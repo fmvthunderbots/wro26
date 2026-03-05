@@ -110,9 +110,9 @@
         .analysis-card { background: #fdfdfd; border: 1px solid #e1e8ed; border-radius: 8px; padding: 15px; font-size: 14px; }
         .analysis-card h3 { margin-top: 0; color: #2980b9; border-bottom: 2px solid #3498db; padding-bottom: 8px; font-size: 16px; }
         .analysis-card ul { list-style-type: none; padding: 0; margin: 0; }
-        .analysis-card li { padding: 6px 0; border-bottom: 1px dashed #eee; display: flex; justify-content: space-between; }
+        .analysis-card li { padding: 6px 0; border-bottom: 1px dashed #eee; display: flex; justify-content: space-between; align-items: center;}
         .analysis-card li:last-child { border-bottom: none; }
-        .score { font-weight: bold; color: #e67e22; }
+        .score { font-weight: bold; color: #e67e22; white-space: nowrap; margin-left:10px;}
         .note { background-color: #fff3cd; border-left: 4px solid #ffecb5; padding: 8px; margin-top: 10px; font-size: 13px; color: #856404; }
 
         .table-container { overflow-x: auto; overflow-y: auto; max-height: 75vh; }
@@ -292,33 +292,59 @@
 
         <div id="analiz-ky" class="sub-tab-content active">
             <div class="analysis-grid">
+                
                 <div class="analysis-card">
-                    <h3 style="color:#009688; border-bottom-color:#009688;">1. Tur Başarı Durumu (%75 Barajı)</h3>
-                    <p>Maksimum puan olan <strong>155 puanın %75'i (~117 puan)</strong> baz alındığında, ilk turda inanılmaz bir tabloyla karşılaşıyoruz[cite: 16]:</p>
-                    <ul>
-                        <li style="color:#d32f2f; font-weight:bold; justify-content:center;">Hiçbir takım %75 barajını geçememiştir! [cite: 16]</li>
+                    <h3 style="color:#009688; border-bottom-color:#009688;">1. Tur Başarı Durumu (%50 ve %40 Barajı)</h3>
+                    <p>Maksimum puan olan <strong>155 puanın</strong> baraj analizleri:</p>
+                    <ul style="margin-top: 15px;">
+                        <li>
+                            <div style="display:flex; flex-direction:column;">
+                                <div><span style="color:#1565c0; font-weight:bold;">%50 Barajı (78+ Puan):</span> <span class="score" style="color:#e74c3c;">Sadece 2 Takım Geçti!</span></div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">SAUVEURS DE L'ESPACE (100) ve DRAGONROBOTİCS (95)</div>
+                            </div>
+                        </li>
+                        <li style="margin-top: 10px;">
+                            <div style="display:flex; flex-direction:column;">
+                                <div><span style="color:#e67e22; font-weight:bold;">%40 Barajı (62+ Puan):</span> <span class="score" style="color:#2ecc71;">Toplam 13 Takım Geçti</span></div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">Üstteki 2 takıma ek olarak; MEGA TEAM (75), THUNDER/BOTS (70), JR TORNADO POWER (70), UZAY KIZLARI (70), CTRL ALT DEFEAT (70), ROBORON (70) ve 65 puan alan 5 farklı takım.</div>
+                            </div>
+                        </li>
                     </ul>
-                    <p style="font-size: 13px; margin-top: 10px;">En yüksek puanı alan takım <strong>100 Puan</strong> ile <span class="score">SAUVEURS DE L'ESPACE</span> olmuş [cite: 16], şampiyon THUNDER/BOTS ise ilk turda en yüksek 70 puanda kalmıştır[cite: 16].</p>
                 </div>
                 
                 <div class="analysis-card">
-                    <h3 style="color:#009688; border-bottom-color:#009688;">2. Tur Zirve Sıralaması (Puan Grupları)</h3>
-                    <p>2. kısım (tur) en yüksek puanlarına göre takımların başarı sıralaması[cite: 16]:</p>
+                    <h3 style="color:#009688; border-bottom-color:#009688;">1. Tur Zirve Sıralaması (İlk 5 Puan Grubu)</h3>
+                    <p>1. kısım (tur) en yüksek puanlarına göre zirvedeki ekipler:</p>
                     <ul>
-                        <li><span>THUNDER/BOTS & WALLBOTS</span> <span class="score">90 Puan</span></li>
-                        <li><span>CODER TEAM</span> <span class="score">75 Puan</span></li>
-                        <li><span>DRAGONROBOTICS (+4 Takım)</span> <span class="score">60 Puan</span></li>
-                        <li><span>DEHA ROBOTİK JR</span> <span class="score">55 Puan</span></li>
-                        <li><span>HIPER TEAM</span> <span class="score">50 Puan</span></li>
-                        <li><span>ROBOCLUB ALANYA</span> <span class="score">45 Puan</span></li>
-                        <li><span>ANGORA</span> <span class="score">40 Puan</span></li>
-                        <li><span>SAUVEURS DE L'ESPACE (+18 Takım)</span> <span class="score">20 Puan</span></li>
-                        <li><span>ROBORON (+2 Takım)</span> <span class="score">15 Puan</span></li>
+                        <li><span>SAUVEURS DE L'ESPACE</span> <span class="score">100 Puan</span></li>
+                        <li><span>DRAGONROBOTİCS</span> <span class="score">95 Puan</span></li>
+                        <li><span>MEGA TEAM</span> <span class="score">75 Puan</span></li>
+                        <li><span>THUNDER/BOTS (+4 Takım daha)</span> <span class="score">70 Puan</span></li>
+                        <li><span>STELLAR TAKEV (+4 Takım daha)</span> <span class="score">65 Puan</span></li>
                     </ul>
                     <div class="note">
-                        <strong>Dikkat Çeken Detay:</strong> İlk turda %75 barajını kimse geçemezken, THUNDER/BOTS ve WALLBOTS ikinci turda 90 puana fırlayarak sıralamayı tamamen değiştirmiş ve şampiyonluğu (ve üçüncülüğü) bu sıçramayla elde etmişlerdir[cite: 16]. 2. turda tam 19 takımın 20 puanda kalması dikkat çekicidir[cite: 16, 22].
+                        <strong>Kritik Detay:</strong> Şampiyon THUNDER/BOTS, ilk turda en yüksek puanı alamasa da (%50 barajını bile geçememiş), ikinci turda yaptığı tam 90 puanlık sıçramayla stratejinin gücünü kanıtlamış ve şampiyonluğa uzanmıştır.
                     </div>
                 </div>
+
+                <div class="analysis-card" style="grid-column: 1 / -1;">
+                    <h3 style="color:#009688; border-bottom-color:#009688;">2. Tur Zirve Sıralaması (Puan Grupları)</h3>
+                    <p>2. kısım (tur) en yüksek puanlarına göre takımların başarı sıralaması:</p>
+                    <ul style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <li><span>THUNDER/BOTS & WALLBOTS</span> <span class="score">90 Puan</span></li>
+                        <li><span>HIPER TEAM</span> <span class="score">50 Puan</span></li>
+                        <li><span>CODER TEAM</span> <span class="score">75 Puan</span></li>
+                        <li><span>ROBOCLUB ALANYA</span> <span class="score">45 Puan</span></li>
+                        <li><span>DRAGONROBOTICS (+4 Takım)</span> <span class="score">60 Puan</span></li>
+                        <li><span>ANGORA</span> <span class="score">40 Puan</span></li>
+                        <li><span>DEHA ROBOTİK JR</span> <span class="score">55 Puan</span></li>
+                        <li><span>SAUVEURS DE L'ESPACE (+18 Takım)</span> <span class="score">20 Puan</span></li>
+                    </ul>
+                    <div class="note">
+                        <strong>Dengelerin Değişimi:</strong> İlk turun açık ara lideri olan <em>SAUVEURS DE L'ESPACE</em>, ikinci turda 20 puanda takılarak tam 19 takımın arasına karışmış. İkinci tur, dengelerin ve madalyaların tamamen değiştiği asıl kırılma noktası olmuştur.
+                    </div>
+                </div>
+
             </div>
         </div>
 
