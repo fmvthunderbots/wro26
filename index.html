@@ -27,7 +27,7 @@
             border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
         }
 
-        /* Sekmeler */
+        /* Ana Sekmeler */
         .tabs { display: flex; flex-wrap: wrap; margin-bottom: 25px; border-bottom: 2px solid #e0e0e0; gap: 5px; }
         .tab-btn { 
             flex: 1; padding: 12px; border: none; background: #f5f5f5; 
@@ -35,6 +35,14 @@
             min-width: 120px; transition: all 0.2s ease; font-size: 0.9rem;
         }
         .tab-btn.active { background: var(--header-bg); color: white; transform: translateY(-2px); }
+
+        /* Alt Sekmeler (Analiz İçin) */
+        .sub-tabs { display: flex; border-bottom: 2px solid #2980b9; margin-bottom: 20px; border-radius: 6px 6px 0 0; overflow: hidden; }
+        .sub-tab-btn { flex: 1; padding: 12px; background: #e8f4f8; border: none; cursor: pointer; font-weight: bold; color: #34495e; transition: 0.3s; font-size: 15px; }
+        .sub-tab-btn:hover { background: #d1e8f0; }
+        .sub-tab-btn.active { background: #2980b9; color: white; }
+        .sub-tab-content { display: none; animation: fadeIn 0.3s; }
+        .sub-tab-content.active { display: block; }
 
         /* Tablo Stilleri (Genel) */
         table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
@@ -275,43 +283,67 @@
     </div>
 
     <div id="content-analiz" class="tab-content">
-        <h2 style="color:#2980b9">WRO26 Yıldızlar Analiz</h2>
-        <div class="analysis-grid">
-            <div class="analysis-card">
-                <h3>1. Tur Başarı Durumu (%75 Barajı)</h3>
-                <p>Maksimum puan olan <strong>156 puanın %75'i (117 puan)</strong> baz alındığında, ilk turda bu barajı geçmeyi başaran yalnızca <strong>4 takım</strong> bulunmaktadır:</p>
-                <ul>
-                    <li><span>THE MARTIANS</span> <span class="score">149 Puan</span></li>
-                    <li><span>SPICA</span> <span class="score">137 Puan</span></li>
-                    <li><span>JR. TORNADO</span> <span class="score">129 Puan</span></li>
-                    <li><span>CYBERTEAM</span> <span class="score">126 Puan</span></li>
-                </ul>
-                <p style="font-size: 12px; color: #7f8c8d; margin-top: 10px;">*Diğer tüm takımlar 117 puanın altında kalmıştır (5. sıradaki en yüksek puan 109'dur).</p>
-            </div>
+        <h2 style="color:#2c3e50; text-align: center; margin-bottom: 20px;">WRO26 Performans Analizi</h2>
+        
+        <div class="sub-tabs">
+            <button class="sub-tab-btn active" onclick="openSubTab(event, 'analiz-ky')">Küçük Yıldızlar Analiz</button>
+            <button class="sub-tab-btn" onclick="openSubTab(event, 'analiz-y')">Yıldızlar Analiz</button>
+        </div>
 
-            <div class="analysis-card">
-                <h3>2. Tur Zirve Sıralaması (İlk 10 Puan)</h3>
-                <p>2. kısım (tur) en yüksek puanlarına göre takımların başarı sıralaması:</p>
-                <ul>
-                    <li><span>ROBOTICS MASTERS</span> <span class="score">89 Puan</span></li>
-                    <li><span>TECH TITANS</span> <span class="score">89 Puan</span></li>
-                    <li><span>ROBO_TURCO</span> <span class="score">86 Puan</span></li>
-                    <li><span>THE MARTIANS</span> <span class="score">84 Puan</span></li>
-                    <li><span>JR. TORNADO</span> <span class="score">79 Puan</span></li>
-                    <li><span>ROBOTRIO</span> <span class="score">79 Puan</span></li>
-                    <li><span>DOĞAL ZEKA</span> <span class="score">79 Puan</span></li>
-                    <li><span>VEGA</span> <span class="score">71 Puan</span></li>
-                    <li><span>SPICA (+19 Takım)</span> <span class="score">69 Puan</span></li>
-                </ul>
-                <div class="note">
-                    <strong>Dikkat Çeken Detay:</strong> 2. turda tam 20 farklı takım (SPICA, CYBERTEAM, ENKA TECH V2, vb.) aynı maksimum puanı (69) aldığı için 9. ve 10. sıraları teknik olarak bu 20 takım paylaşmaktadır.
+        <div id="analiz-ky" class="sub-tab-content active">
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3 style="color:#009688; border-bottom-color:#009688;">1. Tur Başarı Durumu (%75 Barajı)</h3>
+                    <p style="color:#7f8c8d; font-style: italic; padding: 10px;">
+                        Görselleri yüklediğinizde Küçük Yıldızlar klasmanındaki maksimum puan üzerinden %75 barajını hesaplayıp, bu barajı aşan takımları buraya ekleyeceğim. Lütfen ilgili iki görseli sisteme yükleyin.
+                    </p>
+                </div>
+                <div class="analysis-card">
+                    <h3 style="color:#009688; border-bottom-color:#009688;">2. Tur Zirve Sıralaması (İlk 10 Puan)</h3>
+                    <p style="color:#7f8c8d; font-style: italic; padding: 10px;">
+                        Görselleri yüklediğinizde, Küçük Yıldızlar klasmanındaki takımların 2. tur performanslarını inceleyip zirvedeki ilk 10 puanı buraya listeleyeceğim.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="analiz-y" class="sub-tab-content">
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>1. Tur Başarı Durumu (%75 Barajı)</h3>
+                    <p>Maksimum puan olan <strong>156 puanın %75'i (117 puan)</strong> baz alındığında, ilk turda bu barajı geçmeyi başaran yalnızca <strong>4 takım</strong> bulunmaktadır:</p>
+                    <ul>
+                        <li><span>THE MARTIANS</span> <span class="score">149 Puan</span></li>
+                        <li><span>SPICA</span> <span class="score">137 Puan</span></li>
+                        <li><span>JR. TORNADO</span> <span class="score">129 Puan</span></li>
+                        <li><span>CYBERTEAM</span> <span class="score">126 Puan</span></li>
+                    </ul>
+                    <p style="font-size: 12px; color: #7f8c8d; margin-top: 10px;">*Diğer tüm takımlar 117 puanın altında kalmıştır (5. sıradaki en yüksek puan 109'dur).</p>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>2. Tur Zirve Sıralaması (İlk 10 Puan)</h3>
+                    <p>2. kısım (tur) en yüksek puanlarına göre takımların başarı sıralaması:</p>
+                    <ul>
+                        <li><span>ROBOTICS MASTERS</span> <span class="score">89 Puan</span></li>
+                        <li><span>TECH TITANS</span> <span class="score">89 Puan</span></li>
+                        <li><span>ROBO_TURCO</span> <span class="score">86 Puan</span></li>
+                        <li><span>THE MARTIANS</span> <span class="score">84 Puan</span></li>
+                        <li><span>JR. TORNADO</span> <span class="score">79 Puan</span></li>
+                        <li><span>ROBOTRIO</span> <span class="score">79 Puan</span></li>
+                        <li><span>DOĞAL ZEKA</span> <span class="score">79 Puan</span></li>
+                        <li><span>VEGA</span> <span class="score">71 Puan</span></li>
+                        <li><span>SPICA (+19 Takım)</span> <span class="score">69 Puan</span></li>
+                    </ul>
+                    <div class="note">
+                        <strong>Dikkat Çeken Detay:</strong> 2. turda tam 20 farklı takım (SPICA, CYBERTEAM, ENKA TECH V2, vb.) aynı maksimum puanı (69) aldığı için 9. ve 10. sıraları teknik olarak bu 20 takım paylaşmaktadır.
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
     <div id="content-tarihce" class="tab-content">
-        <h2 style="color:#2c3e50">Ödül Alanlar Listesi (2015 - 2025)</h2>
+        <h2 style="color:#2c3e50; text-align: center;">Ödül Alanlar Listesi (2015 - 2025)</h2>
         <div class="table-container">
             <table id="wroTable">
                 <thead>
@@ -369,13 +401,28 @@
     const colors = { 'Sarı': 'c-yellow', 'Lacivert': 'c-blue', 'Siyah': 'c-black', 'Beyaz': 'c-white', 'Kırmızı': 'c-red', 'Yeşil': 'c-green' };
     function cS(txt) { return `<span class="${colors[txt] || ''}">${txt}</span>`; }
 
-    // --- SEKME DEĞİŞTİRME ---
+    // --- ANA SEKME DEĞİŞTİRME ---
     function openTab(id, btn) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         document.getElementById('content-' + id).classList.add('active');
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         if(id.startsWith('stat-')) updateStatsUI(id.split('-')[1]);
+    }
+
+    // --- ALT SEKME DEĞİŞTİRME (Analiz için) ---
+    function openSubTab(evt, tabName) {
+        var i, subcontent, sublinks;
+        subcontent = document.getElementsByClassName("sub-tab-content");
+        for (i = 0; i < subcontent.length; i++) {
+            subcontent[i].classList.remove("active");
+        }
+        sublinks = document.getElementsByClassName("sub-tab-btn");
+        for (i = 0; i < sublinks.length; i++) {
+            sublinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
     }
 
     // --- PUAN HESAPLAMA ---
