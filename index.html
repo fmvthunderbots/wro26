@@ -44,7 +44,7 @@
         .sub-tab-content { display: none; animation: fadeIn 0.3s; }
         .sub-tab-content.active { display: block; }
 
-        /* Tablo Stilleri (Genel) */
+        /* Tablo Stilleri */
         table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
         th, td { border: 1px solid var(--border-color); padding: 10px; text-align: left; }
         th { background-color: var(--header-bg); color: white; font-size: 0.95rem; }
@@ -62,17 +62,18 @@
         .analysis-card { background: #fdfdfd; border: 1px solid #e1e8ed; border-radius: 8px; padding: 12px; font-size: 13px; }
         .analysis-card h3 { margin-top: 0; color: #2980b9; border-bottom: 2px solid #3498db; padding-bottom: 6px; font-size: 15px; }
         .analysis-card ul { list-style-type: none; padding: 0; margin: 0; }
-        .analysis-card li { padding: 4px 0; border-bottom: 1px dashed #eee; display: flex; justify-content: space-between; align-items: center;}
+        .analysis-card li { padding: 5px 0; border-bottom: 1px dashed #eee; display: flex; justify-content: space-between; align-items: center;}
         .analysis-card li:last-child { border-bottom: none; }
         .score { font-weight: bold; color: #e67e22; white-space: nowrap; margin-left:8px;}
-        .note { background-color: #fff3cd; border-left: 4px solid #ffecb5; padding: 8px; margin-top: 10px; font-size: 12px; color: #856404; grid-column: 1 / -1; }
+        .note { background-color: #fff3cd; border-left: 4px solid #ffecb5; padding: 10px; margin-top: 10px; font-size: 12px; color: #856404; grid-column: 1 / -1; }
         
         .final-rank-card { background: #e8f4f8; border: 1px solid #2980b9; }
         .final-rank-card h3 { color: #1565c0; border-bottom-color: #1565c0; }
 
-        .table-container { overflow-x: auto; overflow-y: auto; max-height: 75vh; }
-        #wroTable { font-size: 13px; }
-        .highlight { background-color: #ffeaa7 !important; color: #d35400 !important; font-weight: bold; }
+        /* Puan Çubuğu */
+        .total-sticky { position: sticky; bottom: 0; background: var(--header-bg); color: white; padding: 15px 25px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; z-index: 100; box-shadow: 0 -5px 15px rgba(0,0,0,0.2); }
+        .reset-btn { background: #d32f2f; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .score-display { font-size: 1.4rem; font-weight: bold; display: flex; align-items: center; gap: 15px;}
 
         @media (max-width: 900px) { .analysis-grid { grid-template-columns: 1fr; } }
     </style>
@@ -93,8 +94,68 @@
 
     <div id="content-score-ls" class="tab-content active">
         <h2 style="color:var(--primary-color)">Küçük Yıldızlar Puan Hesaplama</h2>
-        <div class="total-sticky"><button class="reset-btn" onclick="resetScore('ls')">Sıfırla</button><div class="score-display"><span>Toplam: <span id="ls_total">0</span> / 255</span></div></div>
+        <form id="form-ls">
+            <table>
+                <thead><tr><th style="width:55%">Görevler</th><th>Puan</th><th>Adet</th><th>Toplam</th></tr></thead>
+                <tbody>
+                    <tr class="section-header"><td colspan="4">1. Amfiyi hoparlöre bağlama (Maksimum 2 Kablo)</td></tr>
+                    <tr><td>Kablo gri alanın tamamen içinde, düz ve dik</td><td>15</td><td><input type="number" id="ls_kb_f" min="0" max="2" value="0" onchange="validateGroup('ls_kb_f', ['ls_kb_f','ls_kb_p'], 2); calcLS();"></td><td id="res_ls_kb_f">0</td></tr>
+                    <tr><td>Kablo gri alanın kısmen içinde veya düz/dik değil</td><td>5</td><td><input type="number" id="ls_kb_p" min="0" max="2" value="0" onchange="validateGroup('ls_kb_p', ['ls_kb_f','ls_kb_p'], 2); calcLS();"></td><td id="res_ls_kb_p">0</td></tr>
+                    <tr class="section-header"><td colspan="4">2. Gösteri hazırlığı</td></tr>
+                    <tr><td>Mikrofon tamamen içinde, düz ve dik (Maks 1)</td><td>20</td><td><input type="number" id="ls_mk_f" min="0" max="1" value="0" onchange="validateGroup('ls_mk_f', ['ls_mk_f','ls_mk_p'], 1); calcLS();"></td><td id="res_ls_mk_f">0</td></tr>
+                    <tr><td>Mikrofon kısmen içinde veya düz/dik değil</td><td>10</td><td><input type="number" id="ls_mk_p" min="0" max="1" value="0" onchange="validateGroup('ls_mk_p', ['ls_mk_f','ls_mk_p'], 1); calcLS();"></td><td id="res_ls_mk_p">0</td></tr>
+                    <tr><td>Enstrüman tamamen sahne arkasında (Maks 3)</td><td>15</td><td><input type="number" id="ls_ens" min="0" max="3" value="0" onchange="calcLS()"></td><td id="res_ls_ens">0</td></tr>
+                    <tr class="section-header"><td colspan="4">3. Şarkıyı çal (Maksimum 6 Nota)</td></tr>
+                    <tr><td>Nota hedef alanının tamamen içinde, düz ve dik</td><td>20</td><td><input type="number" id="ls_nt_f" min="0" max="6" value="0" onchange="validateGroup('ls_nt_f', ['ls_nt_f','ls_nt_p'], 6); calcLS();"></td><td id="res_ls_nt_f">0</td></tr>
+                    <tr><td>Nota hedef alanının kısmen içinde veya düz/dik değil</td><td>10</td><td><input type="number" id="ls_nt_p" min="0" max="6" value="0" onchange="validateGroup('ls_nt_p', ['ls_nt_f','ls_nt_p'], 6); calcLS();"></td><td id="res_ls_nt_p">0</td></tr>
+                    <tr class="section-header"><td colspan="4">4. Bonus Puan</td></tr>
+                    <tr><td>Sol anahtarı zarar görmemiş/hareket ettirilmemiş</td><td>10</td><td><input type="checkbox" id="ls_bon_sol" onchange="calcLS()"></td><td id="res_ls_bon_sol">0</td></tr>
+                    <tr><td>Hoparlör zarar görmemiş/hareket ettirilmemiş (Maks 2)</td><td>10</td><td><input type="number" id="ls_bon_hop" min="0" max="2" value="0" onchange="calcLS()"></td><td id="res_ls_bon_hop">0</td></tr>
+                    <tr><td>Amfi zarar görmemiş/hareket ettirilmemiş</td><td>10</td><td><input type="checkbox" id="ls_bon_amf" onchange="calcLS()"></td><td id="res_ls_bon_amf">0</td></tr>
+                </tbody>
+            </table>
+        </form>
+        <div class="total-sticky">
+            <button class="reset-btn" onclick="resetScore('ls')">Sıfırla</button>
+            <div class="score-display">
+                <span>Toplam: <span id="ls_total">0</span> / 255</span>
+            </div>
+        </div>
     </div>
+
+    <div id="content-score-s" class="tab-content">
+        <h2 style="color:var(--secondary-color)">Yıldızlar Puan Hesaplama</h2>
+        <form id="form-s">
+            <table>
+                <thead><tr><th style="width:55%">Görevler</th><th>Puan</th><th>Adet</th><th>Toplam</th></tr></thead>
+                <tbody>
+                    <tr class="section-header"><td colspan="4">1. Ziyaretçilere Rehberlik Et (Maksimum 4)</td></tr>
+                    <tr><td>Ziyaretçi tamamen kendi renk alanının içinde ve dik</td><td>10</td><td><input type="number" id="s_ziy_f" min="0" max="4" value="0" onchange="validateGroup('s_ziy_f', ['s_ziy_f','s_ziy_p'], 4); calcS();"></td><td id="res_s_ziy_f">0</td></tr>
+                    <tr><td>Ziyaretçi kısmen kendi renk alanında veya dik değil</td><td>5</td><td><input type="number" id="s_ziy_p" min="0" max="4" value="0" onchange="validateGroup('s_ziy_p', ['s_ziy_f','s_ziy_p'], 4); calcS();"></td><td id="res_s_ziy_p">0</td></tr>
+                    <tr class="section-header"><td colspan="4">2. Kuleleri Yeniden İnşa Et (Maks 2 Kırmızı / 2 Sarı)</td></tr>
+                    <tr><td>Kırmızı kule tamamen hedefte ve dik</td><td>15</td><td><input type="number" id="s_kr_f" min="0" max="2" value="0" onchange="validateGroup('s_kr_f', ['s_kr_f','s_kr_p'], 2); calcS();"></td><td id="res_s_kr_f">0</td></tr>
+                    <tr><td>Kırmızı kule kısmen hedefte veya dik değil</td><td>10</td><td><input type="number" id="s_kr_p" min="0" max="2" value="0" onchange="validateGroup('s_kr_p', ['s_kr_f','s_kr_p'], 2); calcS();"></td><td id="res_s_kr_p">0</td></tr>
+                    <tr><td>Sarı kule üstü doğru + tabanı tamamen hedefte</td><td>25</td><td><input type="number" id="s_sa_f" min="0" max="2" value="0" onchange="validateGroup('s_sa_f', ['s_sa_f','s_sa_p'], 2); calcS();"></td><td id="res_s_sa_f">0</td></tr>
+                    <tr><td>Sarı kule üstü doğru + tabanı kısmen hedefte</td><td>15</td><td><input type="number" id="s_sa_p" min="0" max="2" value="0" onchange="validateGroup('s_sa_p', ['s_sa_f','s_sa_p'], 2); calcS();"></td><td id="res_s_sa_p">0</td></tr>
+                    <tr class="section-header"><td colspan="4">3. Tarihi Eserleri Müzeye Getir (Maksimum 4)</td></tr>
+                    <tr><td>Tarihi eser tamamen müzede ve dik</td><td>15</td><td><input type="number" id="s_es_f" min="0" max="4" value="0" onchange="validateGroup('s_es_f', ['s_es_f','s_es_p'], 4); calcS();"></td><td id="res_s_es_f">0</td></tr>
+                    <tr><td>Tarihi eser kısmen müzede veya dik değil</td><td>5</td><td><input type="number" id="s_es_p" min="0" max="4" value="0" onchange="validateGroup('s_es_p', ['s_es_f','s_es_p'], 4); calcS();"></td><td id="res_s_es_p">0</td></tr>
+                    <tr class="section-header"><td colspan="4">4. Taş Döşemeyi Kirden Temizle (Maks 10 Kir)</td></tr>
+                    <tr><td>Kir parçacıkları taş döşeme alanına değmiyor</td><td>2</td><td><input type="number" id="s_kir" min="0" max="10" value="0" onchange="calcS()"></td><td id="res_s_kir">0</td></tr>
+                    <tr class="section-header"><td colspan="4">5. Bonus Puanlar</td></tr>
+                    <tr><td>Bariyerler zarar görmemiş/hareket etmemiş (x2)</td><td>10</td><td><input type="number" id="s_bon_bar" min="0" max="2" value="0" onchange="calcS()"></td><td id="res_s_bon_bar">0</td></tr>
+                    <tr><td>Papağan zarar görmemiş/hareket etmemiş</td><td>10</td><td><input type="checkbox" id="s_bon_pap" onchange="calcS()"></td><td id="res_s_bon_pap">0</td></tr>
+                </tbody>
+            </table>
+        </form>
+        <div class="total-sticky">
+            <button class="reset-btn" onclick="resetScore('s')">Sıfırla</button>
+            <div class="score-display">
+                <span>Toplam: <span id="s_total">0</span> / 230</span>
+            </div>
+        </div>
+    </div>
+
     <div id="content-analiz" class="tab-content">
         <h2 style="color:#2c3e50; text-align: center; margin-bottom: 20px;">WRO26 Performans Analizi</h2>
         
@@ -115,7 +176,6 @@
                         <li><span>STELLAR TAKEV (+4 Takım)</span> <span class="score">65 Puan</span></li>
                     </ul>
                 </div>
-                
                 <div class="analysis-card">
                     <h3 style="color:#009688;">2. Tur Zirve (En Yüksek 5)</h3>
                     <ul>
@@ -126,7 +186,6 @@
                         <li><span>HIPER TEAM</span> <span class="score">50 Puan</span></li>
                     </ul>
                 </div>
-
                 <div class="analysis-card final-rank-card">
                     <h3>Final Sıralaması (Toplam Puan)</h3>
                     <ul>
@@ -137,9 +196,8 @@
                         <li><span>5. CODER TEAM</span> <span class="score">120 Puan</span></li>
                     </ul>
                 </div>
-
                 <div class="note">
-                    <strong>Matematiksel Değerlendirme:</strong> Küçük Yıldızlar klasmanında şampiyonluk 1. turdaki istikrarla değil, 2. turdaki agresif atağa bağlanmıştır. <strong>Thunderbots</strong>, 1. turda %50 barajını bile geçememişken (70 puan), 2. turdaki en yüksek puanıyla (90) genel toplamda zirveyi yakalamıştır. Bu durum, turnuvanın kaderinin ikinci kısımda çizildiğini kanıtlamaktadır.
+                    <strong>Matematiksel Değerlendirme:</strong> Küçük Yıldızlar klasmanında şampiyonluk 1. turdaki istikrarla değil, 2. turdaki agresif atağa bağlanmıştır. <strong>Thunderbots</strong>, 1. turda %50 barajını bile geçememişken (70 puan), 2. turdaki en yüksek puanıyla (90) genel toplamda zirveyi yakalamıştır. Kader 2. turda çizilmiştir.
                 </div>
             </div>
         </div>
@@ -156,7 +214,6 @@
                         <li><span>TECH TITANS</span> <span class="score">109 Puan</span></li>
                     </ul>
                 </div>
-
                 <div class="analysis-card">
                     <h3 style="color:#e67e22;">2. Tur Zirve (İlk 5)</h3>
                     <ul>
@@ -167,7 +224,6 @@
                         <li><span>JR. TORNADO / ROBOTRIO</span> <span class="score">79 Puan</span></li>
                     </ul>
                 </div>
-
                 <div class="analysis-card final-rank-card">
                     <h3>Final Sıralaması (Toplam Puan)</h3>
                     <ul>
@@ -178,9 +234,8 @@
                         <li><span>5. TECH TITANS</span> <span class="score">189 Puan</span></li>
                     </ul>
                 </div>
-
                 <div class="note">
-                    <strong>Matematiksel Değerlendirme:</strong> Yıldızlar klasmanında şampiyonluk, 1. turda alınan devasa puan farkına (149 puan) bağlanmıştır. <strong>The Martians</strong>, 2. turda en yüksek puanı almasa dahi (4. sırada), ilk turdaki %75 barajını tek aşan takımlardan biri olma avantajını kullanarak şampiyonluğu korumuştur. Burada turnuva kaderi 1. turdan mühürlenmiştir.
+                    <strong>Matematiksel Değerlendirme:</strong> Yıldızlar klasmanında şampiyonluk, 1. turda alınan devasa puan farkına bağlanmıştır. <strong>The Martians</strong>, 2. turda en yüksek puanı almasa dahi, ilk turdaki muazzam avantajını kullanarak şampiyonluğu korumuştur. Burada turnuva kaderi 1. turdan mühürlenmiştir.
                 </div>
             </div>
         </div>
@@ -192,9 +247,8 @@
             <table id="wroTable">
                 <thead><tr><th>Yıl</th><th>Ödül</th><th>K. Yıldızlar</th><th>Yıldızlar</th></tr></thead>
                 <tbody>
-                    <tr><td>2025</td><td>Birincilik</td><td><b>THUNDER/BOTS</b> (42 - ISPARTAKULE IŞIK)</td><td><b>THE MARTIANS</b> (54 - ÇAKABEY)</td></tr>
-                    <tr><td>2025</td><td>İkincilik</td><td><b>DRAGONROBOTICS</b> (23 - MALTEPE BİLSEM)</td><td><b>JR. TORNADO</b> (261 - KAYSERİ BAHÇEŞEHİR)</td></tr>
-                    <tr><td>2025</td><td>Üçüncülük</td><td><b>WALLBOTS</b> (112 - ÇAKABEY)</td><td><b>SPICA</b> (417 - ÇİĞLİ BİLSEM)</td></tr>
+                    <tr><td>2025</td><td>Birincilik</td><td><b>THUNDER/BOTS</b></td><td><b>THE MARTIANS</b></td></tr>
+                    <tr><td>2025</td><td>İkincilik</td><td><b>DRAGONROBOTICS</b></td><td><b>JR. TORNADO</b></td></tr>
                 </tbody>
             </table>
         </div>
@@ -202,7 +256,49 @@
 </div>
 
 <script>
-    // Sekme Fonksiyonları
+    // --- HESAPLAMA MANTIĞI (DÜZELTİLMİŞ) ---
+    function validateGroup(changedId, groupIds, maxLimit) {
+        let currentInput = document.getElementById(changedId);
+        let currentVal = parseInt(currentInput.value) || 0;
+        let otherTotal = 0;
+        groupIds.forEach(id => { if (id !== changedId) otherTotal += parseInt(document.getElementById(id).value) || 0; });
+        if (currentVal + otherTotal > maxLimit) currentInput.value = maxLimit - otherTotal;
+    }
+
+    function calcLS() {
+        let total = 0;
+        const p = { ls_kb_f: 15, ls_kb_p: 5, ls_mk_f: 20, ls_mk_p: 10, ls_ens: 15, ls_nt_f: 20, ls_nt_p: 10, ls_bon_hop: 10 };
+        for(let k in p) {
+            let val = parseInt(document.getElementById(k).value) || 0;
+            if(document.getElementById('res_'+k)) document.getElementById('res_'+k).innerText = val * p[k];
+            total += val * p[k];
+        }
+        let sol = document.getElementById('ls_bon_sol').checked ? 10 : 0;
+        let amf = document.getElementById('ls_bon_amf').checked ? 10 : 0;
+        document.getElementById('res_ls_bon_sol').innerText = sol;
+        document.getElementById('res_ls_bon_amf').innerText = amf;
+        document.getElementById('ls_total').innerText = total + sol + amf;
+    }
+
+    function calcS() {
+        let total = 0;
+        const p = { s_ziy_f: 10, s_ziy_p: 5, s_kr_f: 15, s_kr_p: 10, s_sa_f: 25, s_sa_p: 15, s_es_f: 15, s_es_p: 5, s_kir: 2, s_bon_bar: 10 };
+        for(let k in p) {
+            let val = parseInt(document.getElementById(k).value) || 0;
+            if(document.getElementById('res_'+k)) document.getElementById('res_'+k).innerText = val * p[k];
+            total += val * p[k];
+        }
+        let pap = document.getElementById('s_bon_pap').checked ? 10 : 0;
+        document.getElementById('res_s_bon_pap').innerText = pap;
+        document.getElementById('s_total').innerText = total + pap;
+    }
+
+    function resetScore(cat) {
+        document.getElementById('form-'+cat).reset();
+        cat === 'ls' ? calcLS() : calcS();
+    }
+
+    // --- SEKME MANTIĞI ---
     function openTab(id, btn) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         document.getElementById('content-' + id).classList.add('active');
@@ -217,23 +313,7 @@
         evt.currentTarget.classList.add("active");
     }
 
-    // Puan Formu Fonksiyonları
-    function calcLS() {
-        let total = 0;
-        const inputs = ['ls_kb_f', 'ls_kb_p', 'ls_mk_f', 'ls_mk_p', 'ls_ens', 'ls_nt_f', 'ls_nt_p', 'ls_bon_hop'];
-        inputs.forEach(id => {
-            const el = document.getElementById(id);
-            if(el) total += parseInt(el.value) || 0;
-        });
-        document.getElementById('ls_total').innerText = total;
-    }
-
-    window.onload = () => {
-        // Tablo hücre vurgulama
-        document.querySelectorAll('#wroTable td').forEach(td => {
-            td.onclick = () => td.classList.toggle('highlight');
-        });
-    };
+    window.onload = () => { calcLS(); calcS(); };
 </script>
 
 </body>
