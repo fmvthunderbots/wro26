@@ -38,7 +38,7 @@
 
         /* Alt Sekmeler (Analiz İçin) */
         .sub-tabs { display: flex; border-bottom: 2px solid #2980b9; margin-bottom: 20px; border-radius: 6px 6px 0 0; overflow: hidden; }
-        .sub-tab-btn { flex: 1; padding: 12px; background: #e8f4f8; border: none; cursor: pointer; font-weight: bold; color: #34495e; transition: 0.3s; font-size: 15px; }
+        .sub-tab-btn { flex: 1; padding: 12px; background: #e8f4f8; border: none; cursor: pointer; font-weight: bold; color: #34495e; transition: 0.3s; font-size: 14px; }
         .sub-tab-btn:hover { background: #d1e8f0; }
         .sub-tab-btn.active { background: #2980b9; color: white; }
         .sub-tab-content { display: none; animation: fadeIn 0.3s; }
@@ -70,15 +70,10 @@
 
         /* İhtimaller Listesi */
         .checklist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
-        .checklist-item { 
-            display: flex; align-items: center; background: #fff; 
-            border: 1px solid #ddd; padding: 10px; border-radius: 8px; 
-            cursor: pointer; transition: all 0.2s ease; 
-        }
+        .checklist-item { display: flex; align-items: center; background: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
         .checklist-item:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .checklist-item.checked { background-color: var(--checked-bg); border-color: var(--checked-border); color: #111; }
         .checklist-item input { margin-right: 15px; pointer-events: none; }
-
         .group-box { border: 1px solid #e0e0e0; border-radius: 10px; padding: 15px; margin-bottom: 25px; background: #fafafa; }
         .group-title { margin-top: 0; color: #444; border-bottom: 2px solid #ddd; padding-bottom: 8px; margin-bottom: 15px; }
 
@@ -90,11 +85,7 @@
         .btn-success { background: #4CAF50; }
         .btn-danger { background: #f44336; padding: 5px 10px; font-size: 0.8rem;}
 
-        .total-sticky { 
-            position: sticky; bottom: 0; background: var(--header-bg); color: white; 
-            padding: 15px 25px; border-radius: 10px; display: flex; justify-content: space-between; 
-            align-items: center; z-index: 100; box-shadow: 0 -5px 15px rgba(0,0,0,0.2); 
-        }
+        .total-sticky { position: sticky; bottom: 0; background: var(--header-bg); color: white; padding: 15px 25px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; z-index: 100; box-shadow: 0 -5px 15px rgba(0,0,0,0.2); }
         .reset-btn { background: #d32f2f; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; }
         .score-display { font-size: 1.4rem; font-weight: bold; display: flex; align-items: center; gap: 15px;}
 
@@ -102,22 +93,38 @@
         .stat-card { background: var(--stat-bg); border: 1px solid var(--stat-border); padding: 15px; border-radius: 8px; margin-bottom: 20px;}
         .stat-card h3 { margin-top: 0; color: #664d03; }
         .weakness-list { margin: 0; padding-left: 20px; color: #d32f2f; font-weight: bold; }
-        .weakness-list li { margin-bottom: 5px; }
         .history-table th { background: #607d8b; }
 
-        /* WRO26 Analiz ve Tarihçe Ek Stilleri */
+        /* WRO Analiz ve Tarihçe Ek Stilleri */
         .analysis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .analysis-card { background: #fdfdfd; border: 1px solid #e1e8ed; border-radius: 8px; padding: 15px; font-size: 14px; }
+        .analysis-card { background: #fdfdfd; border: 1px solid #e1e8ed; border-radius: 8px; padding: 15px; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);}
         .analysis-card h3 { margin-top: 0; color: #2980b9; border-bottom: 2px solid #3498db; padding-bottom: 8px; font-size: 16px; }
         .analysis-card ul { list-style-type: none; padding: 0; margin: 0; }
         .analysis-card li { padding: 6px 0; border-bottom: 1px dashed #eee; display: flex; justify-content: space-between; align-items: center;}
         .analysis-card li:last-child { border-bottom: none; }
         .score { font-weight: bold; color: #e67e22; white-space: nowrap; margin-left:10px;}
-        .note { background-color: #fff3cd; border-left: 4px solid #ffecb5; padding: 8px; margin-top: 10px; font-size: 13px; color: #856404; }
         
-        .final-rank-card { background-color: #e8f4f8; border: 2px solid #3498db; margin-top: 15px;}
-        .final-rank-card h3 { color: #1565c0 !important; border-bottom: 2px solid #1565c0 !important; }
-
+        /* Derin Analiz Notları (Pro Mode) */
+        .note { background-color: #f8f9fa; border-left: 4px solid #6c757d; padding: 12px; margin-top: 15px; font-size: 13px; color: #495057; border-radius: 0 4px 4px 0;}
+        .note.danger { border-left-color: #e74c3c; background-color: #fceceb; color: #c0392b;}
+        .note.success { border-left-color: #2ecc71; background-color: #eafaf1; color: #27ae60;}
+        .note.warning { border-left-color: #f39c12; background-color: #fef5e7; color: #d68910;}
+        
+        /* Final Kartı Tasarımı */
+        .final-rank-card { background: linear-gradient(to bottom right, #ffffff, #f0f8ff); border: 2px solid #2980b9; grid-column: 1 / -1; }
+        .final-rank-card h3 { color: #1565c0 !important; border-bottom: 2px solid #1565c0 !important; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;}
+        
+        .pro-rank-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); transition: transform 0.2s ease;}
+        .pro-rank-row:hover { transform: scale(1.01); border-color: #b3d4fc; }
+        .pro-rank-team { font-size: 16px; font-weight: bold; color: #2c3e50; display: flex; align-items: center; gap: 10px;}
+        .pro-rank-team .rank-num { background: #2980b9; color: white; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 13px;}
+        
+        .pro-rank-scores { display: flex; gap: 10px; align-items: center; flex-wrap: wrap;}
+        .badge { padding: 5px 12px; border-radius: 6px; font-size: 13px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;}
+        .badge.t1 { background: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb; }
+        .badge.t2 { background: #f3e5f5; color: #7b1fa2; border: 1px solid #e1bee7; }
+        .badge.final { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; font-size: 15px; padding: 6px 15px; box-shadow: 0 1px 3px rgba(46,125,50,0.2);}
+        
         .table-container { overflow-x: auto; overflow-y: auto; max-height: 75vh; }
         #wroTable { font-size: 13px; }
         #wroTable th { position: sticky; top: 0; z-index: 1; background-color: #f4f7f6; color: #2c3e50; }
@@ -125,7 +132,10 @@
         #wroTable td:hover { background-color: #e8f4f8; }
         .highlight { background-color: #ffeaa7 !important; color: #d35400 !important; font-weight: bold; }
 
-        @media (max-width: 768px) { .analysis-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { 
+            .analysis-grid { grid-template-columns: 1fr; } 
+            .pro-rank-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+        }
     </style>
 </head>
 <body>
@@ -138,7 +148,7 @@
         <button class="tab-btn" onclick="openTab('score-s', this)">Yıldızlar Puan</button>
         <button class="tab-btn" onclick="openTab('prob-s', this)">Yıldızlar İhtimal</button>
         <button class="tab-btn" onclick="openTab('stat-s', this)">📊 Yıldızlar İstatistik</button>
-        <button class="tab-btn" onclick="openTab('analiz', this)">WRO26 Analiz</button>
+        <button class="tab-btn" onclick="openTab('analiz', this)">WRO Analiz</button>
         <button class="tab-btn" onclick="openTab('tarihce', this)">Ödül Listesi</button>
     </div>
 
@@ -286,14 +296,16 @@
     </div>
 
     <div id="content-analiz" class="tab-content">
-        <h2 style="color:#2c3e50; text-align: center; margin-bottom: 20px;">WRO26 Performans Analizi</h2>
+        <h2 style="color:#2c3e50; text-align: center; margin-bottom: 20px;">WRO Turnuva Sonuçları Analizi</h2>
         
         <div class="sub-tabs">
-            <button class="sub-tab-btn active" onclick="openSubTab(event, 'analiz-ky')">Küçük Yıldızlar Analiz</button>
-            <button class="sub-tab-btn" onclick="openSubTab(event, 'analiz-y')">Yıldızlar Analiz</button>
+            <button class="sub-tab-btn active" onclick="openSubTab(event, 'analiz-26-ky')">WRO 26 - K. Yıldızlar</button>
+            <button class="sub-tab-btn" onclick="openSubTab(event, 'analiz-26-y')">WRO 26 - Yıldızlar</button>
+            <button class="sub-tab-btn" onclick="openSubTab(event, 'analiz-25-ky')">WRO 25 - K. Yıldızlar</button>
+            <button class="sub-tab-btn" onclick="openSubTab(event, 'analiz-25-y')">WRO 25 - Yıldızlar</button>
         </div>
 
-        <div id="analiz-ky" class="sub-tab-content active">
+        <div id="analiz-26-ky" class="sub-tab-content active">
             <div class="analysis-grid">
                 
                 <div class="analysis-card">
@@ -313,63 +325,73 @@
                             </div>
                         </li>
                     </ul>
+                    <div class="note danger">
+                        <strong>Kırılma Anı: 1. Turun Liderlerine Ne Oldu?</strong><br>
+                        İlk turun açık ara lideri SAUVEURS DE L'ESPACE (100 puan), 2. turda <strong>20 puana</strong> çakılarak şampiyonluğu kaçırdı! Benzer şekilde 3. sıradaki MEGA TEAM de 2. turda 20 puanda kaldı. Ancak 1. turda 70 puanla 4. sırada olan <strong>THUNDER/BOTS</strong>, 90 puanlık harika bir atakla liderlerin düşüşünü affetmedi ve şampiyon oldu.
+                    </div>
                 </div>
                 
                 <div class="analysis-card">
-                    <h3 style="color:#009688; border-bottom-color:#009688;">1. Tur Zirve Sıralaması (İlk 5 Puan Grubu)</h3>
-                    <p>1. kısım (tur) en yüksek puanlarına göre zirvedeki ekipler:</p>
-                    <ul>
-                        <li><span>SAUVEURS DE L'ESPACE</span> <span class="score">100 Puan</span></li>
-                        <li><span>DRAGONROBOTİCS</span> <span class="score">95 Puan</span></li>
-                        <li><span>MEGA TEAM</span> <span class="score">75 Puan</span></li>
-                        <li><span>THUNDER/BOTS (+4 Takım daha)</span> <span class="score">70 Puan</span></li>
-                        <li><span>STELLAR TAKEV (+4 Takım daha)</span> <span class="score">65 Puan</span></li>
+                    <h3 style="color:#009688; border-bottom-color:#009688;">2. Tur Zirve Sıralaması (Farklı İlk 5 Skor)</h3>
+                    <p>2. kısım (tur) farklı en yüksek puan seviyelerine göre takımlar:</p>
+                    <ul style="display: grid; grid-template-columns: 1fr; gap: 8px;">
+                        <li><span><strong>1. Seviye:</strong> THUNDER/BOTS & WALLBOTS</span> <span class="score">90 Puan</span></li>
+                        <li><span><strong>2. Seviye:</strong> CODER TEAM</span> <span class="score">75 Puan</span></li>
+                        <li><span><strong>3. Seviye:</strong> DRAGONROBOTICS (+4 Takım)</span> <span class="score">60 Puan</span></li>
+                        <li><span><strong>4. Seviye:</strong> DEHA ROBOTİK JR (+2 Takım)</span> <span class="score">55 Puan</span></li>
+                        <li><span><strong>5. Seviye:</strong> HIPER TEAM</span> <span class="score">50 Puan</span></li>
                     </ul>
-                    <div class="note">
-                        <strong>Kritik Detay:</strong> Şampiyon THUNDER/BOTS, ilk turda en yüksek puanı alamasa da (%50 barajını bile geçememiş), ikinci turda yaptığı tam 90 puanlık sıçramayla stratejinin gücünü kanıtlamış ve şampiyonluğa uzanmıştır.
-                    </div>
-                </div>
-
-                <div class="analysis-card" style="grid-column: 1 / -1;">
-                    <h3 style="color:#009688; border-bottom-color:#009688;">2. Tur Zirve Sıralaması (Puan Grupları)</h3>
-                    <p>2. kısım (tur) en yüksek puanlarına göre takımların başarı sıralaması:</p>
-                    <ul style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <li><span>THUNDER/BOTS & WALLBOTS</span> <span class="score">90 Puan</span></li>
-                        <li><span>HIPER TEAM</span> <span class="score">50 Puan</span></li>
-                        <li><span>CODER TEAM</span> <span class="score">75 Puan</span></li>
-                        <li><span>ROBOCLUB ALANYA</span> <span class="score">45 Puan</span></li>
-                        <li><span>DRAGONROBOTICS (+4 Takım)</span> <span class="score">60 Puan</span></li>
-                        <li><span>ANGORA</span> <span class="score">40 Puan</span></li>
-                        <li><span>DEHA ROBOTİK JR</span> <span class="score">55 Puan</span></li>
-                        <li><span>SAUVEURS DE L'ESPACE (+18 Takım)</span> <span class="score">20 Puan</span></li>
-                    </ul>
-                    <div class="note">
-                        <strong>Dengelerin Değişimi:</strong> İlk turun açık ara lideri olan <em>SAUVEURS DE L'ESPACE</em>, ikinci turda 20 puanda takılarak tam 19 takımın arasına karışmış. İkinci tur, dengelerin ve madalyaların tamamen değiştiği asıl kırılma noktası olmuştur.
+                    <div class="note warning">
+                        <strong>Dengelerin Değişimi:</strong> İkinci tur, dengelerin ve madalyaların tamamen değiştiği asıl kırılma noktası olmuştur. İlk turun lideri olan takımların baskıyı kaldıramayarak 18 takımın arasına (20 Puan) karışması turnuvanın kaderini belirlemiştir.
                     </div>
                 </div>
 
                 <div class="analysis-card final-rank-card" style="grid-column: 1 / -1;">
-                    <h3>🏆 Küçük Yıldızlar Final Sıralaması (Toplam Puan İlk 5)</h3>
-                    <ul style="display: grid; grid-template-columns: 1fr; gap: 10px; font-size: 15px;">
-                        <li><span><strong>1. THUNDER/BOTS</strong></span> <span class="score" style="color: #2e7d32; font-size: 15px;">[1. Tur: 70] + [2. Tur: 90] = <strong>160 Puan</strong></span></li>
-                        <li><span><strong>2. DRAGONROBOTICS</strong></span> <span class="score">[1. Tur: 95] + [2. Tur: 60] = <strong>155 Puan</strong></span></li>
-                        <li><span><strong>3. WALLBOTS</strong></span> <span class="score">[1. Tur: 50] + [2. Tur: 90] = <strong>140 Puan</strong></span></li>
-                        <li><span><strong>4. STELLAR TAKEV</strong></span> <span class="score">[1. Tur: 65] + [2. Tur: 60] = <strong>125 Puan</strong></span></li>
-                        <li><span><strong>5. CODER TEAM / DEHA ROBOTİK JR / SAUVEURS DE L'ESPACE</strong></span> <span class="score"><strong>120 Puan</strong> (Beraberlik)</span></li>
-                    </ul>
-                    <div class="note">
-                        <strong>Turnuva Özeti ve Matematiksel Değerlendirme:</strong> Küçük Yıldızlar klasmanında şampiyonluk 1. turdaki istikrarla değil, 2. turdaki agresif atağa bağlanmıştır. Şampiyon <strong>Thunderbots</strong>, ilk turda 70 puanda kalarak ilk 3'e girememiş olsa da, 2. turdaki 90 puanlık harika sıçramasıyla genel toplamda 160 puana ulaşıp zirveyi ele geçirmiştir. Bu klasmanda kazananı tamamen 2. tur performansı belirlemiştir.
+                    <h3>🏆 WRO 26 Küçük Yıldızlar Final Sıralaması (İlk 5)</h3>
+                    <div style="margin-top: 15px;">
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">1</span> THUNDER/BOTS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 70</span><span class="badge t2">Tur 2: 90</span><span class="badge final">160 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">2</span> DRAGONROBOTICS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 95</span><span class="badge t2">Tur 2: 60</span><span class="badge final">155 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">3</span> WALLBOTS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 50</span><span class="badge t2">Tur 2: 90</span><span class="badge final">140 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">4</span> STELLAR TAKEV</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 65</span><span class="badge t2">Tur 2: 60</span><span class="badge final">125 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">5</span> CODER TEAM</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 45</span><span class="badge t2">Tur 2: 75</span><span class="badge final">120 Puan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="note success">
+                        <strong>Genel Değerlendirme:</strong> Şampiyon THUNDER/BOTS, ilk turda en yüksek puanı alamasa da (%50 barajını bile geçememiş), ikinci turda yaptığı tam 90 puanlık sıçramayla stratejinin gücünü kanıtlamış ve şampiyonluğa uzanmıştır.
                     </div>
                 </div>
-
             </div>
         </div>
 
-        <div id="analiz-y" class="sub-tab-content">
+        <div id="analiz-26-y" class="sub-tab-content">
             <div class="analysis-grid">
                 <div class="analysis-card">
                     <h3>1. Tur Başarı Durumu (%75 Barajı)</h3>
-                    <p>Maksimum puan olan <strong>156 puanın %75'i (117 puan)</strong> baz alındığında, ilk turda bu barajı geçmeyi başaran yalnızca <strong>4 takım</strong> bulunmaktadır:</p>
+                    <p>Maksimum puan olan <strong>156 puanın %75'i (117 puan)</strong> baz alındığında ilk tur barajını geçenler:</p>
                     <ul>
                         <li><span>THE MARTIANS</span> <span class="score">149 Puan</span></li>
                         <li><span>SPICA</span> <span class="score">137 Puan</span></li>
@@ -377,41 +399,218 @@
                         <li><span>CYBERTEAM</span> <span class="score">126 Puan</span></li>
                     </ul>
                     <p style="font-size: 12px; color: #7f8c8d; margin-top: 10px;">*Diğer tüm takımlar 117 puanın altında kalmıştır (5. sıradaki en yüksek puan 109'dur).</p>
+                    <div class="note success">
+                        <strong>Kırılma Anı: 1. Turun Liderlerine Ne Oldu?</strong><br>
+                        Küçük Yıldızlar'ın aksine Yıldızlar klasmanında liderler pozisyonlarını korudu. İlk turun lideri 4 takım, 2. turda en yüksek puanları (89 ve 86) alamasalar bile (70-80 bandında kalarak), ilk turda açtıkları devasa fark sayesinde ilk 4 sıradaki yerlerini finalde de aynen korumayı başardılar.
+                    </div>
                 </div>
 
                 <div class="analysis-card">
-                    <h3>2. Tur Zirve Sıralaması (İlk 10 Puan)</h3>
-                    <p>2. kısım (tur) en yüksek puanlarına göre takımların başarı sıralaması:</p>
+                    <h3>2. Tur Zirve Sıralaması (Farklı İlk 5 Skor)</h3>
+                    <p>2. kısım (tur) farklı en yüksek puan seviyelerine göre takımlar:</p>
                     <ul>
-                        <li><span>ROBOTICS MASTERS</span> <span class="score">89 Puan</span></li>
-                        <li><span>TECH TITANS</span> <span class="score">89 Puan</span></li>
-                        <li><span>ROBO_TURCO</span> <span class="score">86 Puan</span></li>
-                        <li><span>THE MARTIANS</span> <span class="score">84 Puan</span></li>
-                        <li><span>JR. TORNADO</span> <span class="score">79 Puan</span></li>
-                        <li><span>ROBOTRIO</span> <span class="score">79 Puan</span></li>
-                        <li><span>DOĞAL ZEKA</span> <span class="score">79 Puan</span></li>
-                        <li><span>VEGA</span> <span class="score">71 Puan</span></li>
-                        <li><span>SPICA (+19 Takım)</span> <span class="score">69 Puan</span></li>
+                        <li><span><strong>1. Seviye:</strong> ROBOTICS MASTERS / TECH TITANS</span> <span class="score">89 Puan</span></li>
+                        <li><span><strong>2. Seviye:</strong> ROBO_TURCO</span> <span class="score">86 Puan</span></li>
+                        <li><span><strong>3. Seviye:</strong> THE MARTIANS</span> <span class="score">84 Puan</span></li>
+                        <li><span><strong>4. Seviye:</strong> JR. TORNADO / ROBOTRIO / DOĞAL ZEKA</span> <span class="score">79 Puan</span></li>
+                        <li><span><strong>5. Seviye:</strong> VEGA</span> <span class="score">71 Puan</span></li>
                     </ul>
-                    <div class="note">
-                        <strong>Dikkat Çeken Detay:</strong> 2. turda tam 20 farklı takım (SPICA, CYBERTEAM, ENKA TECH V2, vb.) aynı maksimum puanı (69) aldığı için 9. ve 10. sıraları teknik olarak bu 20 takım paylaşmaktadır.
+                    <div class="note warning">
+                        <strong>Dikkat Çeken Detay:</strong> 2. turda tam 20 farklı takım (SPICA, CYBERTEAM, ENKA TECH V2, vb.) aynı puanı (69) aldığı için alt sıralarda teknik olarak büyük bir yığılma yaşanmış, bu yığılma ilk turda avantaj elde eden takımların işine yaramıştır.
                     </div>
                 </div>
 
                 <div class="analysis-card final-rank-card" style="grid-column: 1 / -1;">
-                    <h3>🏆 Yıldızlar Final Sıralaması (Toplam Puan İlk 5)</h3>
-                    <ul style="display: grid; grid-template-columns: 1fr; gap: 10px; font-size: 15px;">
-                        <li><span><strong>1. THE MARTIANS</strong></span> <span class="score" style="color: #2e7d32; font-size: 15px;">[1. Tur: 149] + [2. Tur: 84] = <strong>233 Puan</strong></span></li>
-                        <li><span><strong>2. JR. TORNADO</strong></span> <span class="score">[1. Tur: 129] + [2. Tur: 79] = <strong>208 Puan</strong></span></li>
-                        <li><span><strong>3. SPICA</strong></span> <span class="score">[1. Tur: 137] + [2. Tur: 69] = <strong>206 Puan</strong></span></li>
-                        <li><span><strong>4. CYBERTEAM</strong></span> <span class="score">[1. Tur: 126] + [2. Tur: 69] = <strong>195 Puan</strong></span></li>
-                        <li><span><strong>5. ROBOTRIO</strong></span> <span class="score">[1. Tur: 109] + [2. Tur: 79] = <strong>188 Puan</strong></span></li>
+                    <h3>🏆 WRO 26 Yıldızlar Final Sıralaması (İlk 5)</h3>
+                    <div style="margin-top: 15px;">
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">1</span> THE MARTIANS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 149</span><span class="badge t2">Tur 2: 84</span><span class="badge final">233 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">2</span> JR. TORNADO</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 129</span><span class="badge t2">Tur 2: 79</span><span class="badge final">208 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">3</span> SPICA</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 137</span><span class="badge t2">Tur 2: 69</span><span class="badge final">206 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">4</span> CYBERTEAM</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 126</span><span class="badge t2">Tur 2: 69</span><span class="badge final">195 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">5</span> ROBOTRIO</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 109</span><span class="badge t2">Tur 2: 79</span><span class="badge final">188 Puan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="analiz-25-ky" class="sub-tab-content">
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3 style="color:#009688; border-bottom-color:#009688;">1. Tur Başarı Durumu (%50 ve %40 Barajı)</h3>
+                    <p>Maksimum puan olan <strong>142 puanın</strong> baraj analizleri:</p>
+                    <ul style="margin-top: 15px;">
+                        <li>
+                            <div style="display:flex; flex-direction:column;">
+                                <div><span style="color:#1565c0; font-weight:bold;">%50 Barajı (71+ Puan):</span> <span class="score" style="color:#2ecc71;">3 Takım Geçti</span></div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">ROBORON (106), BANBOAT 21 (72), ROBOES SAM (72)</div>
+                            </div>
+                        </li>
+                        <li style="margin-top: 10px;">
+                            <div style="display:flex; flex-direction:column;">
+                                <div><span style="color:#e67e22; font-weight:bold;">%40 Barajı (57+ Puan):</span> <span class="score" style="color:#2ecc71;">Toplam 5 Takım Geçti</span></div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">Üstteki 3 takıma ek olarak; ROBOTUM (68) ve EARTHBOTS (62).</div>
+                            </div>
+                        </li>
                     </ul>
-                    <div class="note">
-                        <strong>Turnuva Özeti ve Matematiksel Değerlendirme:</strong> Yıldızlar klasmanında şampiyonu 1. turdaki üstünlük belirlemiştir. <strong>The Martians</strong>, ilk turda aldığı 149 puanlık devasa avantaj sayesinde 2. turda en yüksek puanı (89) alamamasına rağmen (84 puan aldı) birinciliği açık ara korumuştur.
+                    <div class="note danger">
+                        <strong>Kırılma Anı: 1. Turun Liderlerine Ne Oldu?</strong><br>
+                        İlk turu 106 puanla açık ara lider kapatan ROBORON, 2. turda <strong>22 puana kadar çakılarak</strong> büyük bir yıkım yaşadı ve genel klasmanda 10. sıraya kadar geriledi. İlk turun 2., 3. ve 4. takımları da 2. turda 50-60 bandında kalarak şampiyonluğu kendi elleriyle, 1. turu 62 puanla 5. bitirip 2. turda 107 tam puan yapan EARTHBOTS'a teslim ettiler.
                     </div>
                 </div>
 
+                <div class="analysis-card">
+                    <h3 style="color:#009688; border-bottom-color:#009688;">2. Tur Zirve Sıralaması (Farklı İlk 5 Skor)</h3>
+                    <p>2. kısım (tur) farklı en yüksek puan seviyelerine göre takımlar:</p>
+                    <ul>
+                        <li><span><strong>1. Seviye:</strong> EARTHBOTS / ROBOTAKEV / JR TORNADO POWER / TORNADO / INVICTUS 1</span> <span class="score">107 Puan</span></li>
+                        <li><span><strong>2. Seviye:</strong> TAKEV RSPORT JR. / THUNDERBOTS</span> <span class="score">92 Puan</span></li>
+                        <li><span><strong>3. Seviye:</strong> BANBOAT 21 / ROBOTUM</span> <span class="score">62 Puan</span></li>
+                        <li><span><strong>4. Seviye:</strong> ROBOES SAM / EKOBOT / BEYOND DREAMS / MABİRO / KENYAP1</span> <span class="score">57 Puan</span></li>
+                        <li><span><strong>5. Seviye:</strong> GHOSTFACE</span> <span class="score">44 Puan</span></li>
+                    </ul>
+                </div>
+
+                <div class="analysis-card final-rank-card" style="grid-column: 1 / -1;">
+                    <h3>🏆 WRO 25 (2024) Küçük Yıldızlar Final (İlk 5)</h3>
+                    <div style="margin-top: 15px;">
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">1</span> EARTHBOTS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 62</span><span class="badge t2">Tur 2: 107</span><span class="badge final">169 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">2</span> ROBOTAKEV</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 50</span><span class="badge t2">Tur 2: 107</span><span class="badge final">157 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">3</span> JR TORNADO POWER</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 45</span><span class="badge t2">Tur 2: 107</span><span class="badge final">152 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">4</span> TORNADO</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 37</span><span class="badge t2">Tur 2: 107</span><span class="badge final">144 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">5</span> TAKEV RSPORT JR.</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 51</span><span class="badge t2">Tur 2: 92</span><span class="badge final">143 Puan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="note success">
+                        <strong>Geçmişten Çıkarım (2024 Dinamikleri):</strong> 2024 yılı Küçük Yıldızlar klasmanında benzeri zor görülen bir tesadüfle, zirvedeki ilk 4 takım 2. turda birebir aynı mükemmel puanı <strong>(107)</strong> almıştır. 2. turda bu takımlar arasında denklik bozulmadığı için, takımların 1. turda topladığı nispeten düşük puanlar "averaj" görevi görmüş ve şampiyonu belirlemiştir.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="analiz-25-y" class="sub-tab-content">
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>1. Tur Başarı Durumu (%75 ve %50 Barajı)</h3>
+                    <p>Maksimum puan olan <strong>120 puanın</strong> baraj analizleri:</p>
+                    <ul style="margin-top: 15px;">
+                        <li>
+                            <div style="display:flex; flex-direction:column;">
+                                <div><span style="color:#1565c0; font-weight:bold;">%75 Barajı (90+ Puan):</span> <span class="score" style="color:#2ecc71;">5 Takım Geçti</span></div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">JUNIOR ALTAŞ (122), ROBOMİNO (112), SİRİUS A (109), İLLUSION (108), KT ROBOTICS (104).</div>
+                            </div>
+                        </li>
+                        <li style="margin-top: 10px;">
+                            <div style="display:flex; flex-direction:column;">
+                                <div><span style="color:#e67e22; font-weight:bold;">%50 Barajı (60+ Puan):</span> <span class="score" style="color:#2ecc71;">Toplam 10 Takım Geçti</span></div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">Üstteki 5 takıma ek olarak; ARTİFUSION, NOKTA PARANTEZ, SPARK, TEAM STELLARS ve MAGNETECH2.</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="note danger">
+                        <strong>Kırılma Anı: 1. Turun Liderlerine Ne Oldu?</strong><br>
+                        İlk turun dev liderleri 2. turda adeta döküldü! Lider Junior Altaş 43 puanda, ikinci Robomino 48 puanda kaldı. Bu inanılmaz düşüş, 1. turu 69 puanla çok gerilerde bitiren <strong>ARTİFUSION</strong>'ın 2. turda 120 puanlık kusursuz bir performansla şampiyonluğu çalmasına olanak tanıdı.
+                    </div>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>2. Tur Zirve Sıralaması (Farklı İlk 5 Skor)</h3>
+                    <p>2. kısım (tur) farklı en yüksek puan seviyelerine göre takımlar:</p>
+                    <ul>
+                        <li><span><strong>1. Seviye:</strong> ARTİFUSION</span> <span class="score">120 Puan</span></li>
+                        <li><span><strong>2. Seviye:</strong> INVICTUS ORDU</span> <span class="score">95 Puan</span></li>
+                        <li><span><strong>3. Seviye:</strong> MEGA TEAM</span> <span class="score">83 Puan</span></li>
+                        <li><span><strong>4. Seviye:</strong> NOKTA PARANTEZ</span> <span class="score">78 Puan</span></li>
+                        <li><span><strong>5. Seviye:</strong> SİRİUS A / SPARK / ROVERBOATS</span> <span class="score">73 Puan</span></li>
+                    </ul>
+                </div>
+
+                <div class="analysis-card final-rank-card" style="grid-column: 1 / -1;">
+                    <h3>🏆 WRO 25 (2024) Yıldızlar Final Sıralaması (İlk 5)</h3>
+                    <div style="margin-top: 15px;">
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">1</span> ARTİFUSION</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 69</span><span class="badge t2">Tur 2: 120</span><span class="badge final">189 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">2</span> SİRİUS A</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 109</span><span class="badge t2">Tur 2: 73</span><span class="badge final">182 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">3</span> JUNIOR ALTAŞ</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 122</span><span class="badge t2">Tur 2: 43</span><span class="badge final">165 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">4</span> ROBOMİNO</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 112</span><span class="badge t2">Tur 2: 48</span><span class="badge final">160 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">5</span> NOKTA PARANTEZ</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 69</span><span class="badge t2">Tur 2: 78</span><span class="badge final">147 Puan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="note success">
+                        <strong>Küllerinden Doğma (2024 Dinamikleri):</strong> ARTİFUSION takımı, 1. turu 69 puanla liderlerin fersah fersah gerisinde tamamlamasına rağmen, 2. turda gösterdiği eşsiz eforla (120 Puan) inanılmaz bir geri dönüşe imza atmış ve kupayı kaldırmıştır. WRO turnuvalarında 2. turun ne kadar belirleyici olduğunun en büyük kanıtlarından biridir.
+                    </div>
+                </div>
             </div>
         </div>
     </div>
