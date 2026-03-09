@@ -323,18 +323,82 @@
                 <thead><tr><th style="width:55%">Görevler</th><th>Puan</th><th>Adet</th><th>Toplam</th></tr></thead>
                 <tbody>
                     <tr class="section-header"><td colspan="4">1. Ziyaretçilere Rehberlik Et (Maksimum 4)</td></tr>
-                    <tr><td>Ziyaretçi tamamen kendi renk alanının içinde ve dik</td><td>10</td><td><input type="number" id="s_ziy_f" min="0" max="4" value="0" onchange="validateGroup('s_ziy_f', ['s_ziy_f','s_ziy_p'], 4); calcS();"></td><td id="res_s_ziy_f">0</td></tr>
-                    <tr><td>Ziyaretçi kısmen kendi renk alanında veya dik değil</td><td>5</td><td><input type="number" id="s_ziy_p" min="0" max="4" value="0" onchange="validateGroup('s_ziy_p', ['s_ziy_f','s_ziy_p'], 4); calcS();"></td><td id="res_s_ziy_p">0</td></tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/B5rxC68.png" alt="Ziyaretçi Tam" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Ziyaretçi tamamen kendi renk alanının içinde ve dik</span>
+                            </div>
+                        </td>
+                        <td>10</td><td><input type="number" id="s_ziy_f" min="0" max="4" value="0" onchange="validateGroup('s_ziy_f', ['s_ziy_f','s_ziy_p'], 4); calcS();"></td><td id="res_s_ziy_f">0</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/ZE8KDiQ.png" alt="Ziyaretçi Kısmen" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Ziyaretçi kısmen kendi renk alanında veya dik değil</span>
+                            </div>
+                        </td>
+                        <td>5</td><td><input type="number" id="s_ziy_p" min="0" max="4" value="0" onchange="validateGroup('s_ziy_p', ['s_ziy_f','s_ziy_p'], 4); calcS();"></td><td id="res_s_ziy_p">0</td>
+                    </tr>
 
                     <tr class="section-header"><td colspan="4">2. Kuleleri Yeniden İnşa Et (Maks 2 Kırmızı / 2 Sarı)</td></tr>
-                    <tr><td>Kırmızı kule tamamen hedefte ve dik</td><td>15</td><td><input type="number" id="s_kr_f" min="0" max="2" value="0" onchange="validateGroup('s_kr_f', ['s_kr_f','s_kr_p'], 2); calcS();"></td><td id="res_s_kr_f">0</td></tr>
-                    <tr><td>Kırmızı kule kısmen hedefte veya dik değil</td><td>10</td><td><input type="number" id="s_kr_p" min="0" max="2" value="0" onchange="validateGroup('s_kr_p', ['s_kr_f','s_kr_p'], 2); calcS();"></td><td id="res_s_kr_p">0</td></tr>
-                    <tr><td>Sarı kule üstü doğru + tabanı tamamen hedefte</td><td>25</td><td><input type="number" id="s_sa_f" min="0" max="2" value="0" onchange="validateGroup('s_sa_f', ['s_sa_f','s_sa_p'], 2); calcS();"></td><td id="res_s_sa_f">0</td></tr>
-                    <tr><td>Sarı kule üstü doğru + tabanı kısmen hedefte</td><td>15</td><td><input type="number" id="s_sa_p" min="0" max="2" value="0" onchange="validateGroup('s_sa_p', ['s_sa_f','s_sa_p'], 2); calcS();"></td><td id="res_s_sa_p">0</td></tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/3HYPwty.png" alt="Kırmızı Kule Tam" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Kırmızı kule tamamen hedefte ve dik</span>
+                            </div>
+                        </td>
+                        <td>15</td><td><input type="number" id="s_kr_f" min="0" max="2" value="0" onchange="validateGroup('s_kr_f', ['s_kr_f','s_kr_p'], 2); calcS();"></td><td id="res_s_kr_f">0</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/pl8oNL0.png" alt="Kırmızı Kule Kısmen" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Kırmızı kule kısmen hedefte veya dik değil</span>
+                            </div>
+                        </td>
+                        <td>10</td><td><input type="number" id="s_kr_p" min="0" max="2" value="0" onchange="validateGroup('s_kr_p', ['s_kr_f','s_kr_p'], 2); calcS();"></td><td id="res_s_kr_p">0</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/OWJV2Ad.png" alt="Sarı Kule Tam" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Sarı kule üstü doğru + tabanı tamamen hedefte</span>
+                            </div>
+                        </td>
+                        <td>25</td><td><input type="number" id="s_sa_f" min="0" max="2" value="0" onchange="validateGroup('s_sa_f', ['s_sa_f','s_sa_p'], 2); calcS();"></td><td id="res_s_sa_f">0</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/A9QI5hY.png" alt="Sarı Kule Kısmen" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Sarı kule üstü doğru + tabanı kısmen hedefte</span>
+                            </div>
+                        </td>
+                        <td>15</td><td><input type="number" id="s_sa_p" min="0" max="2" value="0" onchange="validateGroup('s_sa_p', ['s_sa_f','s_sa_p'], 2); calcS();"></td><td id="res_s_sa_p">0</td>
+                    </tr>
 
                     <tr class="section-header"><td colspan="4">3. Tarihi Eserleri Müzeye Getir (Maksimum 4)</td></tr>
-                    <tr><td>Tarihi eser tamamen müzede ve dik</td><td>15</td><td><input type="number" id="s_es_f" min="0" max="4" value="0" onchange="validateGroup('s_es_f', ['s_es_f','s_es_p'], 4); calcS();"></td><td id="res_s_es_f">0</td></tr>
-                    <tr><td>Tarihi eser kısmen müzede veya dik değil</td><td>5</td><td><input type="number" id="s_es_p" min="0" max="4" value="0" onchange="validateGroup('s_es_p', ['s_es_f','s_es_p'], 4); calcS();"></td><td id="res_s_es_p">0</td></tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/VbOCNrx.png" alt="Eser Tam" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Tarihi eser tamamen müzede ve dik</span>
+                            </div>
+                        </td>
+                        <td>15</td><td><input type="number" id="s_es_f" min="0" max="4" value="0" onchange="validateGroup('s_es_f', ['s_es_f','s_es_p'], 4); calcS();"></td><td id="res_s_es_f">0</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/khZIyzn.png" alt="Eser Kısmen" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Tarihi eser kısmen müzede veya dik değil</span>
+                            </div>
+                        </td>
+                        <td>5</td><td><input type="number" id="s_es_p" min="0" max="4" value="0" onchange="validateGroup('s_es_p', ['s_es_f','s_es_p'], 4); calcS();"></td><td id="res_s_es_p">0</td>
+                    </tr>
 
                     <tr class="section-header"><td colspan="4">4. Taş Döşemeyi Kirden Temizle (Maks 10 Kir)</td></tr>
                     <tr><td>Kir parçacıkları taş döşeme alanına değmiyor</td><td>2</td><td><input type="number" id="s_kir" min="0" max="10" value="0" onchange="calcS()"></td><td id="res_s_kir">0</td></tr>
