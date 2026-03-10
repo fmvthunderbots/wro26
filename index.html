@@ -132,6 +132,24 @@
         #wroTable td:hover { background-color: #e8f4f8; }
         .highlight { background-color: #ffeaa7 !important; color: #d35400 !important; font-weight: bold; }
 
+        /* --- KUTU RENKLENDİRME TEMALARI --- */
+        .theme-Beyaz { background-color: #ffffff; border: 2px solid #e2e8f0; }
+        .theme-Beyaz .group-title { color: #475569; border-bottom-color: #e2e8f0; }
+        
+        .theme-Mavi { background-color: #eff6ff; border: 2px solid #bfdbfe; }
+        .theme-Mavi .group-title { color: #1d4ed8; border-bottom-color: #bfdbfe; }
+        
+        .theme-Sarı { background-color: #fefce8; border: 2px solid #fef08a; }
+        .theme-Sarı .group-title { color: #b45309; border-bottom-color: #fef08a; }
+        
+        /* Siyah tema için yazıları okunabilir yapıyoruz */
+        .theme-Siyah { background-color: #1f2937; border: 2px solid #111827; }
+        .theme-Siyah .group-title { color: #f9fafb; border-bottom-color: #374151; }
+        .theme-Siyah .checklist-item { background-color: #374151; border-color: #4b5563; color: #f9fafb; }
+        .theme-Siyah .checklist-item:hover { background-color: #4b5563; transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        .theme-Siyah .checklist-item.checked { background-color: var(--checked-bg); color: #111; }
+        .theme-Siyah .checklist-item .c-black { color: #9ca3af; } /* Koyu arkaplanda 'siyah' kelimesini açık gri yap */
+
         @media (max-width: 768px) { 
             .analysis-grid { grid-template-columns: 1fr; } 
             .pro-rank-row { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -1004,7 +1022,7 @@
         if (currentVal + otherTotal > maxLimit) currentInput.value = maxLimit - otherTotal;
     }
 
-    const colors = { 'Sarı': 'c-yellow', 'Lacivert': 'c-blue', 'Siyah': 'c-black', 'Beyaz': 'c-white', 'Kırmızı': 'c-red', 'Yeşil': 'c-green' };
+    const colors = { 'Sarı': 'c-yellow', 'Lacivert': 'c-blue', 'Mavi': 'c-blue', 'Siyah': 'c-black', 'Beyaz': 'c-white', 'Kırmızı': 'c-red', 'Yeşil': 'c-green' };
     function cS(txt) { return `<span class="${colors[txt] || ''}">${txt}</span>`; }
 
     // --- ANA SEKME DEĞİŞTİRME ---
@@ -1170,24 +1188,55 @@
     function initLSProbs() {
         const cont = document.getElementById('ls-group-container');
         if(!cont) return;
-        const vars = ['Sarı', 'Lacivert', 'Siyah', 'Beyaz'];
-        const fixed = [cS('Kırmızı'), cS('Yeşil')];
-        const getPerms = arr => {
-            if (arr.length <= 2) return arr.length === 2 ? [arr, [arr[1], arr[0]]] : [arr];
-            return arr.reduce((acc, item, i) => acc.concat(getPerms([...arr.slice(0, i), ...arr.slice(i + 1)]).map(val => [item, ...val])), []);
-        };
-        const perms = getPerms(vars);
+
+        // Özel Senaryo Listesi
+        const scenarios = [
+            { id: 1, y2: 'Beyaz', y1: 'Mavi', y5: 'Sarı', y6: 'Siyah' },
+            { id: 2, y2: 'Beyaz', y1: 'Mavi', y5: 'Siyah', y6: 'Sarı' },
+            { id: 3, y2: 'Beyaz', y1: 'Sarı', y5: 'Mavi', y6: 'Siyah' },
+            { id: 4, y2: 'Beyaz', y1: 'Sarı', y5: 'Siyah', y6: 'Mavi' },
+            { id: 5, y2: 'Beyaz', y1: 'Siyah', y5: 'Mavi', y6: 'Sarı' },
+            { id: 6, y2: 'Beyaz', y1: 'Siyah', y5: 'Sarı', y6: 'Mavi' },
+            { id: 7, y2: 'Mavi', y1: 'Beyaz', y5: 'Sarı', y6: 'Siyah' },
+            { id: 8, y2: 'Mavi', y1: 'Beyaz', y5: 'Siyah', y6: 'Sarı' },
+            { id: 9, y2: 'Mavi', y1: 'Sarı', y5: 'Beyaz', y6: 'Siyah' },
+            { id: 10, y2: 'Mavi', y1: 'Sarı', y5: 'Siyah', y6: 'Beyaz' },
+            { id: 11, y2: 'Mavi', y1: 'Siyah', y5: 'Beyaz', y6: 'Sarı' },
+            { id: 12, y2: 'Mavi', y1: 'Siyah', y5: 'Sarı', y6: 'Beyaz' },
+            { id: 13, y2: 'Sarı', y1: 'Beyaz', y5: 'Mavi', y6: 'Siyah' },
+            { id: 14, y2: 'Sarı', y1: 'Beyaz', y5: 'Siyah', y6: 'Mavi' },
+            { id: 15, y2: 'Sarı', y1: 'Mavi', y5: 'Beyaz', y6: 'Siyah' },
+            { id: 16, y2: 'Sarı', y1: 'Mavi', y5: 'Siyah', y6: 'Beyaz' },
+            { id: 17, y2: 'Sarı', y1: 'Siyah', y5: 'Beyaz', y6: 'Mavi' },
+            { id: 18, y2: 'Sarı', y1: 'Siyah', y5: 'Mavi', y6: 'Beyaz' },
+            { id: 19, y2: 'Siyah', y1: 'Beyaz', y5: 'Mavi', y6: 'Sarı' },
+            { id: 20, y2: 'Siyah', y1: 'Beyaz', y5: 'Sarı', y6: 'Mavi' },
+            { id: 21, y2: 'Siyah', y1: 'Mavi', y5: 'Beyaz', y6: 'Sarı' },
+            { id: 22, y2: 'Siyah', y1: 'Mavi', y5: 'Sarı', y6: 'Beyaz' },
+            { id: 23, y2: 'Siyah', y1: 'Sarı', y5: 'Beyaz', y6: 'Mavi' },
+            { id: 24, y2: 'Siyah', y1: 'Sarı', y5: 'Mavi', y6: 'Beyaz' }
+        ];
+
+        // 1. Tura Göre (Yuva 2) Gruplandırma
         const groups = {};
-        perms.forEach(p => { if(!groups[p[0]]) groups[p[0]] = []; groups[p[0]].push(p); });
+        scenarios.forEach(s => {
+            if(!groups[s.y2]) groups[s.y2] = [];
+            groups[s.y2].push(s);
+        });
+
         cont.innerHTML = "";
         for(let head in groups) {
-            let box = `<div class="group-box"><h3 class="group-title">${cS(head)} ile Başlayanlar</h3><div class="checklist-grid">`;
-            groups[head].forEach((p, idx) => {
-                const uid = `ls_v3_${head}_${idx}`;
+            // theme-${head} sınıfı ile CSS renklerini bağlıyoruz
+            let box = `<div class="group-box theme-${head}"><h3 class="group-title">1. Tur: ${head} (Yuva 2)</h3><div class="checklist-grid">`;
+            groups[head].forEach((s) => {
+                const uid = `ls_v3_senaryo_${s.id}`;
                 const chk = localStorage.getItem(uid) === 'true' ? 'checked' : '';
                 box += `<div class="checklist-item ${chk}" onclick="toggleProb('${uid}', this)">
                     <input type="checkbox" ${chk?'checked':''}>
-                    <div>${cS(p[0])} - ${cS(p[1])} - ${fixed[0]} - ${fixed[1]} - ${cS(p[2])} - ${cS(p[3])}</div>
+                    <div style="font-size: 0.9rem; line-height: 1.4;">
+                        <strong>Senaryo ${s.id}</strong><br>
+                        2. Tur: Y1(${cS(s.y1)}) | Y5(${cS(s.y5)}) | Y6(${cS(s.y6)})
+                    </div>
                 </div>`;
             });
             cont.innerHTML += box + `</div></div>`;
