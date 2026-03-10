@@ -69,7 +69,7 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         /* İhtimaller Listesi */
-        .checklist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+        .checklist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
         .checklist-item { display: flex; align-items: center; background: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
         .checklist-item:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .checklist-item.checked { background-color: var(--checked-bg); border-color: var(--checked-border); color: #111; }
@@ -437,7 +437,7 @@
     </div>
 
     <div id="content-prob-s" class="tab-content">
-        <h2>Yıldızlar İhtimaller Listesi</h2>
+        <h2>Yıldızlar Dağıtım İhtimalleri (Slot Matrisi)</h2>
         <div class="action-bar">
             <button class="btn btn-clear" onclick="clearProb('s')">🗑️ Listeyi Temizle</button>
             <button class="btn btn-save" onclick="saveJSON('s', 'prob')">💾 Kaydet</button>
@@ -1243,20 +1243,57 @@
         }
     }
 
+    // --- YILDIZLAR KATEGORİSİ: MATRİS TABANLI İHTİMALLER ---
     function initSProbs() {
         const cont = document.getElementById('s-matrix-container');
         if(!cont) return;
-        const list = ['Kırmızı', 'Sarı', 'Yeşil', 'Siyah', 'Beyaz', 'Lacivert'];
+
+        // Senin verdiğin 4 Slot x 5 Renk = 20 İhtimal Mantığı
+        const slots = [
+            { 
+                title: "1. ÖN KISIM", 
+                routes: [
+                    { color: 'Kırmızı', route: 'Rota-1' }, { color: 'Sarı', route: 'Rota-2' }, 
+                    { color: 'Mavi', route: 'Rota-3' }, { color: 'Yeşil', route: 'Rota-4' }, { color: 'Siyah', route: 'Rota-5' }
+                ]
+            },
+            { 
+                title: "2. ARKA KAFES", 
+                routes: [
+                    { color: 'Kırmızı', route: 'Rota-6' }, { color: 'Sarı', route: 'Rota-7' }, 
+                    { color: 'Mavi', route: 'Rota-8' }, { color: 'Yeşil', route: 'Rota-9' }, { color: 'Siyah', route: 'Rota-10' }
+                ]
+            },
+            { 
+                title: "3. SOL KOL", 
+                routes: [
+                    { color: 'Kırmızı', route: 'Rota-11' }, { color: 'Sarı', route: 'Rota-12' }, 
+                    { color: 'Mavi', route: 'Rota-13' }, { color: 'Yeşil', route: 'Rota-14' }, { color: 'Siyah', route: 'Rota-15' }
+                ]
+            },
+            { 
+                title: "4. SAĞ KOL", 
+                routes: [
+                    { color: 'Kırmızı', route: 'Rota-16' }, { color: 'Sarı', route: 'Rota-17' }, 
+                    { color: 'Mavi', route: 'Rota-18' }, { color: 'Yeşil', route: 'Rota-19' }, { color: 'Siyah', route: 'Rota-20' }
+                ]
+            }
+        ];
+
         cont.innerHTML = "";
-        list.forEach(f => {
-            let box = `<div class="group-box"><h3 class="group-title">İlk Renk: ${cS(f)}</h3><div class="checklist-grid">`;
-            list.forEach(s => {
-                if(f===s) return;
-                const uid = `s_v3_${f}_${s}`;
+
+        slots.forEach((slot, index) => {
+            let box = `<div class="group-box"><h3 class="group-title">${slot.title}</h3><div class="checklist-grid">`;
+            
+            slot.routes.forEach(r => {
+                const uid = `s_v4_slot${index}_${r.color}`; // Benzersiz ve yeni sürüm ID'si
                 const chk = localStorage.getItem(uid) === 'true' ? 'checked' : '';
                 box += `<div class="checklist-item ${chk}" onclick="toggleProb('${uid}', this)">
                     <input type="checkbox" ${chk?'checked':''}>
-                    <div>Sonraki: ${cS(s)}</div>
+                    <div style="font-size: 0.95rem; line-height: 1.4;">
+                        <strong>${cS(r.color)}</strong><br>
+                        Hedef: <span style="color:#d35400; font-weight:bold;">${r.route}</span>
+                    </div>
                 </div>`;
             });
             cont.innerHTML += box + `</div></div>`;
@@ -1272,7 +1309,7 @@
 
     function clearProb(cat) {
         if(!confirm('Tüm işaretlemeleri temizlemek istediğinize emin misiniz?')) return;
-        const prefix = cat === 'ls' ? 'ls_v3_' : 's_v3_';
+        const prefix = cat === 'ls' ? 'ls_v3_' : 's_v4_';
         Object.keys(localStorage).forEach(k => { if(k.startsWith(prefix)) localStorage.removeItem(k); });
         cat === 'ls' ? initLSProbs() : initSProbs();
     }
@@ -1280,7 +1317,7 @@
     function saveJSON(cat, mode) {
         const data = {};
         if (mode === 'prob') {
-            const prefix = cat === 'ls' ? 'ls_v3_' : 's_v3_';
+            const prefix = cat === 'ls' ? 'ls_v3_' : 's_v4_';
             Object.keys(localStorage).forEach(k => { if(k.startsWith(prefix)) data[k] = localStorage.getItem(k); });
         } else {
             const statKey = `stats_${cat}`;
