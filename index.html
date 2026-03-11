@@ -192,7 +192,7 @@
         <button class="tab-btn" onclick="openTab('stat-s', this)">📊 Yıldızlar İstatistik</button>
         <button class="tab-btn" onclick="openTab('analiz', this)">WRO Analiz</button>
         <button class="tab-btn" onclick="openTab('tarihce', this)">Ödül Listesi</button>
-        <button class="tab-btn" onclick="openTab('sayac', this)" style="background-color: #fff3e0; color: #d35400;">⏱️ Sayaç</button>
+        <button class="tab-btn" onclick="openTab('sayac', this)">⏱️ Sayaç</button>
     </div>
 
     <div id="content-sayac" class="tab-content">
@@ -684,7 +684,6 @@
 
     // --- İHTİMALLER & JSON VERİ YÖNETİMİ ---
     function initLSProbs() {
-        // Küçük Yıldızlar İhtimalleri Aynı
         const cont = document.getElementById('ls-group-container');
         if(!cont) return;
 
@@ -739,7 +738,6 @@
         }
     }
 
-    // --- YILDIZLAR KATEGORİSİ: GÜNCELLENMİŞ BAŞLIKLAR ---
     function initSProbs() {
         const cont = document.getElementById('s-matrix-container');
         if(!cont) return;
@@ -781,7 +779,7 @@
             let box = `<div class="group-box"><h3 class="group-title">${slot.title}</h3><div class="checklist-grid">`;
             
             slot.routes.forEach(r => {
-                const uid = `s_v5_slot${index}_${r.color}`; // Kimlik yenilendi
+                const uid = `s_v5_slot${index}_${r.color}`; 
                 const chk = localStorage.getItem(uid) === 'true' ? 'checked' : '';
                 box += `<div class="checklist-item ${chk}" onclick="toggleProb('${uid}', this)">
                     <input type="checkbox" ${chk?'checked':''}>
