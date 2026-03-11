@@ -206,15 +206,15 @@
         <button class="tab-btn" onclick="openTab('stat-s', this)">📊 Yıldızlar İstatistik</button>
         <button class="tab-btn" onclick="openTab('analiz', this)">WRO Analiz</button>
         <button class="tab-btn" onclick="openTab('tarihce', this)">Ödül Listesi</button>
-        <button class="tab-btn" onclick="openTab('sayac', this)" style="background-color: #e8f5e9; color: #2e7d32; font-weight: bold;">⏳ Sayaç</button>
+        <button class="tab-btn" onclick="openTab('sayac', this)">⏳ Sayaç</button>
     </div>
 
     <div id="content-sayac" class="tab-content">
-        <h2 style="color: #2e7d32; text-align: center;">🤖 Antrenman ve Turnuva Zamanı! 🚀</h2>
+        <h2 style="color: #333; text-align: center;">Antrenman ve Turnuva Zamanı</h2>
         
         <div class="timer-container" style="text-align: center; margin: 30px auto; max-width: 600px; background: #e8f4f8; padding: 30px; border-radius: 15px; border: 2px dashed #81d4fa;">
-            <h3 style="color: #0277bd; margin-top: 0;">⏱️ 2 Dakikalık Görev Süresi</h3>
-            <p style="color: #546e7a; font-size: 0.9rem;">Sakin ol, derin bir nefes al ve robotuna güven! Sen bunu yaparsın! 🌟</p>
+            <h3 style="color: #0277bd; margin-top: 0;">2 Dakikalık Görev Süresi</h3>
+            <p style="color: #546e7a; font-size: 0.9rem;">Görev süresini buradan takip edebilirsiniz.</p>
             <div id="robot-timer-display" style="font-size: 4.5rem; font-weight: bold; color: #01579b; margin: 20px 0; font-family: monospace;">02:00</div>
             <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
                 <button class="btn btn-success" style="font-size: 1.1rem; padding: 12px 24px;" onclick="startRobotTimer()">▶️ Başla</button>
@@ -224,11 +224,11 @@
         </div>
 
         <div class="countdown-container" style="text-align: center; margin: 30px auto; max-width: 600px; background: #fffde7; padding: 30px; border-radius: 15px; border: 2px dashed #fdd835;">
-            <h3 style="color: #f57f17; margin-top: 0;">🎯 WRO Turnuvasına Kalan Süre (7 Haz 2026)</h3>
+            <h3 style="color: #f57f17; margin-top: 0;">WRO Turnuvasına Kalan Süre (7 Haz 2026)</h3>
             <div id="wro-countdown-display" style="font-size: 2rem; font-weight: bold; color: #e65100; margin-top: 15px;">
                 Hesaplanıyor... ⏳
             </div>
-            <p style="color: #795548; font-size: 1rem; margin-top: 15px;">Harika gidiyorsunuz, hazırlanmak ve daha iyi olmak için önümüzde kocaman bir zaman var! ✨</p>
+            <p style="color: #795548; font-size: 1rem; margin-top: 15px;">Turnuvaya hazırlık için kalan süre.</p>
         </div>
     </div>
 
@@ -1403,7 +1403,7 @@
             } else {
                 clearInterval(robotTimerInterval);
                 robotTimerInterval = null;
-                alert("🎉 Harika! 2 dakika doldu. Robotun harika iş çıkardı, şimdi sonuçları girme zamanı!");
+                alert("Süre doldu. Lütfen sonuçları girin.");
             }
         }, 1000);
     }
@@ -1427,7 +1427,7 @@
         const display = document.getElementById('wro-countdown-display');
         
         if (distance < 0) {
-            display.innerHTML = "🎉 Turnuva Günü Geldi Çattı! Başarılar! 🤖";
+            display.innerHTML = "Turnuva günü!";
             return;
         }
 
