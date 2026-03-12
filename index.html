@@ -207,10 +207,10 @@
         <button class="tab-btn" onclick="openTab('analiz', this)">WRO Analiz</button>
         <button class="tab-btn" onclick="openTab('tarihce', this)">Ödül Listesi</button>
         <button class="tab-btn" onclick="openTab('sayac', this)">⏳ Sayaç</button>
+        <button class="tab-btn" onclick="openTab('taktik', this)">🗺️ Taktik</button>
     </div>
 
     <div id="content-sayac" class="tab-content">
-        <h2 style="color: #333; text-align: center;">Antrenman ve Turnuva Zamanı</h2>
         
         <div class="timer-container" style="text-align: center; margin: 30px auto; max-width: 600px; background: #e8f4f8; padding: 30px; border-radius: 15px; border: 2px dashed #81d4fa;">
             <h3 style="color: #0277bd; margin-top: 0;">2 Dakikalık Görev Süresi</h3>
@@ -1029,7 +1029,29 @@
         </div>
     </div>
 
-</div>
+    <div id="content-taktik" class="tab-content">
+        <h2 style="color: #2c3e50; text-align: center;">THUNDER⚡BOTS Taktik Tahtası</h2>
+        <div class="action-bar" style="justify-content: center; background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px;">
+            <select id="taktik-mat-select" onchange="changeMat()" style="padding: 8px; border-radius: 6px; border: 1px solid #ccc; font-weight: bold; color: #333; cursor: pointer;">
+                <option value="https://i.imgur.com/809nJsq.jpeg">Küçük Yıldızlar Matı</option>
+                <option value="https://i.imgur.com/tAMgUHC.jpeg">Yıldızlar Matı</option>
+            </select>
+            <div style="width: 2px; background: #eee; margin: 0 10px;"></div>
+            <input type="color" id="taktik-color" value="#e74c3c" title="Kalem Rengi" style="cursor: pointer; height: 35px; width: 40px; padding: 0; border: none; background: transparent;">
+            <input type="range" id="taktik-size" min="1" max="20" value="5" title="Kalem Boyutu" style="width: 100px; cursor: pointer;">
+            <button class="btn btn-save" id="btn-pen" onclick="setTool('pen')" style="background: #2980b9;">✏️ Kalem</button>
+            <button class="btn btn-clear" id="btn-eraser" onclick="setTool('eraser')" style="background: #95a5a6;">🧽 Silgi</button>
+            <button class="btn btn-danger" onclick="clearTaktikCanvas()">🗑️ Tümünü Temizle</button>
+        </div>
+        
+        <div style="position: relative; width: 100%; max-width: 1100px; margin: 0 auto; text-align: center; overflow: hidden;">
+            <canvas id="taktik-canvas" width="1100" height="534" style="width: 100%; max-width: 100%; border: 2px solid var(--border-color); border-radius: 8px; background-image: url('https://i.imgur.com/809nJsq.jpeg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; cursor: crosshair; touch-action: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1);"></canvas>
+        </div>
+        <div class="note" style="margin-top: 15px; text-align: center; max-width: 600px; margin-left: auto; margin-right: auto; border-left-color: #3498db;">
+            <strong>İpucu:</strong> Çizim yaparken mouse veya dokunmatik ekran kullanabilirsin. Mat resmini değiştirdiğinde mevcut çizimlerin otomatik silinir.
+        </div>
+    </div>
+    </div>
 
 <div id="wroImageModal" class="wro-modal" onclick="closeModal()">
     <span class="wro-close">&times;</span>
@@ -1250,7 +1272,6 @@
 
         cont.innerHTML = "";
         for(let head in groups) {
-            // theme-${head} sınıfı ile CSS renklerini bağlıyoruz
             let box = `<div class="group-box theme-${head}"><h3 class="group-title">1. Tur: ${head} (Yuva 2)</h3><div class="checklist-grid">`;
             groups[head].forEach((s) => {
                 const uid = `ls_v3_senaryo_${s.id}`;
@@ -1272,7 +1293,6 @@
         const cont = document.getElementById('s-matrix-container');
         if(!cont) return;
 
-        // İstek üzerine güncellenen başlıklar
         const slots = [
             { 
                 title: "1. SOL KOL ÜST", 
@@ -1310,7 +1330,7 @@
             let box = `<div class="group-box"><h3 class="group-title">${slot.title}</h3><div class="checklist-grid">`;
             
             slot.routes.forEach(r => {
-                const uid = `s_v4_slot${index}_${r.color}`; // Benzersiz ve yeni sürüm ID'si
+                const uid = `s_v4_slot${index}_${r.color}`;
                 const chk = localStorage.getItem(uid) === 'true' ? 'checked' : '';
                 box += `<div class="checklist-item ${chk}" onclick="toggleProb('${uid}', this)">
                     <input type="checkbox" ${chk?'checked':''}>
@@ -1380,7 +1400,7 @@
         document.getElementById('wroImageModal').style.display = "none";
     }
 
-    // --- YENİ: SAYAÇ VE GERİ SAYIM FONKSİYONLARI ---
+    // --- SAYAÇ VE GERİ SAYIM FONKSİYONLARI ---
     let robotTimeLeft = 120; // 2 dakika (saniye cinsinden)
     let robotTimerInterval = null;
 
@@ -1395,7 +1415,7 @@
     }
 
     function startRobotTimer() {
-        if (robotTimerInterval) return; // Zaten çalışıyorsa tekrar başlatma
+        if (robotTimerInterval) return; 
         robotTimerInterval = setInterval(() => {
             if (robotTimeLeft > 0) {
                 robotTimeLeft--;
@@ -1438,6 +1458,96 @@
         display.innerHTML = `${days} Gün <span style="font-size:1.2rem; color: #d35400;">${hours} Saat ${minutes} Dk</span>`;
     }
 
+    // --- TAKTİK TAHTASI (CANVAS) FONKSİYONLARI ---
+    const taktikCanvas = document.getElementById('taktik-canvas');
+    const taktikCtx = taktikCanvas ? taktikCanvas.getContext('2d') : null;
+    let isDrawing = false;
+    let currentTool = 'pen'; 
+
+    function getMousePosTaktik(evt) {
+        const rect = taktikCanvas.getBoundingClientRect();
+        const scaleX = taktikCanvas.width / rect.width;
+        const scaleY = taktikCanvas.height / rect.height;
+        let clientX = evt.clientX;
+        let clientY = evt.clientY;
+        
+        if (evt.touches && evt.touches.length > 0) {
+            clientX = evt.touches[0].clientX;
+            clientY = evt.touches[0].clientY;
+        }
+        
+        return {
+            x: (clientX - rect.left) * scaleX,
+            y: (clientY - rect.top) * scaleY
+        };
+    }
+
+    function startDrawing(evt) {
+        isDrawing = true;
+        const pos = getMousePosTaktik(evt);
+        taktikCtx.beginPath();
+        taktikCtx.moveTo(pos.x, pos.y);
+        evt.preventDefault(); 
+    }
+
+    function draw(evt) {
+        if (!isDrawing) return;
+        const pos = getMousePosTaktik(evt);
+        taktikCtx.lineTo(pos.x, pos.y);
+        
+        taktikCtx.lineWidth = document.getElementById('taktik-size').value;
+        taktikCtx.lineCap = 'round';
+        taktikCtx.lineJoin = 'round';
+        
+        if (currentTool === 'eraser') {
+            taktikCtx.globalCompositeOperation = 'destination-out';
+            taktikCtx.strokeStyle = "rgba(0,0,0,1)";
+        } else {
+            taktikCtx.globalCompositeOperation = 'source-over';
+            taktikCtx.strokeStyle = document.getElementById('taktik-color').value;
+        }
+        
+        taktikCtx.stroke();
+        evt.preventDefault();
+    }
+
+    function stopDrawing() {
+        isDrawing = false;
+        taktikCtx.closePath();
+    }
+
+    function setTool(tool) {
+        currentTool = tool;
+        document.getElementById('btn-pen').style.boxShadow = tool === 'pen' ? 'inset 0 0 0 3px rgba(0,0,0,0.5)' : 'none';
+        document.getElementById('btn-eraser').style.boxShadow = tool === 'eraser' ? 'inset 0 0 0 3px rgba(0,0,0,0.5)' : 'none';
+    }
+
+    function clearTaktikCanvas() {
+        if(confirm('Tahtayı tamamen temizlemek istediğine emin misin?')) {
+            taktikCtx.clearRect(0, 0, taktikCanvas.width, taktikCanvas.height);
+        }
+    }
+
+    function changeMat() {
+        const select = document.getElementById('taktik-mat-select');
+        taktikCanvas.style.backgroundImage = `url('${select.value}')`;
+        taktikCtx.clearRect(0, 0, taktikCanvas.width, taktikCanvas.height);
+    }
+
+    if (taktikCanvas) {
+        taktikCanvas.addEventListener('mousedown', startDrawing);
+        taktikCanvas.addEventListener('mousemove', draw);
+        taktikCanvas.addEventListener('mouseup', stopDrawing);
+        taktikCanvas.addEventListener('mouseout', stopDrawing);
+        
+        taktikCanvas.addEventListener('touchstart', startDrawing, {passive: false});
+        taktikCanvas.addEventListener('touchmove', draw, {passive: false});
+        taktikCanvas.addEventListener('touchend', stopDrawing);
+        taktikCanvas.addEventListener('touchcancel', stopDrawing);
+        
+        setTool('pen');
+    }
+
     // --- BAŞLANGIÇ AYARLARI VE TABLO VURGULAMA ---
     window.onload = () => { 
         initLSProbs(); 
@@ -1447,12 +1557,10 @@
         updateStatsUI('ls'); 
         updateStatsUI('s'); 
 
-        // Yeni eklenen Sayaç fonksiyonlarının başlatılması
         updateRobotTimerDisplay();
         updateWROCountdown();
-        setInterval(updateWROCountdown, 60000); // Geri sayımı her dakika güncelle
+        setInterval(updateWROCountdown, 60000); 
 
-        // Tarihçe tablosu hücrelerine tıklama (vurgulama) efekti ekleme
         const cells = document.querySelectorAll('#wroTable tbody td');
         cells.forEach(cell => {
             cell.addEventListener('click', function() {
