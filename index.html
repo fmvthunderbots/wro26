@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WRO</title>
+    <title>WRO 2025 Türkiye - Puan ve İstatistik Paneli</title>
     <style>
         :root {
             --primary-color: #009688; /* Küçük Yıldızlar */
@@ -141,14 +141,21 @@
         
         .theme-Sarı { background-color: #fefce8; border: 2px solid #fef08a; }
         .theme-Sarı .group-title { color: #b45309; border-bottom-color: #fef08a; }
+
+        /* Yeni Açık Renk Temaları */
+        .theme-Kırmızı { background-color: #ffefef; border: 2px solid #ffcccc; }
+        .theme-Kırmızı .group-title { color: #b71c1c; border-bottom-color: #ffcccc; }
+
+        .theme-Yeşil { background-color: #e6ffeb; border: 2px solid #c2f0ca; }
+        .theme-Yeşil .group-title { color: #1b5e20; border-bottom-color: #c2f0ca; }
         
-        /* Siyah tema için yazıları okunabilir yapıyoruz */
-        .theme-Siyah { background-color: #1f2937; border: 2px solid #111827; }
-        .theme-Siyah .group-title { color: #f9fafb; border-bottom-color: #374151; }
-        .theme-Siyah .checklist-item { background-color: #374151; border-color: #4b5563; color: #f9fafb; }
-        .theme-Siyah .checklist-item:hover { background-color: #4b5563; transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+        /* Füme (Daha açık siyah) tema için yazıları okunabilir yapıyoruz */
+        .theme-Siyah { background-color: #3e444d; border: 2px solid #2f333a; }
+        .theme-Siyah .group-title { color: #f9fafb; border-bottom-color: #555d6b; }
+        .theme-Siyah .checklist-item { background-color: #555d6b; border-color: #6a7485; color: #f9fafb; }
+        .theme-Siyah .checklist-item:hover { background-color: #6a7485; transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
         .theme-Siyah .checklist-item.checked { background-color: var(--checked-bg); color: #111; }
-        .theme-Siyah .checklist-item .c-black { color: #9ca3af; } /* Koyu arkaplanda 'siyah' kelimesini açık gri yap */
+        .theme-Siyah .checklist-item .c-black { color: #d1d5db; } /* Füme arkaplanda 'siyah' kelimesini açık gri yap */
 
         @media (max-width: 768px) { 
             .analysis-grid { grid-template-columns: 1fr; } 
@@ -750,7 +757,7 @@
                         <li>
                             <div style="display:flex; flex-direction:column;">
                                 <div><span style="color:#1565c0; font-weight:bold;">%75 Başarı Barajı (90+ Puan):</span> <span class="score" style="color:#2ecc71;">5 Takım Geçti</span></div>
-                                <div style="font-size:12px; margin-top:3px; color:#555;">JUNIOR ALTAŞ (122 Puan - >%100), ROBOMİNO (112 Puan - %93), SİRİUS A (109 Puan - %91), İLLUSION (108 Puan - %90), KT ROBOTICS (104 Puan - %87).</div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">JUNIOR ALTAŞ (122 Puan - %100'ü aşkın), ROBOMİNO (112 Puan - %93), SİRİUS A (109 Puan - %91), İLLUSION (108 Puan - %90), KT ROBOTICS (104 Puan - %87).</div>
                             </div>
                         </li>
                         <li style="margin-top: 10px;">
@@ -1051,7 +1058,7 @@
             <strong>İpucu:</strong> Çizim yaparken mouse veya dokunmatik ekran kullanabilirsin. Mat resmini değiştirdiğinde mevcut çizimlerin otomatik silinir.
         </div>
     </div>
-    </div>
+</div>
 
 <div id="wroImageModal" class="wro-modal" onclick="closeModal()">
     <span class="wro-close">&times;</span>
@@ -1230,113 +1237,69 @@
         }
     }
 
-    // --- İHTİMALLER & JSON VERİ YÖNETİMİ ---
+    // --- KÜÇÜK YILDIZLAR: ARKA, EN ÖN VE ARKASI İHTİMALLERİ (24 İhtimal) ---
     function initLSProbs() {
         const cont = document.getElementById('ls-group-container');
         if(!cont) return;
 
-        // Özel Senaryo Listesi
-        const scenarios = [
-            { id: 1, y2: 'Beyaz', y1: 'Mavi', y5: 'Sarı', y6: 'Siyah' },
-            { id: 2, y2: 'Beyaz', y1: 'Mavi', y5: 'Siyah', y6: 'Sarı' },
-            { id: 3, y2: 'Beyaz', y1: 'Sarı', y5: 'Mavi', y6: 'Siyah' },
-            { id: 4, y2: 'Beyaz', y1: 'Sarı', y5: 'Siyah', y6: 'Mavi' },
-            { id: 5, y2: 'Beyaz', y1: 'Siyah', y5: 'Mavi', y6: 'Sarı' },
-            { id: 6, y2: 'Beyaz', y1: 'Siyah', y5: 'Sarı', y6: 'Mavi' },
-            { id: 7, y2: 'Mavi', y1: 'Beyaz', y5: 'Sarı', y6: 'Siyah' },
-            { id: 8, y2: 'Mavi', y1: 'Beyaz', y5: 'Siyah', y6: 'Sarı' },
-            { id: 9, y2: 'Mavi', y1: 'Sarı', y5: 'Beyaz', y6: 'Siyah' },
-            { id: 10, y2: 'Mavi', y1: 'Sarı', y5: 'Siyah', y6: 'Beyaz' },
-            { id: 11, y2: 'Mavi', y1: 'Siyah', y5: 'Beyaz', y6: 'Sarı' },
-            { id: 12, y2: 'Mavi', y1: 'Siyah', y5: 'Sarı', y6: 'Beyaz' },
-            { id: 13, y2: 'Sarı', y1: 'Beyaz', y5: 'Mavi', y6: 'Siyah' },
-            { id: 14, y2: 'Sarı', y1: 'Beyaz', y5: 'Siyah', y6: 'Mavi' },
-            { id: 15, y2: 'Sarı', y1: 'Mavi', y5: 'Beyaz', y6: 'Siyah' },
-            { id: 16, y2: 'Sarı', y1: 'Mavi', y5: 'Siyah', y6: 'Beyaz' },
-            { id: 17, y2: 'Sarı', y1: 'Siyah', y5: 'Beyaz', y6: 'Mavi' },
-            { id: 18, y2: 'Sarı', y1: 'Siyah', y5: 'Mavi', y6: 'Beyaz' },
-            { id: 19, y2: 'Siyah', y1: 'Beyaz', y5: 'Mavi', y6: 'Sarı' },
-            { id: 20, y2: 'Siyah', y1: 'Beyaz', y5: 'Sarı', y6: 'Mavi' },
-            { id: 21, y2: 'Siyah', y1: 'Mavi', y5: 'Beyaz', y6: 'Sarı' },
-            { id: 22, y2: 'Siyah', y1: 'Mavi', y5: 'Sarı', y6: 'Beyaz' },
-            { id: 23, y2: 'Siyah', y1: 'Sarı', y5: 'Beyaz', y6: 'Mavi' },
-            { id: 24, y2: 'Siyah', y1: 'Sarı', y5: 'Mavi', y6: 'Beyaz' }
-        ];
-
-        // 1. Tura Göre (Yuva 2) Gruplandırma
-        const groups = {};
-        scenarios.forEach(s => {
-            if(!groups[s.y2]) groups[s.y2] = [];
-            groups[s.y2].push(s);
-        });
+        // Arka Kol Renk Seçenekleri (Gruplar)
+        const backColors = ['Kırmızı', 'Yeşil'];
+        // Öndeki pozisyonlar için renk havuzu
+        const frontColors = ['Mavi', 'Beyaz', 'Sarı', 'Siyah'];
 
         cont.innerHTML = "";
-        for(let head in groups) {
-            let box = `<div class="group-box theme-${head}"><h3 class="group-title">1. Tur: ${head} (Yuva 2)</h3><div class="checklist-grid">`;
-            groups[head].forEach((s) => {
-                const uid = `ls_v3_senaryo_${s.id}`;
+        
+        // 12 farklı ön dizilimi (permütasyon) oluştur
+        let permutations = [];
+        for(let i=0; i<frontColors.length; i++) {
+            for(let j=0; j<frontColors.length; j++) {
+                if(i !== j) {
+                    permutations.push({ enOn: frontColors[i], arkasi: frontColors[j] });
+                }
+            }
+        }
+
+        backColors.forEach(back => {
+            // Temalar CSS'de .theme-Kırmızı ve .theme-Yeşil olarak mevcut
+            let box = `<div class="group-box theme-${back}"><h3 class="group-title">Arka: ${back}</h3><div class="checklist-grid">`;
+            
+            permutations.forEach(perm => {
+                // Eski verileri de silmemek veya çakışmaması adına ls_v5_ ile devam ediyoruz
+                const uid = `ls_v5_arka_${back}_enon_${perm.enOn}_arkasi_${perm.arkasi}`;
                 const chk = localStorage.getItem(uid) === 'true' ? 'checked' : '';
+                
                 box += `<div class="checklist-item ${chk}" onclick="toggleProb('${uid}', this)">
                     <input type="checkbox" ${chk?'checked':''}>
-                    <div style="font-size: 0.9rem; line-height: 1.4;">
-                        <strong>Senaryo ${s.id}</strong><br>
-                        2. Tur: Y1(${cS(s.y1)}) | Y5(${cS(s.y5)}) | Y6(${cS(s.y6)})
+                    <div style="font-size: 0.95rem; line-height: 1.4;">
+                        En Ön: <strong>${cS(perm.enOn)}</strong><br>
+                        Arkası: <strong>${cS(perm.arkasi)}</strong>
                     </div>
                 </div>`;
             });
             cont.innerHTML += box + `</div></div>`;
-        }
+        });
     }
 
-    // --- YILDIZLAR KATEGORİSİ: MATRİS TABANLI İHTİMALLER ---
+    // --- YILDIZLAR KATEGORİSİ: SOL KOL / SAĞ KOL İHTİMALLERİ ---
     function initSProbs() {
         const cont = document.getElementById('s-matrix-container');
         if(!cont) return;
 
-        const slots = [
-            { 
-                title: "1. SOL KOL ÜST", 
-                routes: [
-                    { color: 'Kırmızı', route: 'Rota-1' }, { color: 'Sarı', route: 'Rota-2' }, 
-                    { color: 'Mavi', route: 'Rota-3' }, { color: 'Yeşil', route: 'Rota-4' }, { color: 'Siyah', route: 'Rota-5' }
-                ]
-            },
-            { 
-                title: "2. SOL KOL ALT", 
-                routes: [
-                    { color: 'Kırmızı', route: 'Rota-6' }, { color: 'Sarı', route: 'Rota-7' }, 
-                    { color: 'Mavi', route: 'Rota-8' }, { color: 'Yeşil', route: 'Rota-9' }, { color: 'Siyah', route: 'Rota-10' }
-                ]
-            },
-            { 
-                title: "3. SAĞ KOL ÜST", 
-                routes: [
-                    { color: 'Kırmızı', route: 'Rota-11' }, { color: 'Sarı', route: 'Rota-12' }, 
-                    { color: 'Mavi', route: 'Rota-13' }, { color: 'Yeşil', route: 'Rota-14' }, { color: 'Siyah', route: 'Rota-15' }
-                ]
-            },
-            { 
-                title: "4. SAĞ KOL ALT", 
-                routes: [
-                    { color: 'Kırmızı', route: 'Rota-16' }, { color: 'Sarı', route: 'Rota-17' }, 
-                    { color: 'Mavi', route: 'Rota-18' }, { color: 'Yeşil', route: 'Rota-19' }, { color: 'Siyah', route: 'Rota-20' }
-                ]
-            }
-        ];
+        // Sol Kol Renk Seçenekleri
+        const leftColors = ['Kırmızı', 'Yeşil', 'Mavi', 'Sarı', 'Siyah', 'Beyaz'];
+        // Sağ Kol İhtimalleri (Siyah, Yeşil, Kırmızı, Sarı, Mavi)
+        const rightColors = ['Siyah', 'Yeşil', 'Kırmızı', 'Sarı', 'Mavi'];
 
         cont.innerHTML = "";
-
-        slots.forEach((slot, index) => {
-            let box = `<div class="group-box"><h3 class="group-title">${slot.title}</h3><div class="checklist-grid">`;
-            
-            slot.routes.forEach(r => {
-                const uid = `s_v4_slot${index}_${r.color}`;
+        leftColors.forEach(left => {
+            let box = `<div class="group-box theme-${left}"><h3 class="group-title">Sol Kol: ${left}</h3><div class="checklist-grid">`;
+            rightColors.forEach(right => {
+                const uid = `s_v5_sol_${left}_sag_${right}`;
                 const chk = localStorage.getItem(uid) === 'true' ? 'checked' : '';
                 box += `<div class="checklist-item ${chk}" onclick="toggleProb('${uid}', this)">
                     <input type="checkbox" ${chk?'checked':''}>
                     <div style="font-size: 0.95rem; line-height: 1.4;">
-                        <strong>${cS(r.color)}</strong><br>
-                        Hedef: <span style="color:#d35400; font-weight:bold;">${r.route}</span>
+                        Sağ Kol: <strong>${cS(right)}</strong>
                     </div>
                 </div>`;
             });
@@ -1353,7 +1316,7 @@
 
     function clearProb(cat) {
         if(!confirm('Tüm işaretlemeleri temizlemek istediğinize emin misiniz?')) return;
-        const prefix = cat === 'ls' ? 'ls_v3_' : 's_v4_';
+        const prefix = cat === 'ls' ? 'ls_v5_' : 's_v5_';
         Object.keys(localStorage).forEach(k => { if(k.startsWith(prefix)) localStorage.removeItem(k); });
         cat === 'ls' ? initLSProbs() : initSProbs();
     }
@@ -1361,7 +1324,7 @@
     function saveJSON(cat, mode) {
         const data = {};
         if (mode === 'prob') {
-            const prefix = cat === 'ls' ? 'ls_v3_' : 's_v4_';
+            const prefix = cat === 'ls' ? 'ls_v5_' : 's_v5_';
             Object.keys(localStorage).forEach(k => { if(k.startsWith(prefix)) data[k] = localStorage.getItem(k); });
         } else {
             const statKey = `stats_${cat}`;
