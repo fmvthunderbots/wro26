@@ -1285,23 +1285,23 @@
         const cont = document.getElementById('s-matrix-container');
         if(!cont) return;
 
-        // Sol Kol Renk Seçenekleri
-        const leftColors = ['Kırmızı', 'Yeşil', 'Mavi', 'Sarı', 'Siyah', 'Beyaz'];
-        // Sağ Kol İhtimalleri (Siyah, Yeşil, Kırmızı, Sarı, Mavi)
-        const rightColors = ['Siyah', 'Yeşil', 'Kırmızı', 'Sarı', 'Mavi'];
+        // Sol Kol ve Sağ Kol Renk Seçenekleri (Aynı renge denk gelmemesi sağlandı)
+        const renkler = ['Kırmızı', 'Yeşil', 'Siyah', 'Sarı', 'Mavi'];
 
         cont.innerHTML = "";
-        leftColors.forEach(left => {
+        renkler.forEach(left => {
             let box = `<div class="group-box theme-${left}"><h3 class="group-title">Sol Kol: ${left}</h3><div class="checklist-grid">`;
-            rightColors.forEach(right => {
-                const uid = `s_v5_sol_${left}_sag_${right}`;
-                const chk = localStorage.getItem(uid) === 'true' ? 'checked' : '';
-                box += `<div class="checklist-item ${chk}" onclick="toggleProb('${uid}', this)">
-                    <input type="checkbox" ${chk?'checked':''}>
-                    <div style="font-size: 0.95rem; line-height: 1.4;">
-                        Sağ Kol: <strong>${cS(right)}</strong>
-                    </div>
-                </div>`;
+            renkler.forEach(right => {
+                if (left !== right) {
+                    const uid = `s_v5_sol_${left}_sag_${right}`;
+                    const chk = localStorage.getItem(uid) === 'true' ? 'checked' : '';
+                    box += `<div class="checklist-item ${chk}" onclick="toggleProb('${uid}', this)">
+                        <input type="checkbox" ${chk?'checked':''}>
+                        <div style="font-size: 0.95rem; line-height: 1.4;">
+                            Sağ Kol: <strong>${cS(right)}</strong>
+                        </div>
+                    </div>`;
+                }
             });
             cont.innerHTML += box + `</div></div>`;
         });
