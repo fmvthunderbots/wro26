@@ -69,7 +69,7 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         /* İhtimaller Listesi */
-        .checklist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+        .checklist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
         .checklist-item { display: flex; align-items: center; background: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
         .checklist-item:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .checklist-item.checked { background-color: var(--checked-bg); border-color: var(--checked-border); color: #111; }
@@ -209,7 +209,6 @@
         <button class="tab-btn" onclick="openTab('prob-ls', this)">K. Yıldız İhtimal</button>
         <button class="tab-btn" onclick="openTab('stat-ls', this)">📊 K. Yıldız İstatistik</button>
         <button class="tab-btn" onclick="openTab('score-s', this)">Yıldızlar Puan</button>
-        <button class="tab-btn" onclick="openTab('prob-s', this)">Yıldızlar İhtimal</button>
         <button class="tab-btn" onclick="openTab('stat-s', this)">📊 Yıldızlar İstatistik</button>
         <button class="tab-btn" onclick="openTab('analiz', this)">WRO Analiz</button>
         <button class="tab-btn" onclick="openTab('tarihce', this)">Ödül Listesi</button>
@@ -333,7 +332,7 @@
     <div id="content-prob-ls" class="tab-content">
         <h2>Küçük Yıldızlar İhtimaller Listesi</h2>
         <div class="action-bar">
-            <button class="btn btn-clear" onclick="clearProb('ls')">🗑️ Listeyi Temizle</button>
+            <button class="btn btn-clear" onclick="clearProb()">🗑️ Listeyi Temizle</button>
             <button class="btn btn-save" onclick="saveJSON('ls', 'prob')">💾 Kaydet</button>
             <button class="btn btn-load" onclick="document.getElementById('file-prob-ls').click()">📂 Yükle</button>
             <input type="file" id="file-prob-ls" style="display:none" onchange="loadJSON(event, 'ls', 'prob')">
@@ -465,17 +464,6 @@
                 <span>Toplam: <span id="s_total">0</span> / 230</span>
             </div>
         </div>
-    </div>
-
-    <div id="content-prob-s" class="tab-content">
-        <h2>Yıldızlar Dağıtım İhtimalleri</h2>
-        <div class="action-bar">
-            <button class="btn btn-clear" onclick="clearProb('s')">🗑️ Listeyi Temizle</button>
-            <button class="btn btn-save" onclick="saveJSON('s', 'prob')">💾 Kaydet</button>
-            <button class="btn btn-load" onclick="document.getElementById('file-prob-s').click()">📂 Yükle</button>
-            <input type="file" id="file-prob-s" style="display:none" onchange="loadJSON(event, 's', 'prob')">
-        </div>
-        <div id="s-matrix-container"></div>
     </div>
 
     <div id="content-stat-s" class="tab-content">
@@ -1237,73 +1225,54 @@
         }
     }
 
-    // --- KÜÇÜK YILDIZLAR: ARKA, EN ÖN VE ARKASI İHTİMALLERİ (24 İhtimal) ---
+    // --- KÜÇÜK YILDIZLAR İHTİMALLERİ (Yuvalar) ---
     function initLSProbs() {
         const cont = document.getElementById('ls-group-container');
         if(!cont) return;
 
-        // Arka Kol Renk Seçenekleri (Gruplar)
-        const backColors = ['Kırmızı', 'Yeşil'];
-        // Öndeki pozisyonlar için renk havuzu
-        const frontColors = ['Mavi', 'Beyaz', 'Sarı', 'Siyah'];
-
         cont.innerHTML = "";
-        
-        // 12 farklı ön dizilimi (permütasyon) oluştur
-        let permutations = [];
-        for(let i=0; i<frontColors.length; i++) {
-            for(let j=0; j<frontColors.length; j++) {
-                if(i !== j) {
-                    permutations.push({ enOn: frontColors[i], arkasi: frontColors[j] });
-                }
-            }
-        }
 
-        backColors.forEach(back => {
-            // Temalar CSS'de .theme-Kırmızı ve .theme-Yeşil olarak mevcut
-            let box = `<div class="group-box theme-${back}"><h3 class="group-title">Arka: ${back}</h3><div class="checklist-grid">`;
-            
-            permutations.forEach(perm => {
-                // Eski verileri de silmemek veya çakışmaması adına ls_v5_ ile devam ediyoruz
-                const uid = `ls_v5_arka_${back}_enon_${perm.enOn}_arkasi_${perm.arkasi}`;
+        const data = [
+            {
+                title: "Sol Taraftaki Yuvalar",
+                theme: "Mavi", 
+                items: [
+                    { id: "ls_prob_sol_y1_sari", text: "Yuva 1: <strong>" + cS('Sarı') + "</strong>" },
+                    { id: "ls_prob_sol_y1_mavi", text: "Yuva 1: <strong>" + cS('Mavi') + "</strong>" },
+                    { id: "ls_prob_sol_y2_sari", text: "Yuva 2: <strong>" + cS('Sarı') + "</strong>" },
+                    { id: "ls_prob_sol_y2_mavi", text: "Yuva 2: <strong>" + cS('Mavi') + "</strong>" },
+                    { id: "ls_prob_sol_y1s_y2m", text: "Yuva 1: <strong>" + cS('Sarı') + "</strong>, Yuva 2: <strong>" + cS('Mavi') + "</strong>" },
+                    { id: "ls_prob_sol_y1m_y2s", text: "Yuva 1: <strong>" + cS('Mavi') + "</strong>, Yuva 2: <strong>" + cS('Sarı') + "</strong>" }
+                ]
+            },
+            {
+                title: "Sağ Taraftaki Yuvalar",
+                theme: "Sarı",
+                items: [
+                    { id: "ls_prob_sag_y3_sari", text: "Yuva 3: <strong>" + cS('Sarı') + "</strong>" },
+                    { id: "ls_prob_sag_y3_mavi", text: "Yuva 3: <strong>" + cS('Mavi') + "</strong>" },
+                    { id: "ls_prob_sag_y4_sari", text: "Yuva 4: <strong>" + cS('Sarı') + "</strong>" },
+                    { id: "ls_prob_sag_y4_mavi", text: "Yuva 4: <strong>" + cS('Mavi') + "</strong>" },
+                    { id: "ls_prob_sag_y3s_y4m", text: "Yuva 3: <strong>" + cS('Sarı') + "</strong>, Yuva 4: <strong>" + cS('Mavi') + "</strong>" },
+                    { id: "ls_prob_sag_y3m_y4s", text: "Yuva 3: <strong>" + cS('Mavi') + "</strong>, Yuva 4: <strong>" + cS('Sarı') + "</strong>" }
+                ]
+            }
+        ];
+
+        data.forEach(group => {
+            let box = `<div class="group-box theme-${group.theme}"><h3 class="group-title">${group.title}</h3><div class="checklist-grid">`;
+            group.items.forEach(item => {
+                const uid = item.id;
                 const chk = localStorage.getItem(uid) === 'true' ? 'checked' : '';
-                
                 box += `<div class="checklist-item ${chk}" onclick="toggleProb('${uid}', this)">
                     <input type="checkbox" ${chk?'checked':''}>
-                    <div style="font-size: 0.95rem; line-height: 1.4;">
-                        En Ön: <strong>${cS(perm.enOn)}</strong><br>
-                        Arkası: <strong>${cS(perm.arkasi)}</strong>
+                    <div style="font-size: 0.95rem; line-height: 1.4; white-space: nowrap;">
+                        ${item.text}
                     </div>
                 </div>`;
             });
-            cont.innerHTML += box + `</div></div>`;
-        });
-    }
-
-    // --- YILDIZLAR KATEGORİSİ: SOL KOL / SAĞ KOL İHTİMALLERİ ---
-    function initSProbs() {
-        const cont = document.getElementById('s-matrix-container');
-        if(!cont) return;
-
-        // Sol Kol ve Sağ Kol Renk Seçenekleri (Aynı renge denk gelmemesi sağlandı)
-        const renkler = ['Kırmızı', 'Yeşil', 'Siyah', 'Sarı', 'Mavi'];
-
-        cont.innerHTML = "";
-        renkler.forEach(left => {
-            let box = `<div class="group-box theme-${left}"><h3 class="group-title">Sol Kol: ${left}</h3><div class="checklist-grid">`;
-            renkler.forEach(right => {
-                if (left !== right) {
-                    const uid = `s_v5_sol_${left}_sag_${right}`;
-                    const chk = localStorage.getItem(uid) === 'true' ? 'checked' : '';
-                    box += `<div class="checklist-item ${chk}" onclick="toggleProb('${uid}', this)">
-                        <input type="checkbox" ${chk?'checked':''}>
-                        <div style="font-size: 0.95rem; line-height: 1.4;">
-                            Sağ Kol: <strong>${cS(right)}</strong>
-                        </div>
-                    </div>`;
-                }
-            });
-            cont.innerHTML += box + `</div></div>`;
+            box += `</div></div>`;
+            cont.innerHTML += box;
         });
     }
 
@@ -1314,18 +1283,16 @@
         localStorage.setItem(id, cb.checked);
     }
 
-    function clearProb(cat) {
+    function clearProb() {
         if(!confirm('Tüm işaretlemeleri temizlemek istediğinize emin misiniz?')) return;
-        const prefix = cat === 'ls' ? 'ls_v5_' : 's_v5_';
-        Object.keys(localStorage).forEach(k => { if(k.startsWith(prefix)) localStorage.removeItem(k); });
-        cat === 'ls' ? initLSProbs() : initSProbs();
+        Object.keys(localStorage).forEach(k => { if(k.startsWith('ls_prob_')) localStorage.removeItem(k); });
+        initLSProbs();
     }
 
     function saveJSON(cat, mode) {
         const data = {};
         if (mode === 'prob') {
-            const prefix = cat === 'ls' ? 'ls_v5_' : 's_v5_';
-            Object.keys(localStorage).forEach(k => { if(k.startsWith(prefix)) data[k] = localStorage.getItem(k); });
+            Object.keys(localStorage).forEach(k => { if(k.startsWith('ls_prob_')) data[k] = localStorage.getItem(k); });
         } else {
             const statKey = `stats_${cat}`;
             data[statKey] = localStorage.getItem(statKey);
@@ -1514,7 +1481,6 @@
     // --- BAŞLANGIÇ AYARLARI VE TABLO VURGULAMA ---
     window.onload = () => { 
         initLSProbs(); 
-        initSProbs(); 
         calcLS(); 
         calcS(); 
         updateStatsUI('ls'); 
