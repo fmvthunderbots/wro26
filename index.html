@@ -1,100 +1,1884 @@
-<div id="analiz-26-ky" class="sub-tab-content active">
-    <div class="analysis-grid">
-        <div class="analysis-card">
-            <h3 style="color:#009688; border-bottom-color:#009688;">1. Tur Başarı Durumu (Maks: 255 Puan)</h3>
-            <p>1. Turda en yüksek skorları elde eden takımlar:</p>
-            <ul>
-                <li><span>BANBOAT JUNIOR</span> <span class="score">220 Puan</span></li>
-                <li><span>THUNDER/BOTS</span> <span class="score">210 Puan</span></li>
-                <li><span>ROBİ001</span> <span class="score">200 Puan</span></li>
-                <li><span>THE KING OF MELODIES / ALGORITMALAB</span> <span class="score">180 Puan</span></li>
-            </ul>
-            <div class="note success">
-                <strong>Güçlü Başlangıcın Önemi:</strong> THUNDER/BOTS takımı ilk turda elde edilebilecek 255 puanın 210'unu toplayarak, ileride yaşayabilecekleri olası sorunlar için kendilerine çok güçlü bir güvenlik marjı yaratmıştır[cite: 1].
-            </div>
-        </div>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WRO 2025 Türkiye - Puan ve İstatistik Paneli</title>
+    <style>
+        :root {
+            --primary-color: #009688;
+            --secondary-color: #FF5722;
+            --header-bg: #333;
+            --border-color: #ddd;
+            --checked-bg: #d1e7dd; 
+            --checked-border: #a3cfbb;
+            --stat-bg: #fff3cd;
+            --stat-border: #ffe69c;
+        }
 
-        <div class="analysis-card">
-            <h3 style="color:#009688; border-bottom-color:#009688;">2. Tur Zirve Sıralaması ve Kriz Yönetimi</h3>
-            <p>2. tur performanslarına göre en yüksek puan seviyeleri:</p>
-            <ul>
-                <li><span><strong>1. Seviye:</strong> NORTH ROBOTICS JR</span> <span class="score">215 Puan</span></li>
-                <li><span><strong>2. Seviye:</strong> CODER TEAM</span> <span class="score">195 Puan</span></li>
-                <li><span><strong>3. Seviye:</strong> ANKA ROBOTICS vb.</span> <span class="score">165 Puan</span></li>
-                <li><span><strong>4. Seviye:</strong> THE KING OF MELODIES / ROBORON</span> <span class="score">155 Puan</span></li>
-                <li><span><strong>5. Seviye:</strong> THUNDER/BOTS</span> <span class="score">135 Puan</span></li>
-            </ul>
-            <div class="note warning">
-                <strong>Pes Etmeyen Şampiyon:</strong> İkinci turda robotu iki kez kırılan THUNDER/BOTS takımı çok büyük bir krizle karşılaşmıştır. Ancak takım üyelerinin soğukkanlılıklarını koruyup son dakikalarda robotu tekrar sahaya sürerek puanı 135'e çıkartması, bu şampiyonluğun ardında yatan asıl başarı hikayesidir[cite: 1].
-            </div>
-        </div>
+        body { 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            margin: 0; padding: 10px; 
+            background-color: #f0f2f5; color: #333; 
+        }
+        .container { 
+            max-width: 1200px; margin: 0 auto; 
+            background: white; padding: 20px; 
+            border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+        }
+
+        .tabs { display: flex; flex-wrap: wrap; margin-bottom: 25px; border-bottom: 2px solid #e0e0e0; gap: 5px; }
+        .tab-btn { 
+            flex: 1; padding: 12px; border: none; background: #f5f5f5; 
+            cursor: pointer; font-weight: 600; color: #666; border-radius: 8px 8px 0 0; 
+            min-width: 120px; transition: all 0.2s ease; font-size: 0.9rem;
+        }
+        .tab-btn.active { background: var(--header-bg); color: white; transform: translateY(-2px); }
+
+        .sub-tabs { display: flex; border-bottom: 2px solid #2980b9; margin-bottom: 20px; border-radius: 6px 6px 0 0; overflow: hidden; flex-wrap: wrap;}
+        .sub-tab-btn { flex: 1; padding: 12px; background: #e8f4f8; border: none; cursor: pointer; font-weight: bold; color: #34495e; transition: 0.3s; font-size: 14px; min-width: 130px; }
+        .sub-tab-btn:hover { background: #d1e8f0; }
+        .sub-tab-btn.active { background: #2980b9; color: white; }
+        .sub-tab-content { display: none; animation: fadeIn 0.3s; }
+        .sub-tab-content.active { display: block; }
+
+        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        th, td { border: 1px solid var(--border-color); padding: 10px; text-align: left; }
+        th { background-color: var(--header-bg); color: white; font-size: 0.95rem; }
+        .section-header { background-color: #f1f1f1; font-weight: 700; color: #444; }
+
+        input[type="number"] { 
+            width: 50px; text-align: center; padding: 6px; 
+            border: 2px solid #ccc; border-radius: 6px; font-size: 1rem; font-weight: bold;
+        }
+        input[type="checkbox"] { transform: scale(1.5); cursor: pointer; }
+
+        .c-red { color: #d32f2f; font-weight: bold; }
+        .c-green { color: #2e7d32; font-weight: bold; }
+        .c-blue { color: #1565c0; font-weight: bold; }
+        .c-yellow { color: #f9a825; font-weight: bold; text-shadow: 0px 0px 1px #999; }
+        .c-black { color: #000; font-weight: bold; }
+        .c-white { color: #7f8c8d; font-weight: bold; }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .checklist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+        .checklist-item { display: flex; align-items: center; background: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
+        .checklist-item:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .checklist-item.checked { background-color: var(--checked-bg); border-color: var(--checked-border); color: #111; }
+        .checklist-item input { margin-right: 15px; pointer-events: none; }
         
-        <!-- YENİ EKLENEN RAKİP GELİŞİM ANALİZİ -->
-        <div class="analysis-card" style="grid-column: 1 / -1; background-color: #f8fbff; border-color: #b3d4fc;">
-            <h3 style="color:#0d6efd; border-bottom-color:#0d6efd;">Gelişim ve İstikrar Analizi (Gelecek Yıl İçin Projeksiyon)</h3>
-            <p>2026 sonuçlarına göre takımların tur bazlı performans değişimleri gelecek yıl için şu risk ve fırsatları gösteriyor:</p>
-            
-            <ul style="margin-top: 15px;">
-                <li style="display:block;">
-                    <div style="font-weight:bold; color:#d35400; margin-bottom:5px;">🚀 İkinci Turda Dev Sıçrama Yapanlar (Gelecek Yılın En Tehlikeli Rakipleri)</div>
-                    <div style="font-size:13px; color:#444;">
-                        <strong>NORTH ROBOTICS JR:</strong> 1. turda sadece 110 puan alıp geride kalmalarına rağmen, 2. turda turnuvanın en yüksek ikinci tur skoru olan 215 puanı alarak podyuma 3. sıradan girdiler[cite: 1]. Kriz çözme ve anlık adaptasyon yetenekleri çok yüksek.<br>
-                        <strong>CODER TEAM:</strong> 1. turu 105 puanla geçip 2. turda 195 puan alarak genel klasmanda 7. sıraya tırmandılar[cite: 1]. Gelecek yıl kodlama optimizasyonunu ilk tura yayarlarsa büyük tehdit oluşturacaklar.
-                    </div>
-                </li>
-                <li style="display:block; margin-top:10px;">
-                    <div style="font-weight:bold; color:#e74c3c; margin-bottom:5px;">📉 İstikrar Sorunu Yaşayan Potansiyeller</div>
-                    <div style="font-size:13px; color:#444;">
-                        <strong>BANBOAT JUNIOR:</strong> 1. turun en yüksek skoru olan 220 puanı almalarına rağmen, 2. turda 95 puana kadar düşerek şampiyonluğu kaçırdılar[cite: 1].<br>
-                        <strong>ROBİ001:</strong> İlk turda 200 gibi devasa bir puan alıp 2. turda 75 puanda çakılarak 13. sıraya kadar gerilediler[cite: 1]. Bu takımların robot mekanikleri mükemmel olabilir ancak çevresel faktörlere veya şarj durumuna karşı aşırı hassaslar.
-                    </div>
-                </li>
-                <li style="display:block; margin-top:10px;">
-                    <div style="font-weight:bold; color:#198754; margin-bottom:5px;">⚖️ İstikrarlı Tehdit</div>
-                    <div style="font-size:13px; color:#444;">
-                        <strong>THE KING OF MELODIES:</strong> 1. turda 180, 2. turda 155 puan alarak[cite: 1] hiçbir turda majör hata yapmadılar. Şampiyonluk yolunda her zaman ensenizde olacak en tutarlı rakiptir.
-                    </div>
-                </li>
-            </ul>
+        .group-box { border: 1px solid #e0e0e0; border-radius: 10px; padding: 15px; margin-bottom: 25px; background: #fafafa; }
+        .group-title { margin-top: 0; color: #444; border-bottom: 2px solid #ddd; padding-bottom: 8px; margin-bottom: 15px; }
+
+        .action-bar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .btn { border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; display:flex; align-items:center; gap:6px;}
+        .btn-clear { background: #ff9800; }
+        .btn-save { background: #2196F3; }
+        .btn-load { background: #673AB7; }
+        .btn-success { background: #4CAF50; }
+        .btn-danger { background: #f44336; padding: 5px 10px; font-size: 0.8rem;}
+
+        .total-sticky { position: sticky; bottom: 0; background: var(--header-bg); color: white; padding: 15px 25px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; z-index: 100; box-shadow: 0 -5px 15px rgba(0,0,0,0.2); }
+        .reset-btn { background: #d32f2f; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .score-display { font-size: 1.4rem; font-weight: bold; display: flex; align-items: center; gap: 15px;}
+
+        .stat-card { background: var(--stat-bg); border: 1px solid var(--stat-border); padding: 15px; border-radius: 8px; margin-bottom: 20px;}
+        .stat-card h3 { margin-top: 0; color: #664d03; }
+        .weakness-list { margin: 0; padding-left: 20px; color: #d32f2f; font-weight: bold; }
+        .history-table th { background: #607d8b; }
+
+        .analysis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .analysis-card { background: #fdfdfd; border: 1px solid #e1e8ed; border-radius: 8px; padding: 15px; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);}
+        .analysis-card h3 { margin-top: 0; color: #2980b9; border-bottom: 2px solid #3498db; padding-bottom: 8px; font-size: 16px; }
+        .analysis-card ul { list-style-type: none; padding: 0; margin: 0; }
+        .analysis-card li { padding: 6px 0; border-bottom: 1px dashed #eee; display: flex; justify-content: space-between; align-items: center;}
+        .analysis-card li:last-child { border-bottom: none; }
+        .score { font-weight: bold; color: #e67e22; white-space: nowrap; margin-left:10px;}
+        
+        .note { background-color: #f8f9fa; border-left: 4px solid #6c757d; padding: 12px; margin-top: 15px; font-size: 13px; color: #495057; border-radius: 0 4px 4px 0;}
+        .note.danger { border-left-color: #e74c3c; background-color: #fceceb; color: #c0392b;}
+        .note.success { border-left-color: #2ecc71; background-color: #eafaf1; color: #27ae60;}
+        .note.warning { border-left-color: #f39c12; background-color: #fef5e7; color: #d68910;}
+        
+        .final-rank-card { background: linear-gradient(to bottom right, #ffffff, #f0f8ff); border: 2px solid #2980b9; grid-column: 1 / -1; }
+        .final-rank-card h3 { color: #1565c0 !important; border-bottom: 2px solid #1565c0 !important; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;}
+        
+        .pro-rank-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); transition: transform 0.2s ease;}
+        .pro-rank-row:hover { transform: scale(1.01); border-color: #b3d4fc; }
+        .pro-rank-team { font-size: 16px; font-weight: bold; color: #2c3e50; display: flex; align-items: center; gap: 10px;}
+        .pro-rank-team .rank-num { background: #2980b9; color: white; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 13px;}
+        
+        .pro-rank-scores { display: flex; gap: 10px; align-items: center; flex-wrap: wrap;}
+        .badge { padding: 5px 12px; border-radius: 6px; font-size: 13px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;}
+        .badge.t1 { background: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb; }
+        .badge.t2 { background: #f3e5f5; color: #7b1fa2; border: 1px solid #e1bee7; }
+        .badge.final { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; font-size: 15px; padding: 6px 15px; box-shadow: 0 1px 3px rgba(46,125,50,0.2);}
+        
+        .table-container { overflow-x: auto; overflow-y: auto; max-height: 75vh; padding: 2px;}
+        #wroTable { font-size: 13px; border-collapse: collapse;}
+        #wroTable th { position: sticky; top: 0; z-index: 1; background-color: #f4f7f6; color: #2c3e50; border: 1px solid var(--border-color);}
+        #wroTable td { cursor: pointer; transition: background-color 0.2s; padding: 8px 10px; border: 1px solid var(--border-color);}
+        #wroTable td:hover { background-color: #e8f4f8; }
+        .highlight { background-color: #ffeaa7 !important; color: #d35400 !important; font-weight: bold; }
+
+        /* Yıl Yıl Kalın Çerçeve */
+        .year-block { border: 4px solid #1a252f; }
+
+        /* Ödül Listesi Satır Renkleri (Koyu Tonlar) */
+        .gold-dark { background-color: #fde073; }
+        .silver-dark { background-color: #d1d8e0; }
+        .bronze-dark { background-color: #e2b08a; }
+
+        /* KUTU RENKLENDİRME TEMALARI */
+        .theme-Beyaz { background-color: #ffffff; border: 2px solid #e2e8f0; }
+        .theme-Beyaz .group-title { color: #475569; border-bottom-color: #e2e8f0; }
+        
+        .theme-Mavi { background-color: #eff6ff; border: 2px solid #bfdbfe; }
+        .theme-Mavi .group-title { color: #1d4ed8; border-bottom-color: #bfdbfe; }
+        
+        .theme-Sarı { background-color: #fefce8; border: 2px solid #fef08a; }
+        .theme-Sarı .group-title { color: #b45309; border-bottom-color: #fef08a; }
+
+        .theme-Kırmızı { background-color: #ffefef; border: 2px solid #ffcccc; }
+        .theme-Kırmızı .group-title { color: #b71c1c; border-bottom-color: #ffcccc; }
+
+        .theme-Yeşil { background-color: #e6ffeb; border: 2px solid #c2f0ca; }
+        .theme-Yeşil .group-title { color: #1b5e20; border-bottom-color: #c2f0ca; }
+
+        .theme-Mor { background-color: #faf5ff; border: 2px solid #f3e8ff; }
+        .theme-Mor .group-title { color: #7e22ce; border-bottom-color: #f3e8ff; }
+
+        .theme-Turuncu { background-color: #fff7ed; border: 2px solid #ffedd5; }
+        .theme-Turuncu .group-title { color: #c2410c; border-bottom-color: #ffedd5; }
+
+        @media (max-width: 768px) { 
+            .analysis-grid { grid-template-columns: 1fr; } 
+            .pro-rank-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+        }
+
+        .wro-modal {
+            display: none; position: fixed; z-index: 1000; padding-top: 50px; 
+            left: 0; top: 0; width: 100%; height: 100%; overflow: auto; 
+            background-color: rgba(0,0,0,0.85); 
+        }
+        .wro-modal-content {
+            margin: auto; display: block; max-width: 90%; max-height: 85vh; 
+            border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+            animation: zoomEffect 0.3s;
+        }
+        @keyframes zoomEffect { from {transform: scale(0)} to {transform: scale(1)} }
+        .wro-close {
+            position: absolute; top: 15px; right: 25px; color: #fff;
+            font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.2s;
+        }
+        .wro-close:hover { color: #f44336; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab('score-ls', this)">K. Yıldız Puan</button>
+        <button class="tab-btn" onclick="openTab('prob-ls', this)">K. Yıldız İhtimal</button>
+        <button class="tab-btn" onclick="openTab('notlar-ls', this)">📝 K. Yıldız Notlar</button>
+        <button class="tab-btn" onclick="openTab('stat-ls', this)">📊 K. Yıldız İstatistik</button>
+        <button class="tab-btn" onclick="openTab('score-s', this)">Yıldızlar Puan</button>
+        <button class="tab-btn" onclick="openTab('stat-s', this)">📊 Yıldızlar İstatistik</button>
+        <button class="tab-btn" onclick="openTab('analiz', this)">WRO Analiz</button>
+        <button class="tab-btn" onclick="openTab('tarihce', this)">Ödül Listesi</button>
+        <button class="tab-btn" onclick="openTab('sayac', this)">⏳ Sayaç</button>
+        <button class="tab-btn" onclick="openTab('taktik', this)">🗺️ Taktik</button>
+    </div>
+
+    <div id="content-sayac" class="tab-content">
+        <div class="timer-container" style="text-align: center; margin: 30px auto; max-width: 600px; background: #e8f4f8; padding: 30px; border-radius: 15px; border: 2px dashed #81d4fa;">
+            <h3 style="color: #0277bd; margin-top: 0;">2 Dakikalık Görev Süresi</h3>
+            <p style="color: #546e7a; font-size: 0.9rem;">Görev süresini buradan takip edebilirsiniz.</p>
+            <div id="robot-timer-display" style="font-size: 4.5rem; font-weight: bold; color: #01579b; margin: 20px 0; font-family: monospace;">02:00</div>
+            <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <button class="btn btn-success" style="font-size: 1.1rem; padding: 12px 24px;" onclick="startRobotTimer()">▶️ Başla</button>
+                <button class="btn btn-clear" style="font-size: 1.1rem; padding: 12px 24px;" onclick="pauseRobotTimer()">⏸️ Duraklat</button>
+                <button class="btn btn-danger" style="font-size: 1.1rem; padding: 12px 24px;" onclick="resetRobotTimer()">🔄 Sıfırla</button>
+            </div>
         </div>
 
-        <div class="analysis-card final-rank-card" style="grid-column: 1 / -1;">
-            <h3>🏆 WRO 26 Küçük Yıldızlar Final Sıralaması (İlk 5)</h3>
-            <div style="margin-top: 15px;">
-                <div class="pro-rank-row">
-                    <div class="pro-rank-team"><span class="rank-num">1</span> THUNDER/BOTS[cite: 1]</div>
-                    <div class="pro-rank-scores">
-                        <span class="badge t1">Tur 1: 210</span><span class="badge t2">Tur 2: 135</span><span class="badge final">345 Puan</span>
-                    </div>
-                </div>
-                <div class="pro-rank-row">
-                    <div class="pro-rank-team"><span class="rank-num">2</span> THE KING OF MELODIES[cite: 1]</div>
-                    <div class="pro-rank-scores">
-                        <span class="badge t1">Tur 1: 180</span><span class="badge t2">Tur 2: 155</span><span class="badge final">335 Puan</span>
-                    </div>
-                </div>
-                <div class="pro-rank-row">
-                    <div class="pro-rank-team"><span class="rank-num">3</span> NORTH ROBOTICS JR[cite: 1]</div>
-                    <div class="pro-rank-scores">
-                        <span class="badge t1">Tur 1: 110</span><span class="badge t2">Tur 2: 215</span><span class="badge final">325 Puan</span>
-                    </div>
-                </div>
-                <div class="pro-rank-row">
-                    <div class="pro-rank-team"><span class="rank-num">4</span> BANBOAT JUNIOR[cite: 1]</div>
-                    <div class="pro-rank-scores">
-                        <span class="badge t1">Tur 1: 220</span><span class="badge t2">Tur 2: 95</span><span class="badge final">315 Puan</span>
-                    </div>
-                </div>
-                <div class="pro-rank-row">
-                    <div class="pro-rank-team"><span class="rank-num">5</span> ANKA ROBOTICS[cite: 1]</div>
-                    <div class="pro-rank-scores">
-                        <span class="badge t1">Tur 1: 150</span><span class="badge t2">Tur 2: 165</span><span class="badge final">315 Puan</span>
-                    </div>
-                </div>
+        <div class="countdown-container" style="text-align: center; margin: 30px auto; max-width: 600px; background: #fffde7; padding: 30px; border-radius: 15px; border: 2px dashed #fdd835;">
+            <h3 style="color: #f57f17; margin-top: 0;">7 Haziran 2026 WRO Turnuvasına Kalan Süre</h3>
+            <div id="wro-countdown-display" style="font-size: 2rem; font-weight: bold; color: #e65100; margin-top: 15px;">
+                Hesaplanıyor... ⏳
             </div>
-            <div class="note success">
-                <strong>Gelecek Yılın Stratejisi:</strong> Gelecek yılın şampiyonluk formülü, BANBOAT JUNIOR gibi patlayıcı bir ilk tur skoru yakalayıp, THE KING OF MELODIES gibi bu skoru ikinci turda da stabil tutabilmekten geçiyor.
+            <p style="color: #795548; font-size: 1rem; margin-top: 15px;">Turnuvaya hazırlık için kalan süre.</p>
+        </div>
+    </div>
+
+    <div id="content-score-ls" class="tab-content active">
+        <h2 style="color:var(--primary-color)">Küçük Yıldızlar Puan Hesaplama</h2>
+        <form id="form-ls">
+            <table>
+                <thead><tr><th style="width:55%">Görevler</th><th>Puan</th><th>Adet</th><th>Toplam</th></tr></thead>
+                <tbody>
+                    <tr class="section-header"><td colspan="4">1. Amfiyi hoparlöre bağlama (Maksimum 2 Kablo)</td></tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/ye64FBR.png" alt="Kablo Tamamen İçinde" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Kablo gri alanın tamamen içinde, düz ve dik</span>
+                            </div>
+                        </td>
+                        <td>15</td><td><input type="number" id="ls_kb_f" min="0" max="2" value="0" onchange="validateGroup('ls_kb_f', ['ls_kb_f','ls_kb_p'], 2); calcLS();"></td><td id="res_ls_kb_f">0</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/dTvVInL.png" alt="Kablo Kısmen İçinde" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Kablo gri alanın kısmen içinde veya düz/dik değil</span>
+                            </div>
+                        </td>
+                        <td>5</td><td><input type="number" id="ls_kb_p" min="0" max="2" value="0" onchange="validateGroup('ls_kb_p', ['ls_kb_f','ls_kb_p'], 2); calcLS();"></td><td id="res_ls_kb_p">0</td>
+                    </tr>
+                    
+                    <tr class="section-header"><td colspan="4">2. Gösteri hazırlığı</td></tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/4iBekj0.png" alt="Mikrofon Tam" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Mikrofon tamamen içinde, düz ve dik (Maks 1)</span>
+                            </div>
+                        </td>
+                        <td>20</td><td><input type="number" id="ls_mk_f" min="0" max="1" value="0" onchange="validateGroup('ls_mk_f', ['ls_mk_f','ls_mk_p'], 1); calcLS();"></td><td id="res_ls_mk_f">0</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/qx9Ghyx.png" alt="Mikrofon Kısmen" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Mikrofon kısmen içinde veya düz/dik değil</span>
+                            </div>
+                        </td>
+                        <td>10</td><td><input type="number" id="ls_mk_p" min="0" max="1" value="0" onchange="validateGroup('ls_mk_p', ['ls_mk_f','ls_mk_p'], 1); calcLS();"></td><td id="res_ls_mk_p">0</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/H6Rsljr.png" alt="Enstrüman" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Enstrüman tamamen sahne arkasında (Maks 3)</span>
+                            </div>
+                        </td>
+                        <td>15</td><td><input type="number" id="ls_ens" min="0" max="3" value="0" onchange="calcLS()"></td><td id="res_ls_ens">0</td>
+                    </tr>
+
+                    <tr class="section-header"><td colspan="4">3. Şarkıyı çal (Maksimum 6 Nota)</td></tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/Y9QOEXz.png" alt="Nota Tam" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Nota hedef alanının tamamen içinde, düz ve dik</span>
+                            </div>
+                        </td>
+                        <td>20</td><td><input type="number" id="ls_nt_f" min="0" max="6" value="0" onchange="validateGroup('ls_nt_f', ['ls_nt_f','ls_nt_p'], 6); calcLS();"></td><td id="res_ls_nt_f">0</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/niyklpA.png" alt="Nota Kısmen" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Nota hedef alanının kısmen içinde veya düz/dik değil</span>
+                            </div>
+                        </td>
+                        <td>10</td><td><input type="number" id="ls_nt_p" min="0" max="6" value="0" onchange="validateGroup('ls_nt_p', ['ls_nt_f','ls_nt_p'], 6); calcLS();"></td><td id="res_ls_nt_p">0</td>
+                    </tr>
+
+                    <tr class="section-header"><td colspan="4">4. Bonus Puan</td></tr>
+                    <tr><td>Sol anahtarı zarar görmemiş/hareket ettirilmemiş</td><td>10</td><td><input type="checkbox" id="ls_bon_sol" onchange="calcLS()"></td><td id="res_ls_bon_sol">0</td></tr>
+                    <tr><td>Hoparlör zarar görmemiş/hareket ettirilmemiş (Maks 2)</td><td>10</td><td><input type="number" id="ls_bon_hop" min="0" max="2" value="0" onchange="calcLS()"></td><td id="res_ls_bon_hop">0</td></tr>
+                    <tr><td>Amfi zarar görmemiş/hareket ettirilmemiş</td><td>10</td><td><input type="checkbox" id="ls_bon_amf" onchange="calcLS()"></td><td id="res_ls_bon_amf">0</td></tr>
+                </tbody>
+            </table>
+        </form>
+        <div class="total-sticky">
+            <button class="reset-btn" onclick="resetScore('ls')">Sıfırla</button>
+            <div class="score-display">
+                <button class="btn btn-success" onclick="saveRun('ls')">💾 Puanı Kaydet</button>
+                <span>Toplam: <span id="ls_total">0</span> / 255</span>
             </div>
         </div>
     </div>
+
+    <div id="content-prob-ls" class="tab-content">
+        <h2>Küçük Yıldızlar İhtimaller Listesi</h2>
+        <div class="action-bar">
+            <button class="btn btn-clear" onclick="clearProb()">🗑️ Listeyi Temizle</button>
+            <button class="btn btn-save" onclick="saveJSON('ls', 'prob')">💾 Kaydet</button>
+            <button class="btn btn-load" onclick="document.getElementById('file-prob-ls').click()">📂 Yükle</button>
+            <input type="file" id="file-prob-ls" style="display:none" onchange="loadJSON(event, 'ls', 'prob')">
+        </div>
+        <div id="ls-group-container"></div>
+    </div>
+    
+    <div id="content-notlar-ls" class="tab-content">
+        <h2 style="color:var(--primary-color)">Küçük Yıldızlar Hata ve Görev Notları</h2>
+        <div class="action-bar">
+            <button class="btn btn-save" onclick="saveNotesLS()">💾 Tarayıcıya Kaydet</button>
+            <button class="btn btn-load" onclick="downloadNotesLS()">⬇️ JSON İndir</button>
+            <button class="btn btn-danger" onclick="clearNotesLS()">🗑️ Temizle</button>
+        </div>
+
+        <div class="note-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+            <div class="group-box theme-Beyaz">
+                <h3 class="group-title">1. Kablo Görevi</h3>
+                <textarea id="note_ls_kablo" rows="4" style="width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; padding: 8px; resize: vertical;" placeholder="Kablo yerleşimi ile ilgili hataları/notları buraya yazın..."></textarea>
+            </div>
+            <div class="group-box theme-Beyaz">
+                <h3 class="group-title">2. Gösteri Hazırlığı (Mikrofon/Enstrüman)</h3>
+                <textarea id="note_ls_gosteri" rows="4" style="width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; padding: 8px; resize: vertical;" placeholder="Mikrofon ve enstrüman taşıma hatalarını/notlarını buraya yazın..."></textarea>
+            </div>
+            <div class="group-box theme-Beyaz">
+                <h3 class="group-title">3. Şarkıyı Çal (Notalar)</h3>
+                <textarea id="note_ls_nota" rows="4" style="width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; padding: 8px; resize: vertical;" placeholder="Notaların taşınması ve yerleşimi ile ilgili notlar..."></textarea>
+            </div>
+            <div class="group-box theme-Beyaz">
+                <h3 class="group-title">4. Bonuslar (Sol Anahtarı, Hoparlör, Amfi)</h3>
+                <textarea id="note_ls_bonus" rows="4" style="width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; padding: 8px; resize: vertical;" placeholder="Çarpma, devirme, bonus ve amfi hataları..."></textarea>
+            </div>
+
+            <div class="group-box theme-Mavi">
+                <h3 class="group-title">İhtimaller: Yuva 1 & Yuva 2</h3>
+                <div id="y1_y2_notes_container" style="display:flex; flex-direction:column; gap:8px; margin-bottom:10px;"></div>
+                
+                <div style="display:flex; gap:15px; margin-bottom:8px; font-size:13px; color:#333;">
+                    <div><b>Y1:</b> <label><input type="radio" name="c_y1_y2_1" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y1_y2_1" value="Mavi"> 🔵 Mavi</label></div>
+                    <div><b>Y2:</b> <label><input type="radio" name="c_y1_y2_2" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y1_y2_2" value="Mavi"> 🔵 Mavi</label></div>
+                </div>
+                
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="y1_y2_note_input" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc; background:#fff; color:#333;" placeholder="Yuva 1 & 2 notu yazın...">
+                    <button class="btn btn-save" style="padding: 8px 12px; font-size: 14px;" onclick="addDynamicNote('y1_y2', 'Y1', 'Y2')">Ekle</button>
+                </div>
+            </div>
+
+            <div class="group-box theme-Sarı">
+                <h3 class="group-title">İhtimaller: Yuva 1 & Yuva 3</h3>
+                <div id="y1_y3_notes_container" style="display:flex; flex-direction:column; gap:8px; margin-bottom:10px;"></div>
+                
+                <div style="display:flex; gap:15px; margin-bottom:8px; font-size:13px; color:#333;">
+                    <div><b>Y1:</b> <label><input type="radio" name="c_y1_y3_1" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y1_y3_1" value="Mavi"> 🔵 Mavi</label></div>
+                    <div><b>Y3:</b> <label><input type="radio" name="c_y1_y3_2" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y1_y3_2" value="Mavi"> 🔵 Mavi</label></div>
+                </div>
+
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="y1_y3_note_input" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc; background:#fff; color:#333;" placeholder="Yuva 1 & 3 notu yazın...">
+                    <button class="btn btn-save" style="padding: 8px 12px; font-size: 14px;" onclick="addDynamicNote('y1_y3', 'Y1', 'Y3')">Ekle</button>
+                </div>
+            </div>
+
+            <div class="group-box theme-Kırmızı">
+                <h3 class="group-title">İhtimaller: Yuva 1 & Yuva 4</h3>
+                <div id="y1_y4_notes_container" style="display:flex; flex-direction:column; gap:8px; margin-bottom:10px;"></div>
+                
+                <div style="display:flex; gap:15px; margin-bottom:8px; font-size:13px; color:#333;">
+                    <div><b>Y1:</b> <label><input type="radio" name="c_y1_y4_1" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y1_y4_1" value="Mavi"> 🔵 Mavi</label></div>
+                    <div><b>Y4:</b> <label><input type="radio" name="c_y1_y4_2" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y1_y4_2" value="Mavi"> 🔵 Mavi</label></div>
+                </div>
+
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="y1_y4_note_input" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc; background:#fff; color:#333;" placeholder="Yuva 1 & 4 notu yazın...">
+                    <button class="btn btn-save" style="padding: 8px 12px; font-size: 14px;" onclick="addDynamicNote('y1_y4', 'Y1', 'Y4')">Ekle</button>
+                </div>
+            </div>
+
+            <div class="group-box theme-Yeşil">
+                <h3 class="group-title">İhtimaller: Yuva 2 & Yuva 3</h3>
+                <div id="y2_y3_notes_container" style="display:flex; flex-direction:column; gap:8px; margin-bottom:10px;"></div>
+                
+                <div style="display:flex; gap:15px; margin-bottom:8px; font-size:13px; color:#333;">
+                    <div><b>Y2:</b> <label><input type="radio" name="c_y2_y3_1" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y2_y3_1" value="Mavi"> 🔵 Mavi</label></div>
+                    <div><b>Y3:</b> <label><input type="radio" name="c_y2_y3_2" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y2_y3_2" value="Mavi"> 🔵 Mavi</label></div>
+                </div>
+
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="y2_y3_note_input" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc; background:#fff; color:#333;" placeholder="Yuva 2 & 3 notu yazın...">
+                    <button class="btn btn-save" style="padding: 8px 12px; font-size: 14px;" onclick="addDynamicNote('y2_y3', 'Y2', 'Y3')">Ekle</button>
+                </div>
+            </div>
+
+            <div class="group-box theme-Mor">
+                <h3 class="group-title">İhtimaller: Yuva 2 & Yuva 4</h3>
+                <div id="y2_y4_notes_container" style="display:flex; flex-direction:column; gap:8px; margin-bottom:10px;"></div>
+                
+                <div style="display:flex; gap:15px; margin-bottom:8px; font-size:13px; color:#333;">
+                    <div><b>Y2:</b> <label><input type="radio" name="c_y2_y4_1" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y2_y4_1" value="Mavi"> 🔵 Mavi</label></div>
+                    <div><b>Y4:</b> <label><input type="radio" name="c_y2_y4_2" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y2_y4_2" value="Mavi"> 🔵 Mavi</label></div>
+                </div>
+
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="y2_y4_note_input" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc; background:#fff; color:#333;" placeholder="Yuva 2 & 4 notu yazın...">
+                    <button class="btn btn-save" style="padding: 8px 12px; font-size: 14px;" onclick="addDynamicNote('y2_y4', 'Y2', 'Y4')">Ekle</button>
+                </div>
+            </div>
+
+            <div class="group-box theme-Turuncu">
+                <h3 class="group-title">İhtimaller: Yuva 3 & Yuva 4</h3>
+                <div id="y3_y4_notes_container" style="display:flex; flex-direction:column; gap:8px; margin-bottom:10px;"></div>
+                
+                <div style="display:flex; gap:15px; margin-bottom:8px; font-size:13px; color:#333;">
+                    <div><b>Y3:</b> <label><input type="radio" name="c_y3_y4_1" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y3_y4_1" value="Mavi"> 🔵 Mavi</label></div>
+                    <div><b>Y4:</b> <label><input type="radio" name="c_y3_y4_2" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y3_y4_2" value="Mavi"> 🔵 Mavi</label></div>
+                </div>
+
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="y3_y4_note_input" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc; background:#fff; color:#333;" placeholder="Yuva 3 & 4 notu yazın...">
+                    <button class="btn btn-save" style="padding: 8px 12px; font-size: 14px;" onclick="addDynamicNote('y3_y4', 'Y3', 'Y4')">Ekle</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="content-stat-ls" class="tab-content">
+        <h2 style="color:var(--primary-color)">Küçük Yıldızlar Performans İstatistikleri</h2>
+        <div class="action-bar">
+            <button class="btn btn-clear" onclick="clearStats('ls')">🗑️ Verileri Temizle</button>
+            <button class="btn btn-save" onclick="saveJSON('ls', 'stat')">💾 Verileri Kaydet</button>
+            <button class="btn btn-load" onclick="document.getElementById('file-stat-ls').click()">📂 Veri Yükle</button>
+            <input type="file" id="file-stat-ls" style="display:none" onchange="loadJSON(event, 'ls', 'stat')">
+        </div>
+
+        <div class="stat-card">
+            <h3>📈 Ortalama Puanınız: <span id="stat_avg_ls" style="font-size: 1.5rem; color: #198754;">0</span> / 255</h3>
+            <p><strong>PUAN DETAYLARI</strong></p>
+            <ul class="weakness-list" id="stat_weak_ls">
+                <li>Henüz yeterli veri yok.</li>
+            </ul>
+        </div>
+
+        <h3>Geçmiş Denemeler</h3>
+        <table class="history-table">
+            <thead><tr><th>Tarih / Saat</th><th>Toplam Puan</th><th>İşlem</th></tr></thead>
+            <tbody id="stat_history_ls"></tbody>
+        </table>
+    </div>
+
+    <div id="content-score-s" class="tab-content">
+        <h2 style="color:var(--secondary-color)">Yıldızlar Puan Hesaplama</h2>
+        <form id="form-s">
+            <table>
+                <thead><tr><th style="width:55%">Görevler</th><th>Puan</th><th>Adet</th><th>Toplam</th></tr></thead>
+                <tbody>
+                    <tr class="section-header"><td colspan="4">1. Ziyaretçilere Rehberlik Et (Maksimum 4)</td></tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/B5rxC68.png" alt="Ziyaretçi Tam" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Ziyaretçi tamamen kendi renk alanının içinde ve dik</span>
+                            </div>
+                        </td>
+                        <td>10</td><td><input type="number" id="s_ziy_f" min="0" max="4" value="0" onchange="validateGroup('s_ziy_f', ['s_ziy_f','s_ziy_p'], 4); calcS();"></td><td id="res_s_ziy_f">0</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/ZE8KDiQ.png" alt="Ziyaretçi Kısmen" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Ziyaretçi kısmen kendi renk alanında veya dik değil</span>
+                            </div>
+                        </td>
+                        <td>5</td><td><input type="number" id="s_ziy_p" min="0" max="4" value="0" onchange="validateGroup('s_ziy_p', ['s_ziy_f','s_ziy_p'], 4); calcS();"></td><td id="res_s_ziy_p">0</td>
+                    </tr>
+
+                    <tr class="section-header"><td colspan="4">2. Kuleleri Yeniden İnşa Et (Maks 2 Kırmızı / 2 Sarı)</td></tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/3HYPwty.png" alt="Kırmızı Kule Tam" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Kırmızı kule tamamen hedefte ve dik</span>
+                            </div>
+                        </td>
+                        <td>15</td><td><input type="number" id="s_kr_f" min="0" max="2" value="0" onchange="validateGroup('s_kr_f', ['s_kr_f','s_kr_p'], 2); calcS();"></td><td id="res_s_kr_f">0</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/pl8oNL0.png" alt="Kırmızı Kule Kısmen" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Kırmızı kule kısmen hedefte veya dik değil</span>
+                            </div>
+                        </td>
+                        <td>10</td><td><input type="number" id="s_kr_p" min="0" max="2" value="0" onchange="validateGroup('s_kr_p', ['s_kr_f','s_kr_p'], 2); calcS();"></td><td id="res_s_kr_p">0</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/OWJV2Ad.png" alt="Sarı Kule Tam" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Sarı kule üstü doğru + tabanı tamamen hedefte</span>
+                            </div>
+                        </td>
+                        <td>25</td><td><input type="number" id="s_sa_f" min="0" max="2" value="0" onchange="validateGroup('s_sa_f', ['s_sa_f','s_sa_p'], 2); calcS();"></td><td id="res_s_sa_f">0</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/A9QI5hY.png" alt="Sarı Kule Kısmen" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Sarı kule üstü doğru + tabanı kısmen hedefte</span>
+                            </div>
+                        </td>
+                        <td>15</td><td><input type="number" id="s_sa_p" min="0" max="2" value="0" onchange="validateGroup('s_sa_p', ['s_sa_f','s_sa_p'], 2); calcS();"></td><td id="res_s_sa_p">0</td>
+                    </tr>
+
+                    <tr class="section-header"><td colspan="4">3. Tarihi Eserleri Müzeye Getir (Maksimum 4)</td></tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/VbOCNrx.png" alt="Eser Tam" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Tarihi eser tamamen müzede ve dik</span>
+                            </div>
+                        </td>
+                        <td>15</td><td><input type="number" id="s_es_f" min="0" max="4" value="0" onchange="validateGroup('s_es_f', ['s_es_f','s_es_p'], 4); calcS();"></td><td id="res_s_es_f">0</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="https://i.imgur.com/khZIyzn.png" alt="Eser Kısmen" onclick="openModal(this.src)" style="width: 60px; height: auto; border-radius: 6px; border: 1px solid #bdc3c7; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <span>Tarihi eser kısmen müzede veya dik değil</span>
+                            </div>
+                        </td>
+                        <td>5</td><td><input type="number" id="s_es_p" min="0" max="4" value="0" onchange="validateGroup('s_es_p', ['s_es_f','s_es_p'], 4); calcS();"></td><td id="res_s_es_p">0</td>
+                    </tr>
+
+                    <tr class="section-header"><td colspan="4">4. Taş Döşemeyi Kirden Temizle (Maks 10 Kir)</td></tr>
+                    <tr><td>Kir parçacıkları taş döşeme alanına değmiyor</td><td>2</td><td><input type="number" id="s_kir" min="0" max="10" value="0" onchange="calcS()"></td><td id="res_s_kir">0</td></tr>
+
+                    <tr class="section-header"><td colspan="4">5. Bonus Puanlar</td></tr>
+                    <tr><td>Bariyerler zarar görmemiş/hareket etmemiş (x2)</td><td>10</td><td><input type="number" id="s_bon_bar" min="0" max="2" value="0" onchange="calcS()"></td><td id="res_s_bon_bar">0</td></tr>
+                    <tr><td>Papağan zarar görmemiş/hareket etmemiş</td><td>10</td><td><input type="checkbox" id="s_bon_pap" onchange="calcS()"></td><td id="res_s_bon_pap">0</td></tr>
+                </tbody>
+            </table>
+        </form>
+        <div class="total-sticky">
+            <button class="reset-btn" onclick="resetScore('s')">Sıfırla</button>
+            <div class="score-display">
+                <button class="btn btn-success" onclick="saveRun('s')">💾 Puanı Kaydet</button>
+                <span>Toplam: <span id="s_total">0</span> / 230</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="content-stat-s" class="tab-content">
+        <h2>Yıldızlar Performans İstatistikleri</h2>
+        <div class="action-bar">
+            <button class="btn btn-clear" onclick="clearStats('s')">🗑️ Verileri Temizle</button>
+            <button class="btn btn-save" onclick="saveJSON('s', 'stat')">💾 Verileri Kaydet</button>
+            <button class="btn btn-load" onclick="document.getElementById('file-stat-s').click()">📂 Veri Yükle</button>
+            <input type="file" id="file-stat-s" style="display:none" onchange="loadJSON(event, 's', 'stat')">
+        </div>
+
+        <div class="stat-card">
+            <h3>📈 Ortalama Puanınız: <span id="stat_avg_s" style="font-size: 1.5rem; color: #198754;">0</span> / 230</h3>
+            <p><strong>PUAN DETAYLARI</strong></p>
+            <ul class="weakness-list" id="stat_weak_s">
+                <li>Henüz yeterli veri yok.</li>
+            </ul>
+        </div>
+
+        <h3>Geçmiş Denemeler</h3>
+        <table class="history-table">
+            <thead><tr><th>Tarih / Saat</th><th>Toplam Puan</th><th>İşlem</th></tr></thead>
+            <tbody id="stat_history_s"></tbody>
+        </table>
+    </div>
+
+    <div id="content-analiz" class="tab-content">
+        <h2 style="color:#2c3e50; text-align: center; margin-bottom: 20px;">WRO Turnuva Sonuçları Analizi</h2>
+        
+        <div class="sub-tabs">
+            <button class="sub-tab-btn active" onclick="openSubTab(event, 'analiz-26-ky')">WRO 26 - K. Yıldızlar</button>
+            <button class="sub-tab-btn" onclick="openSubTab(event, 'analiz-26-y')">WRO 26 - Yıldızlar</button>
+            <button class="sub-tab-btn" onclick="openSubTab(event, 'analiz-25-ky')">WRO 25 - K. Yıldızlar</button>
+            <button class="sub-tab-btn" onclick="openSubTab(event, 'analiz-25-y')">WRO 25 - Yıldızlar</button>
+            <button class="sub-tab-btn" onclick="openSubTab(event, 'analiz-24-ky')">WRO 24 - K. Yıldızlar</button>
+            <button class="sub-tab-btn" onclick="openSubTab(event, 'analiz-24-y')">WRO 24 - Yıldızlar</button>
+            <button class="sub-tab-btn" onclick="openSubTab(event, 'analiz-22-ky')">WRO 22 - K. Yıldızlar</button>
+            <button class="sub-tab-btn" onclick="openSubTab(event, 'analiz-22-y')">WRO 22 - Yıldızlar</button>
+        </div>
+
+        <div id="analiz-26-ky" class="sub-tab-content active">
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3 style="color:#009688; border-bottom-color:#009688;">1. Tur Başarı Durumu (Maks: 255 Puan)</h3>
+                    <p>1. Turda en yüksek skorları elde eden takımlar:</p>
+                    <ul>
+                        <li><span>BANBOAT JUNIOR</span> <span class="score">220 Puan</span></li>
+                        <li><span>THUNDER/BOTS</span> <span class="score">210 Puan</span></li>
+                        <li><span>ROBİ001</span> <span class="score">200 Puan</span></li>
+                        <li><span>THE KING OF MELODIES / ALGORITMALAB</span> <span class="score">180 Puan</span></li>
+                    </ul>
+                    <div class="note success">
+                        <strong>Güçlü Başlangıcın Önemi:</strong> THUNDER/BOTS takımı ilk turda elde edilebilecek 255 puanın 210'unu toplayarak, ileride yaşayabilecekleri olası sorunlar için kendilerine çok güçlü bir güvenlik marjı yaratmıştır.
+                    </div>
+                </div>
+
+                <div class="analysis-card">
+                    <h3 style="color:#009688; border-bottom-color:#009688;">2. Tur Zirve Sıralaması ve Kriz Yönetimi</h3>
+                    <p>2. tur performanslarına göre en yüksek puan seviyeleri:</p>
+                    <ul>
+                        <li><span><strong>1. Seviye:</strong> NORTH ROBOTICS JR</span> <span class="score">215 Puan</span></li>
+                        <li><span><strong>2. Seviye:</strong> CODER TEAM</span> <span class="score">195 Puan</span></li>
+                        <li><span><strong>3. Seviye:</strong> ANKA ROBOTICS vb.</span> <span class="score">165 Puan</span></li>
+                        <li><span><strong>4. Seviye:</strong> THE KING OF MELODIES / ROBORON</span> <span class="score">155 Puan</span></li>
+                        <li><span><strong>5. Seviye:</strong> THUNDER/BOTS</span> <span class="score">135 Puan</span></li>
+                    </ul>
+                    <div class="note warning">
+                        <strong>Pes Etmeyen Şampiyon:</strong> İkinci turda robotu iki kez kırılan THUNDER/BOTS takımı çok büyük bir krizle karşılaşmıştır. Ancak takım üyelerinin soğukkanlılıklarını koruyup son dakikalarda robotu tekrar sahaya sürerek puanı 135'e çıkartması, bu şampiyonluğun ardında yatan asıl başarı hikayesidir.
+                    </div>
+                </div>
+                
+                <div class="analysis-card" style="grid-column: 1 / -1; background-color: #f8fbff; border-color: #b3d4fc;">
+                    <h3 style="color:#0d6efd; border-bottom-color:#0d6efd;">Gelişim ve İstikrar Analizi (Gelecek Yıl İçin Projeksiyon)</h3>
+                    <p>2026 sonuçlarına göre takımların tur bazlı performans değişimleri gelecek yıl için şu risk ve fırsatları gösteriyor:</p>
+                    
+                    <ul style="margin-top: 15px;">
+                        <li style="display:block;">
+                            <div style="font-weight:bold; color:#d35400; margin-bottom:5px;">🚀 İkinci Turda Dev Sıçrama Yapanlar (Gelecek Yılın En Tehlikeli Rakipleri)</div>
+                            <div style="font-size:13px; color:#444;">
+                                <strong>NORTH ROBOTICS JR:</strong> 1. turda sadece 110 puan alıp geride kalmalarına rağmen, 2. turda turnuvanın en yüksek ikinci tur skoru olan 215 puanı alarak podyuma 3. sıradan girdiler. Kriz çözme ve anlık adaptasyon yetenekleri çok yüksek.<br>
+                                <strong>CODER TEAM:</strong> 1. turu 105 puanla geçip 2. turda 195 puan alarak genel klasmanda 7. sıraya tırmandılar. Gelecek yıl kodlama optimizasyonunu ilk tura yayarlarsa büyük tehdit oluşturacaklar.
+                            </div>
+                        </li>
+                        <li style="display:block; margin-top:10px;">
+                            <div style="font-weight:bold; color:#e74c3c; margin-bottom:5px;">📉 İstikrar Sorunu Yaşayan Potansiyeller</div>
+                            <div style="font-size:13px; color:#444;">
+                                <strong>BANBOAT JUNIOR:</strong> 1. turun en yüksek skoru olan 220 puanı almalarına rağmen, 2. turda 95 puana kadar düşerek şampiyonluğu kaçırdılar.<br>
+                                <strong>ROBİ001:</strong> İlk turda 200 gibi devasa bir puan alıp 2. turda 75 puanda çakılarak 13. sıraya kadar gerilediler. Bu takımların robot mekanikleri mükemmel olabilir ancak çevresel faktörlere veya şarj durumuna karşı aşırı hassaslar.
+                            </div>
+                        </li>
+                        <li style="display:block; margin-top:10px;">
+                            <div style="font-weight:bold; color:#198754; margin-bottom:5px;">⚖️ İstikrarlı Tehdit</div>
+                            <div style="font-size:13px; color:#444;">
+                                <strong>THE KING OF MELODIES:</strong> 1. turda 180, 2. turda 155 puan alarak hiçbir turda majör hata yapmadılar. Şampiyonluk yolunda her zaman ensenizde olacak en tutarlı rakiptir.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="analysis-card final-rank-card" style="grid-column: 1 / -1;">
+                    <h3>🏆 WRO 26 Küçük Yıldızlar Final Sıralaması (İlk 5)</h3>
+                    <div style="margin-top: 15px;">
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">1</span> THUNDER/BOTS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 210</span><span class="badge t2">Tur 2: 135</span><span class="badge final">345 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">2</span> THE KING OF MELODIES</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 180</span><span class="badge t2">Tur 2: 155</span><span class="badge final">335 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">3</span> NORTH ROBOTICS JR</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 110</span><span class="badge t2">Tur 2: 215</span><span class="badge final">325 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">4</span> BANBOAT JUNIOR</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 220</span><span class="badge t2">Tur 2: 95</span><span class="badge final">315 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">5</span> ANKA ROBOTICS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 150</span><span class="badge t2">Tur 2: 165</span><span class="badge final">315 Puan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="note success">
+                        <strong>Gelecek Yılın Stratejisi:</strong> Gelecek yılın şampiyonluk formülü, BANBOAT JUNIOR gibi patlayıcı bir ilk tur skoru yakalayıp, THE KING OF MELODIES gibi bu skoru ikinci turda da stabil tutabilmekten geçiyor.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="analiz-26-y" class="sub-tab-content">
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>1. Tur Başarı Durumu (Maks: 230 Puan)</h3>
+                    <p>İlk tur barajını geçip avantajı yakalayan zirve takımları:</p>
+                    <ul>
+                        <li><span>ÇAKATECH_1</span> <span class="score">165 Puan</span></li>
+                        <li><span>ALTAŞJUNİOR</span> <span class="score">151 Puan</span></li>
+                        <li><span>THUNDER/BOTS</span> <span class="score">138 Puan</span></li>
+                    </ul>
+                    <div class="note danger">
+                        <strong>İlk Tur Farkları:</strong> ÇAKATECH_1 ilk turda gösterdiği 165 puanlık performansla doğrudan rakipleri olan diğer takımlara ciddi bir üstünlük sağlamış ve bu avantaj turnuvanın gidişatını belirlemiştir.
+                    </div>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>2. Tur Zirve Sıralaması</h3>
+                    <p>2. kısım (tur) farklı en yüksek puan seviyelerine göre takımlar:</p>
+                    <ul>
+                        <li><span><strong>1. Seviye:</strong> THUNDER/BOTS</span> <span class="score">140 Puan</span></li>
+                        <li><span><strong>2. Seviye:</strong> DRAGON ROBOTICS</span> <span class="score">130 Puan</span></li>
+                        <li><span><strong>3. Seviye:</strong> ÇAKATECH_1</span> <span class="score">125 Puan</span></li>
+                        <li><span><strong>4. Seviye:</strong> ÇAKATECH_2</span> <span class="score">115 Puan</span></li>
+                        <li><span><strong>5. Seviye:</strong> UKEBTECH / DİGİTAL ANGEL vb.</span> <span class="score">110 Puan</span></li>
+                    </ul>
+                    <div class="note warning">
+                        <strong>İkinci Turda Karşı Saldırı:</strong> THUNDER/BOTS takımı ikinci turda 140 puanla bu turun en yüksek skorunu alarak ciddi bir atağa kalkmış ancak ilk turdaki puan farkı birincilik için yeterli olmamıştır.
+                    </div>
+                </div>
+
+                <div class="analysis-card final-rank-card" style="grid-column: 1 / -1;">
+                    <h3>🏆 WRO 26 Yıldızlar Final Sıralaması (İlk 5)</h3>
+                    <div style="margin-top: 15px;">
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">1</span> ÇAKATECH_1</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 165</span><span class="badge t2">Tur 2: 125</span><span class="badge final">290 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">2</span> THUNDER/BOTS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 138</span><span class="badge t2">Tur 2: 140</span><span class="badge final">278 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">3</span> ALTAŞJUNİOR</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 151</span><span class="badge t2">Tur 2: 60</span><span class="badge final">211 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">4</span> DRAGON ROBOTICS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 78</span><span class="badge t2">Tur 2: 130</span><span class="badge final">208 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">5</span> BANBOAT</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 86</span><span class="badge t2">Tur 2: 105</span><span class="badge final">191 Puan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="note success">
+                        <strong>Sonuç Analizi:</strong> THUNDER/BOTS ikinci turda müthiş bir istikrar (140) gösterip turu lider bitirse de, ÇAKATECH_1'in ilk turda yarattığı puan farkı onlara şampiyonluğu getirmiştir. Her iki tur performansı, dengenin ve başlangıcın ne kadar kıymetli olduğunu vurgulamaktadır.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="analiz-25-ky" class="sub-tab-content">
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3 style="color:#009688; border-bottom-color:#009688;">1. Tur Başarı Durumu (%50 ve %40 Barajı)</h3>
+                    <p>Maksimum puan olan <strong>155 puanın</strong> baraj analizleri:</p>
+                    <ul style="margin-top: 15px;">
+                        <li>
+                            <div style="display:flex; flex-direction:column;">
+                                <div><span style="color:#1565c0; font-weight:bold;">%50 Barajı (78+ Puan):</span> <span class="score" style="color:#e74c3c;">Sadece 2 Takım Geçti!</span></div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">SAUVEURS DE L'ESPACE (100) ve DRAGONROBOTİCS (95)</div>
+                            </div>
+                        </li>
+                        <li style="margin-top: 10px;">
+                            <div style="display:flex; flex-direction:column;">
+                                <div><span style="color:#e67e22; font-weight:bold;">%40 Barajı (62+ Puan):</span> <span class="score" style="color:#2ecc71;">Toplam 13 Takım Geçti</span></div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">Üstteki 2 takıma ek olarak; MEGA TEAM (75), THUNDER/BOTS (70), JR TORNADO POWER (70), UZAY KIZLARI (70), CTRL ALT DEFEAT (70), ROBORON (70) ve 65 puan alan 5 farklı takım.</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="note danger">
+                        <strong>İlk Tur Liderlerinin 2. Tur Performansı:</strong><br>
+                        İlk turu 100 puanla lider tamamlayan SAUVEURS DE L'ESPACE, 2. turda 20 puanda kalarak avantajını yitirmiştir. Benzer şekilde 3. sıradaki MEGA TEAM de 2. turu 20 puanla tamamlamıştır. 1. turda 70 puanla 4. sırada yer alan THUNDER/BOTS ise 2. turdaki 90 puanlık istikrarlı performansıyla genel klasmanda birinciliğe ulaşmıştır.
+                    </div>
+                </div>
+                
+                <div class="analysis-card">
+                    <h3 style="color:#009688; border-bottom-color:#009688;">2. Tur Zirve Sıralaması (Farklı İlk 5 Skor)</h3>
+                    <p>2. kısım (tur) farklı en yüksek puan seviyelerine göre takımlar:</p>
+                    <ul style="display: grid; grid-template-columns: 1fr; gap: 8px;">
+                        <li><span><strong>1. Seviye:</strong> THUNDER/BOTS & WALLBOTS</span> <span class="score">90 Puan</span></li>
+                        <li><span><strong>2. Seviye:</strong> CODER TEAM</span> <span class="score">75 Puan</span></li>
+                        <li><span><strong>3. Seviye:</strong> DRAGONROBOTICS (+4 Takım)</span> <span class="score">60 Puan</span></li>
+                        <li><span><strong>4. Seviye:</strong> DEHA ROBOTİK JR (+2 Takım)</span> <span class="score">55 Puan</span></li>
+                        <li><span><strong>5. Seviye:</strong> HIPER TEAM</span> <span class="score">50 Puan</span></li>
+                    </ul>
+                    <div class="note warning">
+                        <strong>İkinci Tur Dinamikleri:</strong> 2. turda 90 puan sınırına ulaşan THUNDER/BOTS ve WALLBOTS, bu skorlarıyla genel sıralamada ciddi bir sıçrama yaparak podyumda yer bulmuşlardır.
+                    </div>
+                </div>
+
+                <div class="analysis-card final-rank-card" style="grid-column: 1 / -1;">
+                    <h3>🏆 WRO 25 Küçük Yıldızlar Final Sıralaması (İlk 5)</h3>
+                    <div style="margin-top: 15px;">
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">1</span> THUNDER/BOTS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 70</span><span class="badge t2">Tur 2: 90</span><span class="badge final">160 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">2</span> DRAGONROBOTICS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 95</span><span class="badge t2">Tur 2: 60</span><span class="badge final">155 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">3</span> WALLBOTS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 50</span><span class="badge t2">Tur 2: 90</span><span class="badge final">140 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">4</span> STELLAR TAKEV</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 65</span><span class="badge t2">Tur 2: 60</span><span class="badge final">125 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">5</span> CODER TEAM</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 45</span><span class="badge t2">Tur 2: 75</span><span class="badge final">120 Puan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="note success">
+                        <strong>Genel Değerlendirme:</strong> THUNDER/BOTS ilk turda lider grubun gerisinde (70 puan) kalsa da, ikinci turdaki 90 puanlık güçlü ve istikrarlı performansıyla şampiyonluğu elde ederek 2. turun ne kadar belirleyici olduğunu kanıtlamıştır.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="analiz-25-y" class="sub-tab-content">
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>1. Tur Başarı Durumu (%75 Barajı)</h3>
+                    <p>Maksimum puan olan <strong>156 puanın %75'i (117 puan)</strong> baz alındığında ilk tur barajını geçenler:</p>
+                    <ul>
+                        <li><span>THE MARTIANS</span> <span class="score">149 Puan</span></li>
+                        <li><span>SPICA</span> <span class="score">137 Puan</span></li>
+                        <li><span>JR. TORNADO</span> <span class="score">129 Puan</span></li>
+                        <li><span>CYBERTEAM</span> <span class="score">126 Puan</span></li>
+                    </ul>
+                    <div class="note danger">
+                        <strong>İlk Tur Liderlerinin 2. Tur Performansı:</strong> İlk turu 137 puanla 2. sırada tamamlayan SPICA, 2. turda 60 puanda kalarak büyük bir avantaj kaybetmiş ve sıralamada gerilemiştir. THE MARTIANS ise ilk turdaki 149 puanlık devasa avantajını korumayı başarmıştır.
+                    </div>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>2. Tur Zirve Sıralaması (Farklı İlk 5 Skor)</h3>
+                    <p>2. kısım (tur) farklı en yüksek puan seviyelerine göre takımlar:</p>
+                    <ul>
+                        <li><span><strong>1. Seviye:</strong> ROBOTICS MASTERS / TECH TITANS</span> <span class="score">89 Puan</span></li>
+                        <li><span><strong>2. Seviye:</strong> ROBO_TURCO</span> <span class="score">86 Puan</span></li>
+                        <li><span><strong>3. Seviye:</strong> THE MARTIANS</span> <span class="score">84 Puan</span></li>
+                        <li><span><strong>4. Seviye:</strong> JR. TORNADO / ROBOTRIO / DOĞAL ZEKA</span> <span class="score">79 Puan</span></li>
+                        <li><span><strong>5. Seviye:</strong> VEGA</span> <span class="score">71 Puan</span></li>
+                    </ul>
+                    <div class="note warning">
+                        <strong>İkinci Tur Dinamikleri:</strong> İlk turun aksine 2. turda 90 puanı aşabilen takım çıkmamıştır. ROBOTICS MASTERS ve TECH TITANS'ın 89 puanlık performansları bu turun zirvesini oluşturmuştur.
+                    </div>
+                </div>
+
+                <div class="analysis-card final-rank-card" style="grid-column: 1 / -1;">
+                    <h3>🏆 WRO 25 Yıldızlar Final Sıralaması (İlk 5)</h3>
+                    <div style="margin-top: 15px;">
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">1</span> THE MARTIANS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 149</span><span class="badge t2">Tur 2: 84</span><span class="badge final">233 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">2</span> JR. TORNADO</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 129</span><span class="badge t2">Tur 2: 79</span><span class="badge final">208 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">3</span> SPICA</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 137</span><span class="badge t2">Tur 2: 60</span><span class="badge final">197 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">4</span> CYBERTEAM</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 126</span><span class="badge t2">Tur 2: 65</span><span class="badge final">191 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">5</span> ROBOTICS MASTERS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 90</span><span class="badge t2">Tur 2: 89</span><span class="badge final">179 Puan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="note success">
+                        <strong>İlk Tur Avantajı ve İkinci Tur İstikrarı:</strong> THE MARTIANS takımı 1. turda aldığı 149 puanlık harika skorun verdiği avantajı, 2. turda 84 puanlık istikrarlı bir performansla birleştirerek şampiyonluğa uzanmıştır. Ayrıca ROBOTICS MASTERS takımı 1. turda 90 puanla ilk grubun gerisinde kalsa da, 2. turda yarışmanın en yüksek skorlarından biri olan 89 puanı alarak ilk 5'e girmeyi başarmıştır.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="analiz-24-ky" class="sub-tab-content">
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3 style="color:#009688; border-bottom-color:#009688;">1. Tur Başarı Durumu (Maks: 142 Puan)</h3>
+                    <p>İlk tur (1. Kısım) <strong>142 tam puan</strong> üzerinden baraj analizleri:</p>
+                    <ul style="margin-top: 15px;">
+                        <li>
+                            <div style="display:flex; flex-direction:column;">
+                                <div><span style="color:#1565c0; font-weight:bold;">%50 Başarı Barajı (71+ Puan):</span> <span class="score" style="color:#2ecc71;">6 Takım Geçti</span></div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">ROBORON (106 Puan - %75 Başarı), FARMTECH (84 Puan - %59 Başarı), ROBO GENİUS JR (81), CYBERTEAM (81), BANBOAT 21 (72), ROBOES SAM (72)</div>
+                            </div>
+                        </li>
+                        <li style="margin-top: 10px;">
+                            <div style="display:flex; flex-direction:column;">
+                                <div><span style="color:#e67e22; font-weight:bold;">%40 Başarı Barajı (57+ Puan):</span> <span class="score" style="color:#2ecc71;">Toplam 9 Takım Geçti</span></div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">Üstteki 6 takıma ek olarak; ROBOTUM (68), EARTHBOTS (62 Puan - %44 Başarı) ve NORTH ROBOTICS (59).</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="note danger">
+                        <strong>İlk Tur Liderlerinin 2. Tur Performansı:</strong><br>
+                        İlk turu %75 başarıyla (106 puan) lider tamamlayan ROBORON ve onu takip eden FARMTECH (84) gibi takımlar 2. turda çok düşük puanlar alarak avantajlarını kaybetmiştir. 1. turu %44 başarı oranıyla (62 puan) 8. sırada bitiren EARTHBOTS ise 2. turda aldığı 107 puan ile şampiyonluğa ulaşmıştır.
+                    </div>
+                </div>
+
+                <div class="analysis-card">
+                    <h3 style="color:#009688; border-bottom-color:#009688;">2. Tur Zirve Sıralaması (Farklı İlk 5 Skor)</h3>
+                    <p>2. kısım (tur) farklı en yüksek puan seviyelerine göre takımlar:</p>
+                    <ul>
+                        <li><span><strong>1. Seviye:</strong> EARTHBOTS / ROBOTAKEV / JR TORNADO POWER / TORNADO / INVICTUS 1</span> <span class="score">107 Puan</span></li>
+                        <li><span><strong>2. Seviye:</strong> TAKEV RSPORT JR. / THUNDERBOTS</span> <span class="score">92 Puan</span></li>
+                        <li><span><strong>3. Seviye:</strong> BANBOAT 21 / ROBOTUM</span> <span class="score">62 Puan</span></li>
+                        <li><span><strong>4. Seviye:</strong> ROBOES SAM / EKOBOT / BEYOND DREAMS / MABİRO / KENYAP1</span> <span class="score">57 Puan</span></li>
+                        <li><span><strong>5. Seviye:</strong> GHOSTFACE</span> <span class="score">44 Puan</span></li>
+                    </ul>
+                    <div class="note warning">
+                        <strong>İkinci Tur Dinamikleri:</strong> Tam 5 farklı takımın 107 puanlık maksimum skora ulaşması, rekabetin ne kadar üst düzeyde olduğunu göstermiştir. Eşitlikler sonucu belirlemiştir.
+                    </div>
+                </div>
+
+                <div class="analysis-card final-rank-card" style="grid-column: 1 / -1;">
+                    <h3>🏆 WRO 24 (2024) Küçük Yıldızlar Final (İlk 5)</h3>
+                    <div style="margin-top: 15px;">
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">1</span> EARTHBOTS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 62</span><span class="badge t2">Tur 2: 107</span><span class="badge final">169 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">2</span> ROBOTAKEV</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 50</span><span class="badge t2">Tur 2: 107</span><span class="badge final">157 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">3</span> JR TORNADO POWER</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 45</span><span class="badge t2">Tur 2: 107</span><span class="badge final">152 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">4</span> TORNADO</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 37</span><span class="badge t2">Tur 2: 107</span><span class="badge final">144 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">5</span> TAKEV RSPORT JR.</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 51</span><span class="badge t2">Tur 2: 92</span><span class="badge final">143 Puan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="note success">
+                        <strong>Turnuva İstatistiği (2024 Dinamikleri):</strong> 2024 yılı Küçük Yıldızlar klasmanında dikkat çekici bir istatistik olarak, genel sıralamadaki ilk 4 takım 2. turda 107 puan alarak eşitlik sağlamıştır. 2. turdaki bu eşitlik nedeniyle, şampiyonu takımların 1. turda topladığı puanlar belirlemiştir.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="analiz-24-y" class="sub-tab-content">
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>1. Tur Başarı Durumu (Maks: 120 Puan)</h3>
+                    <p>İlk tur (1. Kısım) <strong>120 tam puan</strong> üzerinden öne çıkan baraj analizleri:</p>
+                    <ul style="margin-top: 15px;">
+                        <li>
+                            <div style="display:flex; flex-direction:column;">
+                                <div><span style="color:#1565c0; font-weight:bold;">%75 Başarı Barajı (90+ Puan):</span> <span class="score" style="color:#2ecc71;">5 Takım Geçti</span></div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">JUNIOR ALTAŞ (122 Puan - %100'ü aşkın), ROBOMİNO (112 Puan - %93), SİRİUS A (109 Puan - %91), İLLUSION (108 Puan - %90), KT ROBOTICS (104 Puan - %87).</div>
+                            </div>
+                        </li>
+                        <li style="margin-top: 10px;">
+                            <div style="display:flex; flex-direction:column;">
+                                <div><span style="color:#e67e22; font-weight:bold;">%50 Başarı Barajı (60+ Puan):</span> <span class="score" style="color:#2ecc71;">Toplam 13 Takım Geçti</span></div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">Üstteki 5 takıma ek olarak; SPARK, LİGHTSPEED, ARTİFUSION (69 Puan - %58), NOKTA PARANTEZ, MAGNETECH2, TEAM STELLARS, DEHA ROBOTİK ve MAGNETECH1.</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="note danger">
+                        <strong>İlk Tur Liderlerinin 2. Tur Performansı:</strong><br>
+                        İlk turun lideri Junior Altaş 2. turda 43 puan, ikinci sıradaki Robomino ise 48 puan alarak avantajlarını kaybetmişlerdir. 1. turu 69 puanla (%58 başarı) tamamlayan ARTİFUSION ise 2. turda 120 puan alarak önemli bir yükseliş göstermiş ve liderliğe yerleşmiştir.
+                    </div>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>2. Tur Zirve Sıralaması (Farklı İlk 5 Skor)</h3>
+                    <p>2. kısım (tur) farklı en yüksek puan seviyelerine göre takımlar:</p>
+                    <ul>
+                        <li><span><strong>1. Seviye:</strong> ARTİFUSION</span> <span class="score">120 Puan</span></li>
+                        <li><span><strong>2. Seviye:</strong> INVICTUS ORDU</span> <span class="score">95 Puan</span></li>
+                        <li><span><strong>3. Seviye:</strong> MEGA TEAM</span> <span class="score">83 Puan</span></li>
+                        <li><span><strong>4. Seviye:</strong> NOKTA PARANTEZ</span> <span class="score">78 Puan</span></li>
+                        <li><span><strong>5. Seviye:</strong> SİRİUS A / SPARK / ROVERBOATS</span> <span class="score">73 Puan</span></li>
+                    </ul>
+                    <div class="note warning">
+                        <strong>İkinci Tur Dinamikleri:</strong> Sadece ARTİFUSION takımının 120 tam puan alabilmesi, bu etabın zorluğunu ve takımın başarısındaki kilit noktayı gözler önüne- sermektedir.
+                    </div>
+                </div>
+
+                <div class="analysis-card final-rank-card" style="grid-column: 1 / -1;">
+                    <h3>🏆 WRO 24 (2024) Yıldızlar Final Sıralaması (İlk 5)</h3>
+                    <div style="margin-top: 15px;">
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">1</span> ARTİFUSION</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 69</span><span class="badge t2">Tur 2: 120</span><span class="badge final">189 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">2</span> SİRİUS A</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 109</span><span class="badge t2">Tur 2: 73</span><span class="badge final">182 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">3</span> JUNIOR ALTAŞ</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 122</span><span class="badge t2">Tur 2: 43</span><span class="badge final">165 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">4</span> ROBOMİNO</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 112</span><span class="badge t2">Tur 2: 48</span><span class="badge final">160 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">5</span> NOKTA PARANTEZ</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 69</span><span class="badge t2">Tur 2: 78</span><span class="badge final">147 Puan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="note success">
+                        <strong>Etkili İkinci Tur Performansı:</strong> ARTİFUSION takımı, 1. turu 69 puanla daha alt sıralarda tamamlamasına karşın, 2. turda elde ettiği 120 puan ile genel klasmanda birinciliğe yükselmiştir. Bu durum, turnuva genelinde 2. tur performansının belirleyiciliğini gösteren önemli bir örnektir.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="analiz-22-ky" class="sub-tab-content">
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3 style="color:#009688; border-bottom-color:#009688;">1. Tur Başarı Durumu (Maks: 125 Puan)</h3>
+                    <p>İlk tur (1. Kısım) <strong>125 tam puan</strong> üzerinden baraj analizleri:</p>
+                    <ul style="margin-top: 15px;">
+                        <li>
+                            <div style="display:flex; flex-direction:column;">
+                                <div><span style="color:#1565c0; font-weight:bold;">%80 Barajı (100+ Puan):</span> <span class="score" style="color:#2ecc71;">4 Takım Geçti</span></div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">ÇAKABOTS (125 Puan - %100), ROBOMİNO (108), SİRİUS (102), GÜÇLÜ ROBOTİX (101).</div>
+                            </div>
+                        </li>
+                        <li style="margin-top: 10px;">
+                            <div style="display:flex; flex-direction:column;">
+                                <div><span style="color:#e67e22; font-weight:bold;">%70 Barajı (87+ Puan):</span> <span class="score" style="color:#2ecc71;">Toplam 7 Takım Geçti</span></div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">Üstteki 4 takıma ek olarak; GLADIATORS (94), ROBOES4 (92) ve İNVİCTUS ORDU (91).</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="note danger">
+                        <strong>İlk Tur Liderlerinin 2. Tur Performansı:</strong><br>
+                        İlk turu 125 tam puanla (%100 başarı) lider tamamlayan ÇAKABOTS, 2. turda 49 puan alarak podyumdaki avantajını korumuştur. İlk turda 108 puanla 2. sırada olan ROBOMİNO ise 2. turda 24 puanda kalarak sıralamada gerilemiştir.
+                    </div>
+                </div>
+
+                <div class="analysis-card">
+                    <h3 style="color:#009688; border-bottom-color:#009688;">2. Tur Zirve Sıralaması (Farklı İlk 5 Skor)</h3>
+                    <p>2. kısım (tur) farklı en yüksek puan seviyelerine göre takımlar:</p>
+                    <ul>
+                        <li><span><strong>1. Seviye:</strong> JR TORNADO POWER</span> <span class="score">52 Puan</span></li>
+                        <li><span><strong>2. Seviye:</strong> ÇAKABOTS</span> <span class="score">49 Puan</span></li>
+                        <li><span><strong>3. Seviye:</strong> GLADIATORS</span> <span class="score">48 Puan</span></li>
+                        <li><span><strong>4. Seviye:</strong> SİRİUS</span> <span class="score">30 Puan</span></li>
+                        <li><span><strong>5. Seviye:</strong> ROBOMİNO</span> <span class="score">24 Puan</span></li>
+                    </ul>
+                    <div class="note warning">
+                        <strong>Turnuva Dinamikleri:</strong> 2. tur skorlarının maksimum kapasite olan 125'in çok altında (en fazla 52) kalması, ilk turda toplanan puanların şampiyonluk yarışındaki belirleyici rolünü ön plana çıkarmıştır.
+                    </div>
+                </div>
+
+                <div class="analysis-card final-rank-card" style="grid-column: 1 / -1;">
+                    <h3>🏆 WRO 22 (2022) Küçük Yıldızlar Final Sıralaması (İlk 5)</h3>
+                    <div style="margin-top: 15px;">
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">1</span> ÇAKABOTS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 125</span><span class="badge t2">Tur 2: 49</span><span class="badge final">174 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">2</span> GLADIATORS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 94</span><span class="badge t2">Tur 2: 48</span><span class="badge final">142 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">3</span> SİRİUS</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 102</span><span class="badge t2">Tur 2: 30</span><span class="badge final">132 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">4</span> ROBOMİNO</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 108</span><span class="badge t2">Tur 2: 24</span><span class="badge final">132 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">5</span> İNVİCTUS ORDU</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 91</span><span class="badge t2">Tur 2: 22</span><span class="badge final">113 Puan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="note success">
+                        <strong>Genel Değerlendirme:</strong> ÇAKABOTS'un ilk turdaki 125 tam puanlık kusursuz performansı, ikinci turda yaşanan genel puan düşüşüne rağmen onlara rahat bir şampiyonluk getirmiştir.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="analiz-22-y" class="sub-tab-content">
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <h3>1. Tur Başarı Durumu (Maks: 155 Puan)</h3>
+                    <p>İlk tur (1. Kısım) tahmini <strong>155 tam puan</strong> üzerinden baraj analizleri:</p>
+                    <ul style="margin-top: 15px;">
+                        <li>
+                            <div style="display:flex; flex-direction:column;">
+                                <div><span style="color:#1565c0; font-weight:bold;">%90 Barajı (139+ Puan):</span> <span class="score" style="color:#2ecc71;">3 Takım Geçti</span></div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">ROBARMY-1 (153 Puan), GOD OF LEGO (148 Puan), COME ON (147 Puan).</div>
+                            </div>
+                        </li>
+                        <li style="margin-top: 10px;">
+                            <div style="display:flex; flex-direction:column;">
+                                <div><span style="color:#e67e22; font-weight:bold;">%70 Barajı (108+ Puan):</span> <span class="score" style="color:#2ecc71;">Toplam 6 Takım Geçti</span></div>
+                                <div style="font-size:12px; margin-top:3px; color:#555;">Üstteki 3 takıma ek olarak; KONTAK (136 Puan), ROBORION (136 Puan) ve THE CODE (112 Puan).</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="note success">
+                        <strong>Geri Dönüş Çabası:</strong> İlk turda 112 puan ile liderlerin biraz gerisinde kalan THE CODE takımı, 2. turda muazzam bir yükselişle 120 tam puanlık bir performans göstermiştir.
+                    </div>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>2. Tur Zirve Sıralaması (Farklı İlk 5 Skor)</h3>
+                    <p>2. kısım (tur) farklı en yüksek puan seviyelerine göre takımlar:</p>
+                    <ul>
+                        <li><span><strong>1. Seviye:</strong> COME ON / THE CODE</span> <span class="score">120 Puan</span></li>
+                        <li><span><strong>2. Seviye:</strong> SPARK</span> <span class="score">100 Puan</span></li>
+                        <li><span><strong>3. Seviye:</strong> ROBARMY-1 / PANACEA</span> <span class="score">90 Puan</span></li>
+                        <li><span><strong>4. Seviye:</strong> GOD OF LEGO</span> <span class="score">85 Puan</span></li>
+                        <li><span><strong>5. Seviye:</strong> ROBOES 3 / ÇAKATECH</span> <span class="score">75 Puan</span></li>
+                    </ul>
+                    <div class="note warning">
+                        <strong>İkinci Tur Dinamikleri:</strong> COME ON ve THE CODE takımlarının 120 tam puanlık hatasız performansları, turnuvanın kaderini belirleyen en önemli etken olmuştur.
+                    </div>
+                </div>
+
+                <div class="analysis-card final-rank-card" style="grid-column: 1 / -1;">
+                    <h3>🏆 WRO 22 (2022) Yıldızlar Final Sıralaması (İlk 5)</h3>
+                    <div style="margin-top: 15px;">
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">1</span> COME ON</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 147</span><span class="badge t2">Tur 2: 120</span><span class="badge final">267 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">2</span> ROBARMY-1</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 153</span><span class="badge t2">Tur 2: 90</span><span class="badge final">243 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">3</span> GOD OF LEGO</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 148</span><span class="badge t2">Tur 2: 85</span><span class="badge final">233 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">4</span> THE CODE</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 112</span><span class="badge t2">Tur 2: 120</span><span class="badge final">232 Puan</span>
+                            </div>
+                        </div>
+                        <div class="pro-rank-row">
+                            <div class="pro-rank-team"><span class="rank-num">5</span> KONTAK</div>
+                            <div class="pro-rank-scores">
+                                <span class="badge t1">Tur 1: 136</span><span class="badge t2">Tur 2: 70</span><span class="badge final">206 Puan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="note success">
+                        <strong>Genel Değerlendirme:</strong> COME ON takımı, her iki turda da gösterdiği üst düzey ve istikrarlı performans (147 ve 120 puan) ile WRO 22'nin en dikkat çeken şampiyonluklarından birine imza atmıştır.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="content-tarihce" class="tab-content">
+        <h2 style="color:#2c3e50; text-align: center;">Ödül Alanlar Listesi (2015 - 2026)</h2>
+        <div class="table-container">
+            <table id="wroTable">
+                <thead>
+                    <tr>
+                        <th>Yıl</th>
+                        <th>Ödül</th>
+                        <th>Robomission Küçük Yıldızlar</th>
+                        <th>Robomission Yıldızlar</th>
+                    </tr>
+                </thead>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2026</td><td>Birincilik</td><td><b>THUNDER/BOTS</b> (21)</td><td><b>ÇAKATECH_1</b> (15)</td></tr>
+                    <tr class="silver-dark"><td>2026</td><td>İkincilik</td><td><b>THE KING OF MELODIES</b> (272)</td><td><b>THUNDER/BOTS</b> (73)</td></tr>
+                    <tr class="bronze-dark"><td>2026</td><td>Üçüncülük</td><td><b>NORTH ROBOTİCS JR</b> (11)</td><td><b>ALTAŞJUNİOR</b> (112)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2025</td><td>Birincilik</td><td><b>THUNDER/BOTS</b> (42 - FMV ÖZEL ISPARTAKULE IŞIK ORTAOKULU)</td><td><b>THE MARTIANS</b> (54 - ÖZEL ÇAKABEY ORTAOKULU)</td></tr>
+                    <tr class="silver-dark"><td>2025</td><td>İkincilik</td><td><b>DRAGONROBOTİCS</b> (23 - MALTEPE KADİR HAS BİLİM VE SANAT MERKEZİ)</td><td><b>JR. TORNADO</b> (261 - ÖZEL BAHÇEŞEHİR KAYSERİ ORTAOKULU)</td></tr>
+                    <tr class="bronze-dark"><td>2025</td><td>Üçüncülük</td><td><b>WALLBOTS</b> (112 - ÖZEL ÇAKABEY ORTAOKULU)</td><td><b>SPICA</b> (417 - ÇİĞLİ AYDOĞAN YAĞCI BİLİM VE SANAT MERKEZİ)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2024</td><td>Birincilik</td><td><b>EARTBOTS</b> (107 - ÖZEL ÇAKABEY ORTAOKULU)</td><td><b>ARTIFUSION</b> (86 - ÖZEL ÇAKABEY LİSESİ)</td></tr>
+                    <tr class="silver-dark"><td>2024</td><td>İkincilik</td><td><b>ROBOTAKEV</b> (227 - TAKEV ÖZEL ORTAOKULU)</td><td><b>SIRIUS A</b> (295 - DR. M. HİLMİ GÜLER BİLİM VE SANAT MERKEZİ)</td></tr>
+                    <tr class="bronze-dark"><td>2024</td><td>Üçüncülük</td><td><b>JR TORNADO POWER</b> (256 - ÖZEL BAHÇEŞEHİR KAYSERİ ORTAOKULU)</td><td><b>JUNIOR ALTAŞ</b> (182 - ÖZEL ALTAŞ ORTAOKULU)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2023</td><td>Birincilik</td><td><b>ALBATROS</b> (18 - Bireysel)</td><td><b>JUNIOR ALTAŞ</b> (85 - ÖZEL ALTAŞ ORTAOKULU)</td></tr>
+                    <tr class="silver-dark"><td>2023</td><td>İkincilik</td><td><b>ROBALANYA</b> (20 - ALANYA BİLİM VE SANAT MERKEZİ)</td><td><b>ROBARMY1</b> (105 - DR. M. HİLMİ GÜLER BİLİM VE SANAT MERKEZİ)</td></tr>
+                    <tr class="bronze-dark"><td>2023</td><td>Üçüncülük</td><td><b>CODE MASTERS</b> (14 - ÖZEL ERASLAN ORTAOKULU)</td><td><b>6TH DIMENSION</b> (21 - ÖZEL ÇAKABEY LİSESİ)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2022</td><td>Birincilik</td><td><b>ÇAKABOTS</b> (278)</td><td><b>COME ON</b> (267)</td></tr>
+                    <tr class="silver-dark"><td>2022</td><td>İkincilik</td><td><b>GLADIATORS</b> (13)</td><td><b>ROBARMY-1</b> (40)</td></tr>
+                    <tr class="bronze-dark"><td>2022</td><td>Üçüncülük</td><td><b>SİRİUS</b> (30)</td><td><b>GOD OF LEGO</b> (178)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2021</td><td>Birincilik</td><td><b>ÇAKABOTS</b> (13)</td><td><b>SPARK</b> (2)</td></tr>
+                    <tr class="silver-dark"><td>2021</td><td>İkincilik</td><td><b>ÇAKATECH</b> (5)</td><td><b>ROBOTUM</b> (121)</td></tr>
+                    <tr class="bronze-dark"><td>2021</td><td>Üçüncülük</td><td><b>BİLNETECH KİDS</b> (22)</td><td><b>BİLBOTS</b> (42)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2019</td><td>Birincilik</td><td>-</td><td><b>Bandboat</b> (284)</td></tr>
+                    <tr class="silver-dark"><td>2019</td><td>İkincilik</td><td>-</td><td><b>Magnetech Initium</b> (235)</td></tr>
+                    <tr class="bronze-dark"><td>2019</td><td>Üçüncülük</td><td>-</td><td><b>Thunderforce</b> (352)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2018</td><td>Birincilik</td><td>-</td><td><b>Robarmy - 4</b> (45)</td></tr>
+                    <tr class="silver-dark"><td>2018</td><td>İkincilik</td><td>-</td><td><b>Bilsem 10</b> (104)</td></tr>
+                    <tr class="bronze-dark"><td>2018</td><td>Üçüncülük</td><td>-</td><td><b>Robomer</b> (214)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2017</td><td>Birincilik</td><td>-</td><td><b>ROBISTIM QUARK</b> (24)</td></tr>
+                    <tr class="silver-dark"><td>2017</td><td>İkincilik</td><td>-</td><td><b>ROBOBRAINS</b> (101)</td></tr>
+                    <tr class="bronze-dark"><td>2017</td><td>Üçüncülük</td><td>-</td><td><b>ROBOTAKEV</b> (100)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2016</td><td>Birincilik</td><td>-</td><td><b>ROBİSTİM KUANTUM</b> (25)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2015</td><td>Birincilik</td><td>-</td><td><b>ROBİSTİM</b> (4)</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="content-taktik" class="tab-content">
+        <h2 style="color: #2c3e50; text-align: center;">THUNDER⚡BOTS Taktik Tahtası</h2>
+        <div class="action-bar" style="justify-content: center; background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px;">
+            <select id="taktik-mat-select" onchange="changeMat()" style="padding: 8px; border-radius: 6px; border: 1px solid #ccc; font-weight: bold; color: #333; cursor: pointer;">
+                <option value="https://i.imgur.com/809nJsq.jpeg">Küçük Yıldızlar Matı</option>
+                <option value="https://i.imgur.com/tAMgUHC.jpeg">Yıldızlar Matı</option>
+            </select>
+            <div style="width: 2px; background: #eee; margin: 0 10px;"></div>
+            <input type="color" id="taktik-color" value="#e74c3c" title="Kalem Rengi" style="cursor: pointer; height: 35px; width: 40px; padding: 0; border: none; background: transparent;">
+            <input type="range" id="taktik-size" min="1" max="20" value="5" title="Kalem Boyutu" style="width: 100px; cursor: pointer;">
+            <button class="btn btn-save" id="btn-pen" onclick="setTool('pen')" style="background: #2980b9;">✏️ Kalem</button>
+            <button class="btn btn-clear" id="btn-eraser" onclick="setTool('eraser')" style="background: #95a5a6;">🧽 Silgi</button>
+            <button class="btn btn-danger" onclick="clearTaktikCanvas()">🗑️ Tümünü Temizle</button>
+        </div>
+        
+        <div style="position: relative; width: 100%; max-width: 1100px; margin: 0 auto; text-align: center; overflow: hidden;">
+            <canvas id="taktik-canvas" width="1100" height="534" style="width: 100%; max-width: 100%; border: 2px solid var(--border-color); border-radius: 8px; background-image: url('https://i.imgur.com/809nJsq.jpeg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; cursor: crosshair; touch-action: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1);"></canvas>
+        </div>
+        <div class="note" style="margin-top: 15px; text-align: center; max-width: 600px; margin-left: auto; margin-right: auto; border-left-color: #3498db;">
+            <strong>İpucu:</strong> Çizim yaparken mouse veya dokunmatik ekran kullanabilirsin. Mat resmini değiştirdiğinde mevcut çizimlerin otomatik silinir.
+        </div>
+    </div>
 </div>
+
+<div id="wroImageModal" class="wro-modal" onclick="closeModal()">
+    <span class="wro-close">&times;</span>
+    <img class="wro-modal-content" id="wroExpandedImage">
+</div>
+
+<script>
+    function validateGroup(changedId, groupIds, maxLimit) {
+        let currentInput = document.getElementById(changedId);
+        let currentVal = parseInt(currentInput.value) || 0;
+        let otherTotal = 0;
+        groupIds.forEach(id => { if (id !== changedId) otherTotal += parseInt(document.getElementById(id).value) || 0; });
+        if (currentVal + otherTotal > maxLimit) currentInput.value = maxLimit - otherTotal;
+    }
+
+    const colors = { 'Sarı': 'c-yellow', 'Lacivert': 'c-blue', 'Mavi': 'c-blue', 'Siyah': 'c-black', 'Beyaz': 'c-white', 'Kırmızı': 'c-red', 'Yeşil': 'c-green' };
+    function cS(txt) { return `<span class="${colors[txt] || ''}">${txt}</span>`; }
+
+    function openTab(id, btn) {
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.getElementById('content-' + id).classList.add('active');
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if(id.startsWith('stat-')) updateStatsUI(id.split('-')[1]);
+    }
+
+    function openSubTab(evt, tabName) {
+        var i, subcontent, sublinks;
+        subcontent = document.getElementsByClassName("sub-tab-content");
+        for (i = 0; i < subcontent.length; i++) { subcontent[i].classList.remove("active"); }
+        sublinks = document.getElementsByClassName("sub-tab-btn");
+        for (i = 0; i < sublinks.length; i++) { sublinks[i].classList.remove("active"); }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
+    function calcLS() {
+        let total = 0;
+        const p = { ls_kb_f: 15, ls_kb_p: 5, ls_mk_f: 20, ls_mk_p: 10, ls_ens: 15, ls_nt_f: 20, ls_nt_p: 10, ls_bon_hop: 10 };
+        for(let k in p) {
+            let val = parseInt(document.getElementById(k).value) || 0;
+            if(document.getElementById('res_'+k)) document.getElementById('res_'+k).innerText = val * p[k];
+            total += val * p[k];
+        }
+        let sol = document.getElementById('ls_bon_sol').checked ? 10 : 0;
+        let amf = document.getElementById('ls_bon_amf').checked ? 10 : 0;
+        if(document.getElementById('res_ls_bon_sol')) document.getElementById('res_ls_bon_sol').innerText = sol;
+        if(document.getElementById('res_ls_bon_amf')) document.getElementById('res_ls_bon_amf').innerText = amf;
+        document.getElementById('ls_total').innerText = total + sol + amf;
+        return { total: total + sol + amf, groups: {
+            "Kablolar (Maks 30)": (parseInt(document.getElementById('ls_kb_f').value)||0)*15 + (parseInt(document.getElementById('ls_kb_p').value)||0)*5,
+            "Mikrofon (Maks 20)": (parseInt(document.getElementById('ls_mk_f').value)||0)*20 + (parseInt(document.getElementById('ls_mk_p').value)||0)*10,
+            "Enstrüman (Maks 45)": (parseInt(document.getElementById('ls_ens').value)||0)*15,
+            "Notalar (Maks 120)": (parseInt(document.getElementById('ls_nt_f').value)||0)*20 + (parseInt(document.getElementById('ls_nt_p').value)||0)*10,
+            "Bonuslar (Maks 40)": sol + amf + (parseInt(document.getElementById('ls_bon_hop').value)||0)*10
+        }};
+    }
+
+    function calcS() {
+        let total = 0;
+        const p = { s_ziy_f: 10, s_ziy_p: 5, s_kr_f: 15, s_kr_p: 10, s_sa_f: 25, s_sa_p: 15, s_es_f: 15, s_es_p: 5, s_kir: 2, s_bon_bar: 10 };
+        for(let k in p) {
+            let val = parseInt(document.getElementById(k).value) || 0;
+            if(document.getElementById('res_'+k)) document.getElementById('res_'+k).innerText = val * p[k];
+            total += val * p[k];
+        }
+        let pap = document.getElementById('s_bon_pap').checked ? 10 : 0;
+        if(document.getElementById('res_s_bon_pap')) document.getElementById('res_s_bon_pap').innerText = pap;
+        document.getElementById('s_total').innerText = total + pap;
+        return { total: total + pap, groups: {
+            "Ziyaretçiler (Maks 40)": (parseInt(document.getElementById('s_ziy_f').value)||0)*10 + (parseInt(document.getElementById('s_ziy_p').value)||0)*5,
+            "Kırmızı Kule (Maks 30)": (parseInt(document.getElementById('s_kr_f').value)||0)*15 + (parseInt(document.getElementById('s_kr_p').value)||0)*10,
+            "Sarı Kule (Maks 50)": (parseInt(document.getElementById('s_sa_f').value)||0)*25 + (parseInt(document.getElementById('s_sa_p').value)||0)*15,
+            "Eserler (Maks 60)": (parseInt(document.getElementById('s_es_f').value)||0)*15 + (parseInt(document.getElementById('s_es_p').value)||0)*5,
+            "Taş Döşeme/Kir (Maks 20)": (parseInt(document.getElementById('s_kir').value)||0)*2,
+            "Bonuslar (Maks 30)": pap + (parseInt(document.getElementById('s_bon_bar').value)||0)*10
+        }};
+    }
+
+    function resetScore(cat) {
+        if(!confirm('Puan formunu sıfırlamak istiyor musunuz?')) return;
+        document.getElementById('form-'+cat).reset();
+        cat === 'ls' ? calcLS() : calcS();
+    }
+
+    const maxScores = {
+        'ls': { "Kablolar (Maks 30)":30, "Mikrofon (Maks 20)":20, "Enstrüman (Maks 45)":45, "Notalar (Maks 120)":120, "Bonuslar (Maks 40)":40 },
+        's': { "Ziyaretçiler (Maks 40)":40, "Kırmızı Kule (Maks 30)":30, "Sarı Kule (Maks 50)":50, "Eserler (Maks 60)":60, "Taş Döşeme/Kir (Maks 20)":20, "Bonuslar (Maks 30)":30 }
+    };
+
+    function saveRun(cat) {
+        const data = cat === 'ls' ? calcLS() : calcS();
+        if (data.total === 0) { alert('Puanınız 0. Kaydetmek için önce skor girin.'); return; }
+        
+        let runs = JSON.parse(localStorage.getItem(`stats_${cat}`) || '[]');
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('tr-TR') + ' ' + now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+        
+        runs.push({ id: Date.now(), date: dateStr, total: data.total, groups: data.groups });
+        localStorage.setItem(`stats_${cat}`, JSON.stringify(runs));
+        
+        alert(`Tebrikler! ${data.total} puan başarıyla kaydedildi.`);
+        updateStatsUI(cat);
+    }
+
+    function deleteRun(cat, id) {
+        let runs = JSON.parse(localStorage.getItem(`stats_${cat}`) || '[]');
+        runs = runs.filter(r => r.id !== id);
+        localStorage.setItem(`stats_${cat}`, JSON.stringify(runs));
+        updateStatsUI(cat);
+    }
+
+    function clearStats(cat) {
+        if(!confirm('Geçmiş tüm puan kayıtlarını kalıcı olarak silmek istediğine emin misin?')) return;
+        localStorage.removeItem(`stats_${cat}`);
+        updateStatsUI(cat);
+    }
+
+    function updateStatsUI(cat) {
+        let runs = JSON.parse(localStorage.getItem(`stats_${cat}`) || '[]');
+        const tbody = document.getElementById(`stat_history_${cat}`);
+        const weakList = document.getElementById(`stat_weak_${cat}`);
+        const avgSpan = document.getElementById(`stat_avg_${cat}`);
+        
+        if(!tbody || !weakList || !avgSpan) return;
+
+        tbody.innerHTML = '';
+        if (runs.length === 0) {
+            avgSpan.innerText = '0';
+            weakList.innerHTML = '<li>Henüz yeterli veri yok. En az 1 skor kaydedin.</li>';
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;">Kayıt bulunamadı.</td></tr>';
+            return;
+        }
+
+        let totalScore = 0;
+        let groupSums = {};
+        
+        runs.slice().reverse().forEach(run => {
+            totalScore += run.total;
+            for(let g in run.groups) { groupSums[g] = (groupSums[g]||0) + run.groups[g]; }
+            
+            tbody.innerHTML += `<tr>
+                <td>${run.date}</td>
+                <td><strong>${run.total}</strong></td>
+                <td><button class="btn btn-danger" onclick="deleteRun('${cat}', ${run.id})">Sil</button></td>
+            </tr>`;
+        });
+
+        avgSpan.innerText = Math.round(totalScore / runs.length);
+        
+        let weaknesses = [];
+        for(let g in maxScores[cat]) {
+            let avgG = (groupSums[g] || 0) / runs.length;
+            let missed = maxScores[cat][g] - avgG;
+            if (missed > 0) weaknesses.push({ name: g, missed: missed });
+        }
+        
+        weaknesses.sort((a,b) => b.missed - a.missed);
+        
+        weakList.innerHTML = '';
+        if (weaknesses.length === 0) {
+            weakList.innerHTML = '<li style="color:#198754">Harika! Tüm görevleri eksiksiz yapıyorsunuz!</li>';
+        } else {
+            weaknesses.slice(0,3).forEach(w => {
+                weakList.innerHTML += `<li>${w.name} ➔ Ortalama <strong>${w.missed.toFixed(1)}</strong> puan kaybediyorsunuz.</li>`;
+            });
+        }
+    }
+
+    function initLSProbs() {
+        const cont = document.getElementById('ls-group-container');
+        if(!cont) return;
+
+        cont.innerHTML = "";
+
+        const data = [
+            {
+                title: "Sol Taraftaki Yuvalar",
+                theme: "Mavi", 
+                items: [
+                    { id: "ls_prob_sol_y1_sari", text: "Yuva 1: <strong>" + cS('Sarı') + "</strong>" },
+                    { id: "ls_prob_sol_y1_mavi", text: "Yuva 1: <strong>" + cS('Mavi') + "</strong>" },
+                    { id: "ls_prob_sol_y2_sari", text: "Yuva 2: <strong>" + cS('Sarı') + "</strong>" },
+                    { id: "ls_prob_sol_y2_mavi", text: "Yuva 2: <strong>" + cS('Mavi') + "</strong>" },
+                    { id: "ls_prob_sol_y1s_y2m", text: "Yuva 1: <strong>" + cS('Sarı') + "</strong>, Yuva 2: <strong>" + cS('Mavi') + "</strong>" },
+                    { id: "ls_prob_sol_y1m_y2s", text: "Yuva 1: <strong>" + cS('Mavi') + "</strong>, Yuva 2: <strong>" + cS('Sarı') + "</strong>" }
+                ]
+            },
+            {
+                title: "Sağ Taraftaki Yuvalar",
+                theme: "Sarı",
+                items: [
+                    { id: "ls_prob_sag_y3_sari", text: "Yuva 3: <strong>" + cS('Sarı') + "</strong>" },
+                    { id: "ls_prob_sag_y3_mavi", text: "Yuva 3: <strong>" + cS('Mavi') + "</strong>" },
+                    { id: "ls_prob_sag_y4_sari", text: "Yuva 4: <strong>" + cS('Sarı') + "</strong>" },
+                    { id: "ls_prob_sag_y4_mavi", text: "Yuva 4: <strong>" + cS('Mavi') + "</strong>" },
+                    { id: "ls_prob_sag_y3s_y4m", text: "Yuva 3: <strong>" + cS('Sarı') + "</strong>, Yuva 4: <strong>" + cS('Mavi') + "</strong>" },
+                    { id: "ls_prob_sag_y3m_y4s", text: "Yuva 3: <strong>" + cS('Mavi') + "</strong>, Yuva 4: <strong>" + cS('Sarı') + "</strong>" }
+                ]
+            }
+        ];
+
+        data.forEach(group => {
+            let box = `<div class="group-box theme-${group.theme}"><h3 class="group-title">${group.title}</h3><div class="checklist-grid">`;
+            group.items.forEach(item => {
+                const uid = item.id;
+                const chk = localStorage.getItem(uid) === 'true' ? 'checked' : '';
+                box += `<div class="checklist-item ${chk}" onclick="toggleProb('${uid}', this)">
+                    <input type="checkbox" ${chk?'checked':''}>
+                    <div style="font-size: 0.95rem; line-height: 1.4; white-space: nowrap;">
+                        ${item.text}
+                    </div>
+                </div>`;
+            });
+            box += `</div></div>`;
+            cont.innerHTML += box;
+        });
+    }
+
+    function toggleProb(id, el) {
+        const cb = el.querySelector('input');
+        cb.checked = !cb.checked;
+        el.classList.toggle('checked', cb.checked);
+        localStorage.setItem(id, cb.checked);
+    }
+
+    function clearProb() {
+        if(!confirm('Tüm işaretlemeleri temizlemek istediğinize emin misiniz?')) return;
+        Object.keys(localStorage).forEach(k => { if(k.startsWith('ls_prob_')) localStorage.removeItem(k); });
+        initLSProbs();
+    }
+
+    let pairNotes = {
+        y1_y2: [],
+        y1_y3: [],
+        y1_y4: [],
+        y2_y3: [],
+        y2_y4: [],
+        y3_y4: []
+    };
+
+    function renderDynamicNotes(type) {
+        const container = document.getElementById(`${type}_notes_container`);
+        if (!container) return;
+        const notes = pairNotes[type];
+        container.innerHTML = '';
+        notes.forEach((note, index) => {
+            container.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; background:#fff; border:1px solid #ddd; padding:8px; border-radius:4px; color:#333; margin-bottom:4px;">
+                <span style="flex:1; padding-right:10px; font-size:13px;">${note}</span>
+                <button class="btn btn-danger" style="padding:2px 6px; font-size:12px; height:fit-content;" onclick="removeDynamicNote('${type}', ${index})">Sil</button>
+            </div>`;
+        });
+    }
+
+    function addDynamicNote(type, label1, label2) {
+        const input = document.getElementById(`${type}_note_input`);
+        const val = input.value.trim();
+        if(val) {
+            const c1 = document.querySelector(`input[name="c_${type}_1"]:checked`).value;
+            const c2 = document.querySelector(`input[name="c_${type}_2"]:checked`).value;
+            const colorPrefix = `[${label1}: ${c1}, ${label2}: ${c2}]`;
+            const finalNote = `<strong style="color:#d35400;">${colorPrefix}</strong> ${val}`;
+            
+            pairNotes[type].push(finalNote);
+            input.value = '';
+            renderDynamicNotes(type);
+        }
+    }
+
+    function removeDynamicNote(type, index) {
+        pairNotes[type].splice(index, 1);
+        renderDynamicNotes(type);
+    }
+
+    function saveNotesLS() {
+        const notes = {
+            kablo: document.getElementById('note_ls_kablo').value,
+            gosteri: document.getElementById('note_ls_gosteri').value,
+            nota: document.getElementById('note_ls_nota').value,
+            bonus: document.getElementById('note_ls_bonus').value,
+            pairs: pairNotes
+        };
+        localStorage.setItem('wro_ls_notes', JSON.stringify(notes));
+        alert('Notlar tarayıcıya başarıyla kaydedildi!');
+    }
+
+    function loadNotesLS() {
+        const saved = localStorage.getItem('wro_ls_notes');
+        if (saved) {
+            try {
+                const notes = JSON.parse(saved);
+                document.getElementById('note_ls_kablo').value = notes.kablo || '';
+                document.getElementById('note_ls_gosteri').value = notes.gosteri || '';
+                document.getElementById('note_ls_nota').value = notes.nota || '';
+                document.getElementById('note_ls_bonus').value = notes.bonus || '';
+                if(notes.pairs) {
+                    pairNotes = { ...pairNotes, ...notes.pairs };
+                } else if(notes.sol_notes || notes.sag_notes) {
+                    pairNotes.y1_y2 = notes.sol_notes || [];
+                    pairNotes.y3_y4 = notes.sag_notes || [];
+                }
+                
+                Object.keys(pairNotes).forEach(type => renderDynamicNotes(type));
+            } catch(e) {}
+        }
+    }
+
+    function clearNotesLS() {
+        if (confirm('Tüm Küçük Yıldızlar notlarını silmek istediğinize emin misiniz?')) {
+            document.getElementById('note_ls_kablo').value = '';
+            document.getElementById('note_ls_gosteri').value = '';
+            document.getElementById('note_ls_nota').value = '';
+            document.getElementById('note_ls_bonus').value = '';
+            pairNotes = { y1_y2: [], y1_y3: [], y1_y4: [], y2_y3: [], y2_y4: [], y3_y4: [] };
+            Object.keys(pairNotes).forEach(type => renderDynamicNotes(type));
+            localStorage.removeItem('wro_ls_notes');
+        }
+    }
+
+    function downloadNotesLS() {
+        const notes = {
+            kablo: document.getElementById('note_ls_kablo').value,
+            gosteri: document.getElementById('note_ls_gosteri').value,
+            nota: document.getElementById('note_ls_nota').value,
+            bonus: document.getElementById('note_ls_bonus').value,
+            pairs: pairNotes
+        };
+        const blob = new Blob([JSON.stringify(notes, null, 2)], {type: 'application/json'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `kucuk_yildizlar_notlar.json`;
+        a.click();
+    }
+
+    function saveJSON(cat, mode) {
+        const data = {};
+        if (mode === 'prob') {
+            Object.keys(localStorage).forEach(k => { if(k.startsWith('ls_prob_')) data[k] = localStorage.getItem(k); });
+        } else {
+            const statKey = `stats_${cat}`;
+            data[statKey] = localStorage.getItem(statKey);
+        }
+        
+        const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `wro_2025_${cat}_${mode}.json`;
+        a.click();
+    }
+
+    function loadJSON(ev, cat, mode) {
+        const file = ev.target.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+            try {
+                const data = JSON.parse(e.target.result);
+                Object.keys(data).forEach(k => localStorage.setItem(k, data[k]));
+                alert('Veriler başarıyla yüklendi!');
+                location.reload();
+            } catch(e) { alert('Hatalı dosya formatı!'); }
+        };
+        reader.readAsText(file);
+    }
+
+    function openModal(imageSrc) {
+        document.getElementById('wroExpandedImage').src = imageSrc;
+        document.getElementById('wroImageModal').style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById('wroImageModal').style.display = "none";
+    }
+
+    let robotTimeLeft = 120;
+    let robotTimerInterval = null;
+
+    function formatTime(seconds) {
+        const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+        const s = (seconds % 60).toString().padStart(2, '0');
+        return `${m}:${s}`;
+    }
+
+    function updateRobotTimerDisplay() {
+        document.getElementById('robot-timer-display').innerText = formatTime(robotTimeLeft);
+    }
+
+    function startRobotTimer() {
+        if (robotTimerInterval) return; 
+        robotTimerInterval = setInterval(() => {
+            if (robotTimeLeft > 0) {
+                robotTimeLeft--;
+                updateRobotTimerDisplay();
+            } else {
+                clearInterval(robotTimerInterval);
+                robotTimerInterval = null;
+                alert("Süre doldu. Lütfen sonuçları girin.");
+            }
+        }, 1000);
+    }
+
+    function pauseRobotTimer() {
+        clearInterval(robotTimerInterval);
+        robotTimerInterval = null;
+    }
+
+    function resetRobotTimer() {
+        pauseRobotTimer();
+        robotTimeLeft = 120;
+        updateRobotTimerDisplay();
+    }
+
+    function updateWROCountdown() {
+        const targetDate = new Date("2026-06-07T00:00:00").getTime();
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+        
+        const display = document.getElementById('wro-countdown-display');
+        
+        if (distance < 0) {
+            display.innerHTML = "Turnuva günü!";
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+        display.innerHTML = `${days} Gün <span style="font-size:1.2rem; color: #d35400;">${hours} Saat ${minutes} Dk</span>`;
+    }
+
+    const taktikCanvas = document.getElementById('taktik-canvas');
+    const taktikCtx = taktikCanvas ? taktikCanvas.getContext('2d') : null;
+    let isDrawing = false;
+    let currentTool = 'pen'; 
+
+    function getMousePosTaktik(evt) {
+        const rect = taktikCanvas.getBoundingClientRect();
+        const scaleX = taktikCanvas.width / rect.width;
+        const scaleY = taktikCanvas.height / rect.height;
+        let clientX = evt.clientX;
+        let clientY = evt.clientY;
+        
+        if (evt.touches && evt.touches.length > 0) {
+            clientX = evt.touches[0].clientX;
+            clientY = evt.touches[0].clientY;
+        }
+        
+        return {
+            x: (clientX - rect.left) * scaleX,
+            y: (clientY - rect.top) * scaleY
+        };
+    }
+
+    function startDrawing(evt) {
+        isDrawing = true;
+        const pos = getMousePosTaktik(evt);
+        taktikCtx.beginPath();
+        taktikCtx.moveTo(pos.x, pos.y);
+        evt.preventDefault(); 
+    }
+
+    function draw(evt) {
+        if (!isDrawing) return;
+        const pos = getMousePosTaktik(evt);
+        taktikCtx.lineTo(pos.x, pos.y);
+        
+        taktikCtx.lineWidth = document.getElementById('taktik-size').value;
+        taktikCtx.lineCap = 'round';
+        taktikCtx.lineJoin = 'round';
+        
+        if (currentTool === 'eraser') {
+            taktikCtx.globalCompositeOperation = 'destination-out';
+            taktikCtx.strokeStyle = "rgba(0,0,0,1)";
+        } else {
+            taktikCtx.globalCompositeOperation = 'source-over';
+            taktikCtx.strokeStyle = document.getElementById('taktik-color').value;
+        }
+        
+        taktikCtx.stroke();
+        evt.preventDefault();
+    }
+
+    function stopDrawing() {
+        isDrawing = false;
+        taktikCtx.closePath();
+    }
+
+    function setTool(tool) {
+        currentTool = tool;
+        document.getElementById('btn-pen').style.boxShadow = tool === 'pen' ? 'inset 0 0 0 3px rgba(0,0,0,0.5)' : 'none';
+        document.getElementById('btn-eraser').style.boxShadow = tool === 'eraser' ? 'inset 0 0 0 3px rgba(0,0,0,0.5)' : 'none';
+    }
+
+    function clearTaktikCanvas() {
+        if(confirm('Tahtayı tamamen temizlemek istediğine emin misin?')) {
+            taktikCtx.clearRect(0, 0, taktikCanvas.width, taktikCanvas.height);
+        }
+    }
+
+    function changeMat() {
+        const select = document.getElementById('taktik-mat-select');
+        taktikCanvas.style.backgroundImage = `url('${select.value}')`;
+        taktikCtx.clearRect(0, 0, taktikCanvas.width, taktikCanvas.height);
+    }
+
+    if (taktikCanvas) {
+        taktikCanvas.addEventListener('mousedown', startDrawing);
+        taktikCanvas.addEventListener('mousemove', draw);
+        taktikCanvas.addEventListener('mouseup', stopDrawing);
+        taktikCanvas.addEventListener('mouseout', stopDrawing);
+        
+        taktikCanvas.addEventListener('touchstart', startDrawing, {passive: false});
+        taktikCanvas.addEventListener('touchmove', draw, {passive: false});
+        taktikCanvas.addEventListener('touchend', stopDrawing);
+        taktikCanvas.addEventListener('touchcancel', stopDrawing);
+        
+        setTool('pen');
+    }
+
+    window.onload = () => { 
+        initLSProbs(); 
+        calcLS(); 
+        calcS(); 
+        updateStatsUI('ls'); 
+        updateStatsUI('s'); 
+
+        updateRobotTimerDisplay();
+        updateWROCountdown();
+        setInterval(updateWROCountdown, 60000); 
+
+        const cells = document.querySelectorAll('#wroTable tbody td');
+        cells.forEach(cell => {
+            cell.addEventListener('click', function() {
+                this.classList.toggle('highlight');
+            });
+        });
+
+        loadNotesLS();
+    };
+</script>
+
+</body>
+</html>
