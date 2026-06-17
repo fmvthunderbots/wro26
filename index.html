@@ -6,8 +6,8 @@
     <title>WRO 2025 Türkiye - Puan ve İstatistik Paneli</title>
     <style>
         :root {
-            --primary-color: #009688; /* Küçük Yıldızlar */
-            --secondary-color: #FF5722; /* Yıldızlar */
+            --primary-color: #009688;
+            --secondary-color: #FF5722;
             --header-bg: #333;
             --border-color: #ddd;
             --checked-bg: #d1e7dd; 
@@ -27,7 +27,6 @@
             border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
         }
 
-        /* Ana Sekmeler */
         .tabs { display: flex; flex-wrap: wrap; margin-bottom: 25px; border-bottom: 2px solid #e0e0e0; gap: 5px; }
         .tab-btn { 
             flex: 1; padding: 12px; border: none; background: #f5f5f5; 
@@ -36,7 +35,6 @@
         }
         .tab-btn.active { background: var(--header-bg); color: white; transform: translateY(-2px); }
 
-        /* Alt Sekmeler (Analiz İçin) */
         .sub-tabs { display: flex; border-bottom: 2px solid #2980b9; margin-bottom: 20px; border-radius: 6px 6px 0 0; overflow: hidden; flex-wrap: wrap;}
         .sub-tab-btn { flex: 1; padding: 12px; background: #e8f4f8; border: none; cursor: pointer; font-weight: bold; color: #34495e; transition: 0.3s; font-size: 14px; min-width: 130px; }
         .sub-tab-btn:hover { background: #d1e8f0; }
@@ -44,7 +42,6 @@
         .sub-tab-content { display: none; animation: fadeIn 0.3s; }
         .sub-tab-content.active { display: block; }
 
-        /* Tablo Stilleri (Genel) */
         table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
         th, td { border: 1px solid var(--border-color); padding: 10px; text-align: left; }
         th { background-color: var(--header-bg); color: white; font-size: 0.95rem; }
@@ -56,7 +53,6 @@
         }
         input[type="checkbox"] { transform: scale(1.5); cursor: pointer; }
 
-        /* Renkler */
         .c-red { color: #d32f2f; font-weight: bold; }
         .c-green { color: #2e7d32; font-weight: bold; }
         .c-blue { color: #1565c0; font-weight: bold; }
@@ -68,12 +64,12 @@
         .tab-content.active { display: block; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* İhtimaller Listesi */
         .checklist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
         .checklist-item { display: flex; align-items: center; background: #fff; border: 1px solid #ddd; padding: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
         .checklist-item:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .checklist-item.checked { background-color: var(--checked-bg); border-color: var(--checked-border); color: #111; }
         .checklist-item input { margin-right: 15px; pointer-events: none; }
+        
         .group-box { border: 1px solid #e0e0e0; border-radius: 10px; padding: 15px; margin-bottom: 25px; background: #fafafa; }
         .group-title { margin-top: 0; color: #444; border-bottom: 2px solid #ddd; padding-bottom: 8px; margin-bottom: 15px; }
 
@@ -89,13 +85,11 @@
         .reset-btn { background: #d32f2f; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; }
         .score-display { font-size: 1.4rem; font-weight: bold; display: flex; align-items: center; gap: 15px;}
 
-        /* İstatistik Bölümü */
         .stat-card { background: var(--stat-bg); border: 1px solid var(--stat-border); padding: 15px; border-radius: 8px; margin-bottom: 20px;}
         .stat-card h3 { margin-top: 0; color: #664d03; }
         .weakness-list { margin: 0; padding-left: 20px; color: #d32f2f; font-weight: bold; }
         .history-table th { background: #607d8b; }
 
-        /* WRO Analiz ve Tarihçe Ek Stilleri */
         .analysis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .analysis-card { background: #fdfdfd; border: 1px solid #e1e8ed; border-radius: 8px; padding: 15px; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.03);}
         .analysis-card h3 { margin-top: 0; color: #2980b9; border-bottom: 2px solid #3498db; padding-bottom: 8px; font-size: 16px; }
@@ -104,13 +98,11 @@
         .analysis-card li:last-child { border-bottom: none; }
         .score { font-weight: bold; color: #e67e22; white-space: nowrap; margin-left:10px;}
         
-        /* Derin Analiz Notları (Pro Mode) */
         .note { background-color: #f8f9fa; border-left: 4px solid #6c757d; padding: 12px; margin-top: 15px; font-size: 13px; color: #495057; border-radius: 0 4px 4px 0;}
         .note.danger { border-left-color: #e74c3c; background-color: #fceceb; color: #c0392b;}
         .note.success { border-left-color: #2ecc71; background-color: #eafaf1; color: #27ae60;}
         .note.warning { border-left-color: #f39c12; background-color: #fef5e7; color: #d68910;}
         
-        /* Final Kartı Tasarımı */
         .final-rank-card { background: linear-gradient(to bottom right, #ffffff, #f0f8ff); border: 2px solid #2980b9; grid-column: 1 / -1; }
         .final-rank-card h3 { color: #1565c0 !important; border-bottom: 2px solid #1565c0 !important; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;}
         
@@ -125,14 +117,22 @@
         .badge.t2 { background: #f3e5f5; color: #7b1fa2; border: 1px solid #e1bee7; }
         .badge.final { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; font-size: 15px; padding: 6px 15px; box-shadow: 0 1px 3px rgba(46,125,50,0.2);}
         
-        .table-container { overflow-x: auto; overflow-y: auto; max-height: 75vh; }
-        #wroTable { font-size: 13px; }
-        #wroTable th { position: sticky; top: 0; z-index: 1; background-color: #f4f7f6; color: #2c3e50; }
-        #wroTable td { cursor: pointer; transition: background-color 0.2s; padding: 8px 10px; }
+        .table-container { overflow-x: auto; overflow-y: auto; max-height: 75vh; padding: 2px;}
+        #wroTable { font-size: 13px; border-collapse: collapse;}
+        #wroTable th { position: sticky; top: 0; z-index: 1; background-color: #f4f7f6; color: #2c3e50; border: 1px solid var(--border-color);}
+        #wroTable td { cursor: pointer; transition: background-color 0.2s; padding: 8px 10px; border: 1px solid var(--border-color);}
         #wroTable td:hover { background-color: #e8f4f8; }
         .highlight { background-color: #ffeaa7 !important; color: #d35400 !important; font-weight: bold; }
 
-        /* --- KUTU RENKLENDİRME TEMALARI --- */
+        /* Yıl Yıl Kalın Çerçeve */
+        .year-block { border: 4px solid #1a252f; }
+
+        /* Ödül Listesi Satır Renkleri (Koyu Tonlar) */
+        .gold-dark { background-color: #fde073; }
+        .silver-dark { background-color: #d1d8e0; }
+        .bronze-dark { background-color: #e2b08a; }
+
+        /* KUTU RENKLENDİRME TEMALARI */
         .theme-Beyaz { background-color: #ffffff; border: 2px solid #e2e8f0; }
         .theme-Beyaz .group-title { color: #475569; border-bottom-color: #e2e8f0; }
         
@@ -142,62 +142,38 @@
         .theme-Sarı { background-color: #fefce8; border: 2px solid #fef08a; }
         .theme-Sarı .group-title { color: #b45309; border-bottom-color: #fef08a; }
 
-        /* Yeni Açık Renk Temaları */
         .theme-Kırmızı { background-color: #ffefef; border: 2px solid #ffcccc; }
         .theme-Kırmızı .group-title { color: #b71c1c; border-bottom-color: #ffcccc; }
 
         .theme-Yeşil { background-color: #e6ffeb; border: 2px solid #c2f0ca; }
         .theme-Yeşil .group-title { color: #1b5e20; border-bottom-color: #c2f0ca; }
-        
-        /* Füme (Daha açık siyah) tema için yazıları okunabilir yapıyoruz */
-        .theme-Siyah { background-color: #3e444d; border: 2px solid #2f333a; }
-        .theme-Siyah .group-title { color: #f9fafb; border-bottom-color: #555d6b; }
-        .theme-Siyah .checklist-item { background-color: #555d6b; border-color: #6a7485; color: #f9fafb; }
-        .theme-Siyah .checklist-item:hover { background-color: #6a7485; transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-        .theme-Siyah .checklist-item.checked { background-color: var(--checked-bg); color: #111; }
-        .theme-Siyah .checklist-item .c-black { color: #d1d5db; } /* Füme arkaplanda 'siyah' kelimesini açık gri yap */
+
+        .theme-Mor { background-color: #faf5ff; border: 2px solid #f3e8ff; }
+        .theme-Mor .group-title { color: #7e22ce; border-bottom-color: #f3e8ff; }
+
+        .theme-Turuncu { background-color: #fff7ed; border: 2px solid #ffedd5; }
+        .theme-Turuncu .group-title { color: #c2410c; border-bottom-color: #ffedd5; }
 
         @media (max-width: 768px) { 
             .analysis-grid { grid-template-columns: 1fr; } 
             .pro-rank-row { flex-direction: column; align-items: flex-start; gap: 10px; }
         }
 
-        /* --- RESİM ZOOM MODAL STİLLERİ --- */
         .wro-modal {
-            display: none; 
-            position: fixed; 
-            z-index: 1000; 
-            padding-top: 50px; 
-            left: 0; top: 0;
-            width: 100%; height: 100%; 
-            overflow: auto; 
+            display: none; position: fixed; z-index: 1000; padding-top: 50px; 
+            left: 0; top: 0; width: 100%; height: 100%; overflow: auto; 
             background-color: rgba(0,0,0,0.85); 
         }
-
         .wro-modal-content {
-            margin: auto;
-            display: block;
-            max-width: 90%; 
-            max-height: 85vh; 
-            border-radius: 12px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+            margin: auto; display: block; max-width: 90%; max-height: 85vh; 
+            border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.5);
             animation: zoomEffect 0.3s;
         }
-
-        @keyframes zoomEffect {
-            from {transform: scale(0)} 
-            to {transform: scale(1)}
-        }
-
+        @keyframes zoomEffect { from {transform: scale(0)} to {transform: scale(1)} }
         .wro-close {
-            position: absolute;
-            top: 15px; right: 25px;
-            color: #fff;
-            font-size: 40px; font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
+            position: absolute; top: 15px; right: 25px; color: #fff;
+            font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.2s;
         }
-
         .wro-close:hover { color: #f44336; }
     </style>
 </head>
@@ -207,6 +183,7 @@
     <div class="tabs">
         <button class="tab-btn active" onclick="openTab('score-ls', this)">K. Yıldız Puan</button>
         <button class="tab-btn" onclick="openTab('prob-ls', this)">K. Yıldız İhtimal</button>
+        <button class="tab-btn" onclick="openTab('notlar-ls', this)">📝 K. Yıldız Notlar</button>
         <button class="tab-btn" onclick="openTab('stat-ls', this)">📊 K. Yıldız İstatistik</button>
         <button class="tab-btn" onclick="openTab('score-s', this)">Yıldızlar Puan</button>
         <button class="tab-btn" onclick="openTab('stat-s', this)">📊 Yıldızlar İstatistik</button>
@@ -217,7 +194,6 @@
     </div>
 
     <div id="content-sayac" class="tab-content">
-        
         <div class="timer-container" style="text-align: center; margin: 30px auto; max-width: 600px; background: #e8f4f8; padding: 30px; border-radius: 15px; border: 2px dashed #81d4fa;">
             <h3 style="color: #0277bd; margin-top: 0;">2 Dakikalık Görev Süresi</h3>
             <p style="color: #546e7a; font-size: 0.9rem;">Görev süresini buradan takip edebilirsiniz.</p>
@@ -338,6 +314,125 @@
             <input type="file" id="file-prob-ls" style="display:none" onchange="loadJSON(event, 'ls', 'prob')">
         </div>
         <div id="ls-group-container"></div>
+    </div>
+    
+    <div id="content-notlar-ls" class="tab-content">
+        <h2 style="color:var(--primary-color)">Küçük Yıldızlar Hata ve Görev Notları</h2>
+        <div class="action-bar">
+            <button class="btn btn-save" onclick="saveNotesLS()">💾 Tarayıcıya Kaydet</button>
+            <button class="btn btn-load" onclick="downloadNotesLS()">⬇️ JSON İndir</button>
+            <button class="btn btn-danger" onclick="clearNotesLS()">🗑️ Temizle</button>
+        </div>
+
+        <div class="note-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+            <div class="group-box theme-Beyaz">
+                <h3 class="group-title">1. Kablo Görevi</h3>
+                <textarea id="note_ls_kablo" rows="4" style="width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; padding: 8px; resize: vertical;" placeholder="Kablo yerleşimi ile ilgili hataları/notları buraya yazın..."></textarea>
+            </div>
+            <div class="group-box theme-Beyaz">
+                <h3 class="group-title">2. Gösteri Hazırlığı (Mikrofon/Enstrüman)</h3>
+                <textarea id="note_ls_gosteri" rows="4" style="width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; padding: 8px; resize: vertical;" placeholder="Mikrofon ve enstrüman taşıma hatalarını/notlarını buraya yazın..."></textarea>
+            </div>
+            <div class="group-box theme-Beyaz">
+                <h3 class="group-title">3. Şarkıyı Çal (Notalar)</h3>
+                <textarea id="note_ls_nota" rows="4" style="width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; padding: 8px; resize: vertical;" placeholder="Notaların taşınması ve yerleşimi ile ilgili notlar..."></textarea>
+            </div>
+            <div class="group-box theme-Beyaz">
+                <h3 class="group-title">4. Bonuslar (Sol Anahtarı, Hoparlör, Amfi)</h3>
+                <textarea id="note_ls_bonus" rows="4" style="width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; padding: 8px; resize: vertical;" placeholder="Çarpma, devirme, bonus ve amfi hataları..."></textarea>
+            </div>
+
+            <div class="group-box theme-Mavi">
+                <h3 class="group-title">İhtimaller: Yuva 1 & Yuva 2</h3>
+                <div id="y1_y2_notes_container" style="display:flex; flex-direction:column; gap:8px; margin-bottom:10px;"></div>
+                
+                <div style="display:flex; gap:15px; margin-bottom:8px; font-size:13px; color:#333;">
+                    <div><b>Y1:</b> <label><input type="radio" name="c_y1_y2_1" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y1_y2_1" value="Mavi"> 🔵 Mavi</label></div>
+                    <div><b>Y2:</b> <label><input type="radio" name="c_y1_y2_2" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y1_y2_2" value="Mavi"> 🔵 Mavi</label></div>
+                </div>
+                
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="y1_y2_note_input" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc; background:#fff; color:#333;" placeholder="Yuva 1 & 2 notu yazın...">
+                    <button class="btn btn-save" style="padding: 8px 12px; font-size: 14px;" onclick="addDynamicNote('y1_y2', 'Y1', 'Y2')">Ekle</button>
+                </div>
+            </div>
+
+            <div class="group-box theme-Sarı">
+                <h3 class="group-title">İhtimaller: Yuva 1 & Yuva 3</h3>
+                <div id="y1_y3_notes_container" style="display:flex; flex-direction:column; gap:8px; margin-bottom:10px;"></div>
+                
+                <div style="display:flex; gap:15px; margin-bottom:8px; font-size:13px; color:#333;">
+                    <div><b>Y1:</b> <label><input type="radio" name="c_y1_y3_1" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y1_y3_1" value="Mavi"> 🔵 Mavi</label></div>
+                    <div><b>Y3:</b> <label><input type="radio" name="c_y1_y3_2" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y1_y3_2" value="Mavi"> 🔵 Mavi</label></div>
+                </div>
+
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="y1_y3_note_input" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc; background:#fff; color:#333;" placeholder="Yuva 1 & 3 notu yazın...">
+                    <button class="btn btn-save" style="padding: 8px 12px; font-size: 14px;" onclick="addDynamicNote('y1_y3', 'Y1', 'Y3')">Ekle</button>
+                </div>
+            </div>
+
+            <div class="group-box theme-Kırmızı">
+                <h3 class="group-title">İhtimaller: Yuva 1 & Yuva 4</h3>
+                <div id="y1_y4_notes_container" style="display:flex; flex-direction:column; gap:8px; margin-bottom:10px;"></div>
+                
+                <div style="display:flex; gap:15px; margin-bottom:8px; font-size:13px; color:#333;">
+                    <div><b>Y1:</b> <label><input type="radio" name="c_y1_y4_1" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y1_y4_1" value="Mavi"> 🔵 Mavi</label></div>
+                    <div><b>Y4:</b> <label><input type="radio" name="c_y1_y4_2" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y1_y4_2" value="Mavi"> 🔵 Mavi</label></div>
+                </div>
+
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="y1_y4_note_input" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc; background:#fff; color:#333;" placeholder="Yuva 1 & 4 notu yazın...">
+                    <button class="btn btn-save" style="padding: 8px 12px; font-size: 14px;" onclick="addDynamicNote('y1_y4', 'Y1', 'Y4')">Ekle</button>
+                </div>
+            </div>
+
+            <div class="group-box theme-Yeşil">
+                <h3 class="group-title">İhtimaller: Yuva 2 & Yuva 3</h3>
+                <div id="y2_y3_notes_container" style="display:flex; flex-direction:column; gap:8px; margin-bottom:10px;"></div>
+                
+                <div style="display:flex; gap:15px; margin-bottom:8px; font-size:13px; color:#333;">
+                    <div><b>Y2:</b> <label><input type="radio" name="c_y2_y3_1" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y2_y3_1" value="Mavi"> 🔵 Mavi</label></div>
+                    <div><b>Y3:</b> <label><input type="radio" name="c_y2_y3_2" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y2_y3_2" value="Mavi"> 🔵 Mavi</label></div>
+                </div>
+
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="y2_y3_note_input" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc; background:#fff; color:#333;" placeholder="Yuva 2 & 3 notu yazın...">
+                    <button class="btn btn-save" style="padding: 8px 12px; font-size: 14px;" onclick="addDynamicNote('y2_y3', 'Y2', 'Y3')">Ekle</button>
+                </div>
+            </div>
+
+            <div class="group-box theme-Mor">
+                <h3 class="group-title">İhtimaller: Yuva 2 & Yuva 4</h3>
+                <div id="y2_y4_notes_container" style="display:flex; flex-direction:column; gap:8px; margin-bottom:10px;"></div>
+                
+                <div style="display:flex; gap:15px; margin-bottom:8px; font-size:13px; color:#333;">
+                    <div><b>Y2:</b> <label><input type="radio" name="c_y2_y4_1" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y2_y4_1" value="Mavi"> 🔵 Mavi</label></div>
+                    <div><b>Y4:</b> <label><input type="radio" name="c_y2_y4_2" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y2_y4_2" value="Mavi"> 🔵 Mavi</label></div>
+                </div>
+
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="y2_y4_note_input" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc; background:#fff; color:#333;" placeholder="Yuva 2 & 4 notu yazın...">
+                    <button class="btn btn-save" style="padding: 8px 12px; font-size: 14px;" onclick="addDynamicNote('y2_y4', 'Y2', 'Y4')">Ekle</button>
+                </div>
+            </div>
+
+            <div class="group-box theme-Turuncu">
+                <h3 class="group-title">İhtimaller: Yuva 3 & Yuva 4</h3>
+                <div id="y3_y4_notes_container" style="display:flex; flex-direction:column; gap:8px; margin-bottom:10px;"></div>
+                
+                <div style="display:flex; gap:15px; margin-bottom:8px; font-size:13px; color:#333;">
+                    <div><b>Y3:</b> <label><input type="radio" name="c_y3_y4_1" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y3_y4_1" value="Mavi"> 🔵 Mavi</label></div>
+                    <div><b>Y4:</b> <label><input type="radio" name="c_y3_y4_2" value="Sarı" checked> 🟡 Sarı</label> &nbsp;<label><input type="radio" name="c_y3_y4_2" value="Mavi"> 🔵 Mavi</label></div>
+                </div>
+
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="y3_y4_note_input" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc; background:#fff; color:#333;" placeholder="Yuva 3 & 4 notu yazın...">
+                    <button class="btn btn-save" style="padding: 8px 12px; font-size: 14px;" onclick="addDynamicNote('y3_y4', 'Y3', 'Y4')">Ekle</button>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <div id="content-stat-ls" class="tab-content">
@@ -772,7 +867,7 @@
                         <li><span><strong>5. Seviye:</strong> SİRİUS A / SPARK / ROVERBOATS</span> <span class="score">73 Puan</span></li>
                     </ul>
                     <div class="note warning">
-                        <strong>İkinci Tur Dinamikleri:</strong> Sadece ARTİFUSION takımının 120 tam puan alabilmesi, bu etabın zorluğunu ve takımın başarısındaki kilit noktayı gözler önüne sermektedir.
+                        <strong>İkinci Tur Dinamikleri:</strong> Sadece ARTİFUSION takımının 120 tam puan alabilmesi, bu etabın zorluğunu ve takımın başarısındaki kilit noktayı gözler önüne- sermektedir.
                     </div>
                 </div>
 
@@ -981,7 +1076,7 @@
     </div>
 
     <div id="content-tarihce" class="tab-content">
-        <h2 style="color:#2c3e50; text-align: center;">Ödül Alanlar Listesi (2015 - 2025)</h2>
+        <h2 style="color:#2c3e50; text-align: center;">Ödül Alanlar Listesi (2015 - 2026)</h2>
         <div class="table-container">
             <table id="wroTable">
                 <thead>
@@ -992,33 +1087,56 @@
                         <th>Robomission Yıldızlar</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr><td>2025</td><td>Birincilik</td><td><b>THUNDER/BOTS</b> (42 - FMV ÖZEL ISPARTAKULE IŞIK ORTAOKULU)</td><td><b>THE MARTIANS</b> (54 - ÖZEL ÇAKABEY ORTAOKULU)</td></tr>
-                    <tr><td>2025</td><td>İkincilik</td><td><b>DRAGONROBOTİCS</b> (23 - MALTEPE KADİR HAS BİLİM VE SANAT MERKEZİ)</td><td><b>JR. TORNADO</b> (261 - ÖZEL BAHÇEŞEHİR KAYSERİ ORTAOKULU)</td></tr>
-                    <tr><td>2025</td><td>Üçüncülük</td><td><b>WALLBOTS</b> (112 - ÖZEL ÇAKABEY ORTAOKULU)</td><td><b>SPICA</b> (417 - ÇİĞLİ AYDOĞAN YAĞCI BİLİM VE SANAT MERKEZİ)</td></tr>
-                    <tr><td>2024</td><td>Birincilik</td><td><b>EARTBOTS</b> (107 - ÖZEL ÇAKABEY ORTAOKULU)</td><td><b>ARTIFUSION</b> (86 - ÖZEL ÇAKABEY LİSESİ)</td></tr>
-                    <tr><td>2024</td><td>İkincilik</td><td><b>ROBOTAKEV</b> (227 - TAKEV ÖZEL ORTAOKULU)</td><td><b>SIRIUS A</b> (295 - DR. M. HİLMİ GÜLER BİLİM VE SANAT MERKEZİ)</td></tr>
-                    <tr><td>2024</td><td>Üçüncülük</td><td><b>JR TORNADO POWER</b> (256 - ÖZEL BAHÇEŞEHİR KAYSERİ ORTAOKULU)</td><td><b>JUNIOR ALTAŞ</b> (182 - ÖZEL ALTAŞ ORTAOKULU)</td></tr>
-                    <tr><td>2023</td><td>Birincilik</td><td><b>ALBATROS</b> (18 - Bireysel)</td><td><b>JUNIOR ALTAŞ</b> (85 - ÖZEL ALTAŞ ORTAOKULU)</td></tr>
-                    <tr><td>2023</td><td>İkincilik</td><td><b>ROBALANYA</b> (20 - ALANYA BİLİM VE SANAT MERKEZİ)</td><td><b>ROBARMY1</b> (105 - DR. M. HİLMİ GÜLER BİLİM VE SANAT MERKEZİ)</td></tr>
-                    <tr><td>2023</td><td>Üçüncülük</td><td><b>CODE MASTERS</b> (14 - ÖZEL ERASLAN ORTAOKULU)</td><td><b>6TH DIMENSION</b> (21 - ÖZEL ÇAKABEY LİSESİ)</td></tr>
-                    <tr><td>2022</td><td>Birincilik</td><td><b>ÇAKABOTS</b> (278)</td><td><b>COME ON</b> (267)</td></tr>
-                    <tr><td>2022</td><td>İkincilik</td><td><b>GLADIATORS</b> (13)</td><td><b>ROBARMY-1</b> (40)</td></tr>
-                    <tr><td>2022</td><td>Üçüncülük</td><td><b>SİRİUS</b> (30)</td><td><b>GOD OF LEGO</b> (178)</td></tr>
-                    <tr><td>2021</td><td>Birincilik</td><td><b>ÇAKABOTS</b> (13)</td><td><b>SPARK</b> (2)</td></tr>
-                    <tr><td>2021</td><td>İkincilik</td><td><b>ÇAKATECH</b> (5)</td><td><b>ROBOTUM</b> (121)</td></tr>
-                    <tr><td>2021</td><td>Üçüncülük</td><td><b>BİLNETECH KİDS</b> (22)</td><td><b>BİLBOTS</b> (42)</td></tr>
-                    <tr><td>2019</td><td>Birincilik</td><td>-</td><td><b>Bandboat</b> (284)</td></tr>
-                    <tr><td>2019</td><td>İkincilik</td><td>-</td><td><b>Magnetech Initium</b> (235)</td></tr>
-                    <tr><td>2019</td><td>Üçüncülük</td><td>-</td><td><b>Thunderforce</b> (352)</td></tr>
-                    <tr><td>2018</td><td>Birincilik</td><td>-</td><td><b>Robarmy - 4</b> (45)</td></tr>
-                    <tr><td>2018</td><td>İkincilik</td><td>-</td><td><b>Bilsem 10</b> (104)</td></tr>
-                    <tr><td>2018</td><td>Üçüncülük</td><td>-</td><td><b>Robomer</b> (214)</td></tr>
-                    <tr><td>2017</td><td>Birincilik</td><td>-</td><td><b>ROBISTIM QUARK</b> (24)</td></tr>
-                    <tr><td>2017</td><td>İkincilik</td><td>-</td><td><b>ROBOBRAINS</b> (101)</td></tr>
-                    <tr><td>2017</td><td>Üçüncülük</td><td>-</td><td><b>ROBOTAKEV</b> (100)</td></tr>
-                    <tr><td>2016</td><td>Birincilik</td><td>-</td><td><b>ROBİSTİM KUANTUM</b> (25)</td></tr>
-                    <tr><td>2015</td><td>Birincilik</td><td>-</td><td><b>ROBİSTİM</b> (4)</td></tr>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2026</td><td>Birincilik</td><td><b>THUNDER/BOTS</b> (21)</td><td><b>ÇAKATECH_1</b> (15)</td></tr>
+                    <tr class="silver-dark"><td>2026</td><td>İkincilik</td><td><b>THE KING OF MELODIES</b> (272)</td><td><b>THUNDER/BOTS</b> (73)</td></tr>
+                    <tr class="bronze-dark"><td>2026</td><td>Üçüncülük</td><td><b>NORTH ROBOTİCS JR</b> (11)</td><td><b>ALTAŞJUNİOR</b> (112)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2025</td><td>Birincilik</td><td><b>THUNDER/BOTS</b> (42 - FMV ÖZEL ISPARTAKULE IŞIK ORTAOKULU)</td><td><b>THE MARTIANS</b> (54 - ÖZEL ÇAKABEY ORTAOKULU)</td></tr>
+                    <tr class="silver-dark"><td>2025</td><td>İkincilik</td><td><b>DRAGONROBOTİCS</b> (23 - MALTEPE KADİR HAS BİLİM VE SANAT MERKEZİ)</td><td><b>JR. TORNADO</b> (261 - ÖZEL BAHÇEŞEHİR KAYSERİ ORTAOKULU)</td></tr>
+                    <tr class="bronze-dark"><td>2025</td><td>Üçüncülük</td><td><b>WALLBOTS</b> (112 - ÖZEL ÇAKABEY ORTAOKULU)</td><td><b>SPICA</b> (417 - ÇİĞLİ AYDOĞAN YAĞCI BİLİM VE SANAT MERKEZİ)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2024</td><td>Birincilik</td><td><b>EARTBOTS</b> (107 - ÖZEL ÇAKABEY ORTAOKULU)</td><td><b>ARTIFUSION</b> (86 - ÖZEL ÇAKABEY LİSESİ)</td></tr>
+                    <tr class="silver-dark"><td>2024</td><td>İkincilik</td><td><b>ROBOTAKEV</b> (227 - TAKEV ÖZEL ORTAOKULU)</td><td><b>SIRIUS A</b> (295 - DR. M. HİLMİ GÜLER BİLİM VE SANAT MERKEZİ)</td></tr>
+                    <tr class="bronze-dark"><td>2024</td><td>Üçüncülük</td><td><b>JR TORNADO POWER</b> (256 - ÖZEL BAHÇEŞEHİR KAYSERİ ORTAOKULU)</td><td><b>JUNIOR ALTAŞ</b> (182 - ÖZEL ALTAŞ ORTAOKULU)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2023</td><td>Birincilik</td><td><b>ALBATROS</b> (18 - Bireysel)</td><td><b>JUNIOR ALTAŞ</b> (85 - ÖZEL ALTAŞ ORTAOKULU)</td></tr>
+                    <tr class="silver-dark"><td>2023</td><td>İkincilik</td><td><b>ROBALANYA</b> (20 - ALANYA BİLİM VE SANAT MERKEZİ)</td><td><b>ROBARMY1</b> (105 - DR. M. HİLMİ GÜLER BİLİM VE SANAT MERKEZİ)</td></tr>
+                    <tr class="bronze-dark"><td>2023</td><td>Üçüncülük</td><td><b>CODE MASTERS</b> (14 - ÖZEL ERASLAN ORTAOKULU)</td><td><b>6TH DIMENSION</b> (21 - ÖZEL ÇAKABEY LİSESİ)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2022</td><td>Birincilik</td><td><b>ÇAKABOTS</b> (278)</td><td><b>COME ON</b> (267)</td></tr>
+                    <tr class="silver-dark"><td>2022</td><td>İkincilik</td><td><b>GLADIATORS</b> (13)</td><td><b>ROBARMY-1</b> (40)</td></tr>
+                    <tr class="bronze-dark"><td>2022</td><td>Üçüncülük</td><td><b>SİRİUS</b> (30)</td><td><b>GOD OF LEGO</b> (178)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2021</td><td>Birincilik</td><td><b>ÇAKABOTS</b> (13)</td><td><b>SPARK</b> (2)</td></tr>
+                    <tr class="silver-dark"><td>2021</td><td>İkincilik</td><td><b>ÇAKATECH</b> (5)</td><td><b>ROBOTUM</b> (121)</td></tr>
+                    <tr class="bronze-dark"><td>2021</td><td>Üçüncülük</td><td><b>BİLNETECH KİDS</b> (22)</td><td><b>BİLBOTS</b> (42)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2019</td><td>Birincilik</td><td>-</td><td><b>Bandboat</b> (284)</td></tr>
+                    <tr class="silver-dark"><td>2019</td><td>İkincilik</td><td>-</td><td><b>Magnetech Initium</b> (235)</td></tr>
+                    <tr class="bronze-dark"><td>2019</td><td>Üçüncülük</td><td>-</td><td><b>Thunderforce</b> (352)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2018</td><td>Birincilik</td><td>-</td><td><b>Robarmy - 4</b> (45)</td></tr>
+                    <tr class="silver-dark"><td>2018</td><td>İkincilik</td><td>-</td><td><b>Bilsem 10</b> (104)</td></tr>
+                    <tr class="bronze-dark"><td>2018</td><td>Üçüncülük</td><td>-</td><td><b>Robomer</b> (214)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2017</td><td>Birincilik</td><td>-</td><td><b>ROBISTIM QUARK</b> (24)</td></tr>
+                    <tr class="silver-dark"><td>2017</td><td>İkincilik</td><td>-</td><td><b>ROBOBRAINS</b> (101)</td></tr>
+                    <tr class="bronze-dark"><td>2017</td><td>Üçüncülük</td><td>-</td><td><b>ROBOTAKEV</b> (100)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2016</td><td>Birincilik</td><td>-</td><td><b>ROBİSTİM KUANTUM</b> (25)</td></tr>
+                </tbody>
+                <tbody class="year-block">
+                    <tr class="gold-dark"><td>2015</td><td>Birincilik</td><td>-</td><td><b>ROBİSTİM</b> (4)</td></tr>
                 </tbody>
             </table>
         </div>
@@ -1054,7 +1172,6 @@
 </div>
 
 <script>
-    // --- AKILLI LİMİT FONKSİYONU ---
     function validateGroup(changedId, groupIds, maxLimit) {
         let currentInput = document.getElementById(changedId);
         let currentVal = parseInt(currentInput.value) || 0;
@@ -1066,7 +1183,6 @@
     const colors = { 'Sarı': 'c-yellow', 'Lacivert': 'c-blue', 'Mavi': 'c-blue', 'Siyah': 'c-black', 'Beyaz': 'c-white', 'Kırmızı': 'c-red', 'Yeşil': 'c-green' };
     function cS(txt) { return `<span class="${colors[txt] || ''}">${txt}</span>`; }
 
-    // --- ANA SEKME DEĞİŞTİRME ---
     function openTab(id, btn) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         document.getElementById('content-' + id).classList.add('active');
@@ -1075,22 +1191,16 @@
         if(id.startsWith('stat-')) updateStatsUI(id.split('-')[1]);
     }
 
-    // --- ALT SEKME DEĞİŞTİRME (Analiz için) ---
     function openSubTab(evt, tabName) {
         var i, subcontent, sublinks;
         subcontent = document.getElementsByClassName("sub-tab-content");
-        for (i = 0; i < subcontent.length; i++) {
-            subcontent[i].classList.remove("active");
-        }
+        for (i = 0; i < subcontent.length; i++) { subcontent[i].classList.remove("active"); }
         sublinks = document.getElementsByClassName("sub-tab-btn");
-        for (i = 0; i < sublinks.length; i++) {
-            sublinks[i].classList.remove("active");
-        }
+        for (i = 0; i < sublinks.length; i++) { sublinks[i].classList.remove("active"); }
         document.getElementById(tabName).classList.add("active");
         evt.currentTarget.classList.add("active");
     }
 
-    // --- PUAN HESAPLAMA ---
     function calcLS() {
         let total = 0;
         const p = { ls_kb_f: 15, ls_kb_p: 5, ls_mk_f: 20, ls_mk_p: 10, ls_ens: 15, ls_nt_f: 20, ls_nt_p: 10, ls_bon_hop: 10 };
@@ -1140,7 +1250,6 @@
         cat === 'ls' ? calcLS() : calcS();
     }
 
-    // --- İSTATİSTİK (KAYDET, GÖSTER, SİL) ---
     const maxScores = {
         'ls': { "Kablolar (Maks 30)":30, "Mikrofon (Maks 20)":20, "Enstrüman (Maks 45)":45, "Notalar (Maks 120)":120, "Bonuslar (Maks 40)":40 },
         's': { "Ziyaretçiler (Maks 40)":40, "Kırmızı Kule (Maks 30)":30, "Sarı Kule (Maks 50)":50, "Eserler (Maks 60)":60, "Taş Döşeme/Kir (Maks 20)":20, "Bonuslar (Maks 30)":30 }
@@ -1225,7 +1334,6 @@
         }
     }
 
-    // --- KÜÇÜK YILDIZLAR İHTİMALLERİ (Yuvalar) ---
     function initLSProbs() {
         const cont = document.getElementById('ls-group-container');
         if(!cont) return;
@@ -1289,6 +1397,108 @@
         initLSProbs();
     }
 
+    let pairNotes = {
+        y1_y2: [],
+        y1_y3: [],
+        y1_y4: [],
+        y2_y3: [],
+        y2_y4: [],
+        y3_y4: []
+    };
+
+    function renderDynamicNotes(type) {
+        const container = document.getElementById(`${type}_notes_container`);
+        if (!container) return;
+        const notes = pairNotes[type];
+        container.innerHTML = '';
+        notes.forEach((note, index) => {
+            container.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; background:#fff; border:1px solid #ddd; padding:8px; border-radius:4px; color:#333; margin-bottom:4px;">
+                <span style="flex:1; padding-right:10px; font-size:13px;">${note}</span>
+                <button class="btn btn-danger" style="padding:2px 6px; font-size:12px; height:fit-content;" onclick="removeDynamicNote('${type}', ${index})">Sil</button>
+            </div>`;
+        });
+    }
+
+    function addDynamicNote(type, label1, label2) {
+        const input = document.getElementById(`${type}_note_input`);
+        const val = input.value.trim();
+        if(val) {
+            const c1 = document.querySelector(`input[name="c_${type}_1"]:checked`).value;
+            const c2 = document.querySelector(`input[name="c_${type}_2"]:checked`).value;
+            const colorPrefix = `[${label1}: ${c1}, ${label2}: ${c2}]`;
+            const finalNote = `<strong style="color:#d35400;">${colorPrefix}</strong> ${val}`;
+            
+            pairNotes[type].push(finalNote);
+            input.value = '';
+            renderDynamicNotes(type);
+        }
+    }
+
+    function removeDynamicNote(type, index) {
+        pairNotes[type].splice(index, 1);
+        renderDynamicNotes(type);
+    }
+
+    function saveNotesLS() {
+        const notes = {
+            kablo: document.getElementById('note_ls_kablo').value,
+            gosteri: document.getElementById('note_ls_gosteri').value,
+            nota: document.getElementById('note_ls_nota').value,
+            bonus: document.getElementById('note_ls_bonus').value,
+            pairs: pairNotes
+        };
+        localStorage.setItem('wro_ls_notes', JSON.stringify(notes));
+        alert('Notlar tarayıcıya başarıyla kaydedildi!');
+    }
+
+    function loadNotesLS() {
+        const saved = localStorage.getItem('wro_ls_notes');
+        if (saved) {
+            try {
+                const notes = JSON.parse(saved);
+                document.getElementById('note_ls_kablo').value = notes.kablo || '';
+                document.getElementById('note_ls_gosteri').value = notes.gosteri || '';
+                document.getElementById('note_ls_nota').value = notes.nota || '';
+                document.getElementById('note_ls_bonus').value = notes.bonus || '';
+                if(notes.pairs) {
+                    pairNotes = { ...pairNotes, ...notes.pairs };
+                } else if(notes.sol_notes || notes.sag_notes) {
+                    pairNotes.y1_y2 = notes.sol_notes || [];
+                    pairNotes.y3_y4 = notes.sag_notes || [];
+                }
+                
+                Object.keys(pairNotes).forEach(type => renderDynamicNotes(type));
+            } catch(e) {}
+        }
+    }
+
+    function clearNotesLS() {
+        if (confirm('Tüm Küçük Yıldızlar notlarını silmek istediğinize emin misiniz?')) {
+            document.getElementById('note_ls_kablo').value = '';
+            document.getElementById('note_ls_gosteri').value = '';
+            document.getElementById('note_ls_nota').value = '';
+            document.getElementById('note_ls_bonus').value = '';
+            pairNotes = { y1_y2: [], y1_y3: [], y1_y4: [], y2_y3: [], y2_y4: [], y3_y4: [] };
+            Object.keys(pairNotes).forEach(type => renderDynamicNotes(type));
+            localStorage.removeItem('wro_ls_notes');
+        }
+    }
+
+    function downloadNotesLS() {
+        const notes = {
+            kablo: document.getElementById('note_ls_kablo').value,
+            gosteri: document.getElementById('note_ls_gosteri').value,
+            nota: document.getElementById('note_ls_nota').value,
+            bonus: document.getElementById('note_ls_bonus').value,
+            pairs: pairNotes
+        };
+        const blob = new Blob([JSON.stringify(notes, null, 2)], {type: 'application/json'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `kucuk_yildizlar_notlar.json`;
+        a.click();
+    }
+
     function saveJSON(cat, mode) {
         const data = {};
         if (mode === 'prob') {
@@ -1320,7 +1530,6 @@
         reader.readAsText(file);
     }
 
-    // --- RESİM ZOOM MODAL FONKSİYONLARI ---
     function openModal(imageSrc) {
         document.getElementById('wroExpandedImage').src = imageSrc;
         document.getElementById('wroImageModal').style.display = "block";
@@ -1330,8 +1539,7 @@
         document.getElementById('wroImageModal').style.display = "none";
     }
 
-    // --- SAYAÇ VE GERİ SAYIM FONKSİYONLARI ---
-    let robotTimeLeft = 120; // 2 dakika (saniye cinsinden)
+    let robotTimeLeft = 120;
     let robotTimerInterval = null;
 
     function formatTime(seconds) {
@@ -1388,7 +1596,6 @@
         display.innerHTML = `${days} Gün <span style="font-size:1.2rem; color: #d35400;">${hours} Saat ${minutes} Dk</span>`;
     }
 
-    // --- TAKTİK TAHTASI (CANVAS) FONKSİYONLARI ---
     const taktikCanvas = document.getElementById('taktik-canvas');
     const taktikCtx = taktikCanvas ? taktikCanvas.getContext('2d') : null;
     let isDrawing = false;
@@ -1478,7 +1685,6 @@
         setTool('pen');
     }
 
-    // --- BAŞLANGIÇ AYARLARI VE TABLO VURGULAMA ---
     window.onload = () => { 
         initLSProbs(); 
         calcLS(); 
@@ -1496,6 +1702,8 @@
                 this.classList.toggle('highlight');
             });
         });
+
+        loadNotesLS();
     };
 </script>
 
